@@ -1,12 +1,32 @@
 package web;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import web.DBConnection;
 
 public class login extends javax.swing.JFrame {
 
     public login() {
         initComponents();
+        
     }
-       
- 
+   private void saveLogin(String username) {
+
+    String sql = "INSERT INTO login_logs (username) VALUES (?)";
+
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement pst = conn.prepareStatement(sql)) {
+
+        pst.setString(1, username);
+        pst.executeUpdate();
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this,
+            "Database error: " + e.getMessage());
+    }
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -22,7 +42,7 @@ public class login extends javax.swing.JFrame {
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel5 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        password = new javax.swing.JPasswordField();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
 
@@ -92,9 +112,9 @@ public class login extends javax.swing.JFrame {
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 40, 40));
         jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, 260, 20));
 
-        jPasswordField1.setText("jPasswordField1");
-        jPasswordField1.setBorder(null);
-        jPanel2.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 260, 290, 20));
+        password.setText("password");
+        password.setBorder(null);
+        jPanel2.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 260, 290, 20));
         jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 210, 260, 20));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/username.png"))); // NOI18N
@@ -112,7 +132,47 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_usernameActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        System.out.println("Hello there: " +username.getText());
+      
+
+    String userName = username.getText();
+    String pass = new String(password.getPassword());
+
+    if (userName.isEmpty() || pass.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter username and password");
+        return;
+    }
+
+   boolean loginSuccess = false;
+
+// Step 1: Check login
+try (Connection conn = DBConnection.getConnection();
+     PreparedStatement pst = conn.prepareStatement(
+         "SELECT * FROM users WHERE username = ? AND password = ?")) {
+
+    pst.setString(1, userName);
+    pst.setString(2, pass);
+
+    try (ResultSet rs = pst.executeQuery()) {
+        if (rs.next()) {
+            loginSuccess = true;  // login is valid
+        }
+    } // ✅ ResultSet auto-closed here
+
+} catch (SQLException e) {
+    e.printStackTrace();
+    JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage());
+}
+
+// Step 2: Only now save login
+if (loginSuccess) {
+    JOptionPane.showMessageDialog(this, "Login successful!");
+    saveLogin(userName);   // <-- safe, previous connection closed
+    new landing().setVisible(true);
+    this.dispose();
+} else {
+    JOptionPane.showMessageDialog(this, "Invalid username or password");
+}
+
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -174,9 +234,9 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JPasswordField password;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }
