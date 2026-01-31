@@ -4,7 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import web.DBConnection;
+import Config.config;
+import admin.usersForm;
+import admin.adminDashboard;
 
 public class login extends javax.swing.JFrame {
 
@@ -16,7 +18,7 @@ public class login extends javax.swing.JFrame {
 
     String sql = "INSERT INTO login_logs (username) VALUES (?)";
 
-    try (Connection conn = DBConnection.getConnection();
+    try (Connection conn = config.connectDB();
          PreparedStatement pst = conn.prepareStatement(sql)) {
 
         pst.setString(1, username);
@@ -42,9 +44,11 @@ public class login extends javax.swing.JFrame {
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel5 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        password = new javax.swing.JPasswordField();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        password = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -52,7 +56,7 @@ public class login extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(1, 18, 6));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/loginr.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/loginreal.png"))); // NOI18N
         jLabel4.setText("jLabel4");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 500));
 
@@ -61,7 +65,6 @@ public class login extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        username.setText("Username");
         username.setBorder(null);
         username.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         username.addActionListener(new java.awt.event.ActionListener() {
@@ -69,57 +72,76 @@ public class login extends javax.swing.JFrame {
                 usernameActionPerformed(evt);
             }
         });
-        jPanel2.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, 285, 30));
+        jPanel2.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 285, 30));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
         jLabel2.setText("LOGIN");
         jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 178, 52));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 178, 52));
 
         jButton1.setBackground(new java.awt.Color(195, 183, 146));
+        jButton1.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jButton1.setText("Login");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 360, 285, 39));
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 260, 39));
 
+        jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jLabel3.setText("Don't have an account? Sign up");
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel3MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 410, 178, 33));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 420, 240, 33));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel1.setText("Join us and get started in seconds");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, -1, -1));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, -1, -1));
 
         jCheckBox1.setBackground(new java.awt.Color(255, 255, 255));
-        jCheckBox1.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jCheckBox1.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
         jCheckBox1.setText("Remember me");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, -1, -1));
+        jPanel2.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 290, -1, -1));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/password.png"))); // NOI18N
         jLabel5.setText("jLabel5");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 40, 40));
-        jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, 260, 20));
-
-        password.setText("password");
-        password.setBorder(null);
-        jPanel2.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 260, 290, 20));
-        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 210, 260, 20));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 30, 40));
+        jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 270, 260, 30));
+        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, 260, 20));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/username.png"))); // NOI18N
         jLabel6.setText("jLabel5");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, 40, 40));
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, 30, 40));
+
+        jLabel7.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+        jLabel7.setText("Password");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 220, 130, -1));
+
+        jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+        jLabel8.setText("Username");
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 150, 130, 20));
+
+        password.setBorder(null);
+        password.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordActionPerformed(evt);
+            }
+        });
+        jPanel2.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 240, 260, 30));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 0, 420, 500));
 
@@ -132,48 +154,61 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_usernameActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      
-
+    
     String userName = username.getText();
-    String pass = new String(password.getPassword());
+    String pass = new String(password.getText());
 
     if (userName.isEmpty() || pass.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Please enter username and password");
         return;
     }
 
-   boolean loginSuccess = false;
+    String type = ""; 
+    String status = ""; // Variable to store account status
+    boolean loginSuccess = false;
 
-// Step 1: Check login
-try (Connection conn = DBConnection.getConnection();
-     PreparedStatement pst = conn.prepareStatement(
-         "SELECT * FROM users WHERE username = ? AND password = ?")) {
+    // Step 1: Fetch user_type AND status
+    try (Connection conn = config.connectDB();
+         PreparedStatement pst = conn.prepareStatement(
+             "SELECT user_type, status FROM users WHERE username = ? AND password = ?")) {
 
-    pst.setString(1, userName);
-    pst.setString(2, pass);
+        pst.setString(1, userName);
+        pst.setString(2, pass);
 
-    try (ResultSet rs = pst.executeQuery()) {
-        if (rs.next()) {
-            loginSuccess = true;  // login is valid
+        try (ResultSet rs = pst.executeQuery()) {
+            if (rs.next()) {
+                type = rs.getString("user_type");
+                status = rs.getString("status"); // Get status from DB
+                loginSuccess = true;
+            }
         }
-    } // ✅ ResultSet auto-closed here
 
-} catch (SQLException e) {
-    e.printStackTrace();
-    JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage());
-}
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage());
+    }
 
-// Step 2: Only now save login
-if (loginSuccess) {
-    JOptionPane.showMessageDialog(this, "Login successful!");
-    saveLogin(userName);   // <-- safe, previous connection closed
-    new landing().setVisible(true);
-    this.dispose();
-} else {
-    JOptionPane.showMessageDialog(this, "Invalid username or password");
-}
+    // Step 2: Logic for Success vs Status vs Failure
+    if (loginSuccess) {
+        // Check if the account is Active
+        if (!status.equalsIgnoreCase("Active")) {
+            JOptionPane.showMessageDialog(this, "Inaccessible account. Status: " + status);
+        } else {
+            // If Active, proceed to redirect
+            JOptionPane.showMessageDialog(this, "Login successful!");
+            saveLogin(userName); 
+            
+            if (type.equalsIgnoreCase("Admin")) {
+                new adminDashboard().setVisible(true);
+            } else {
+                new usersForm().setVisible(true);
+            }
+            this.dispose();
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Invalid username or password");
+    }
 
-        
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -186,6 +221,14 @@ if (loginSuccess) {
        sign.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordActionPerformed
 
     /**
      * @param args the command line arguments
@@ -232,11 +275,13 @@ if (loginSuccess) {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JPasswordField password;
+    private javax.swing.JTextField password;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }
