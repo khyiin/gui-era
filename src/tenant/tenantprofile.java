@@ -3,24 +3,59 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package admin;
+package tenant;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import Config.config;
 
 /**
  *
  * @author corpu
  */
-public class adminDashboard extends javax.swing.JFrame {
-    public int adminId;
+public class tenantprofile extends javax.swing.JFrame {
 
     /**
-     * Creates new form usersForm
+     * Creates new form tenantprofile
      */
-    public adminDashboard(int id) {
-    initComponents();
-    this.adminId = id; // This saves the ID passed from login
+    public int userId; 
+
+    public tenantprofile(int id) {
+        initComponents();
+        this.userId = id; // Set the ID passed from login
+        displayData();    // Fetch data immediately
+    }
+    
+    // Keep your default constructor for NetBeans design view
+    public tenantprofile() {
+        initComponents();
+    }
+    
+    public void displayData() {
+    try (Connection conn = config.connectDB();
+         PreparedStatement pst = conn.prepareStatement("SELECT * FROM users WHERE id = ?")) {
+
+        pst.setInt(1, userId);
+        ResultSet rs = pst.executeQuery();
+
+        if (rs.next()) {
+            // Mapping database columns to your JLabels
+            username.setText(rs.getString("username"));
+            lastname.setText(rs.getString("last_name"));
+            firstname.setText(rs.getString("first_name"));
+            email.setText(rs.getString("email"));
+            usertype.setText(rs.getString("user_type"));
+        } else {
+            JOptionPane.showMessageDialog(this, "No user found with ID: " + userId);
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage());
+    }
 }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,8 +65,6 @@ public class adminDashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
         jPanel2 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
@@ -47,14 +80,23 @@ public class adminDashboard extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        email = new javax.swing.JLabel();
+        username = new javax.swing.JLabel();
+        usertype = new javax.swing.JLabel();
+        lastname = new javax.swing.JLabel();
+        jSeparator5 = new javax.swing.JSeparator();
+        jSeparator4 = new javax.swing.JSeparator();
+        jSeparator3 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
+        jSeparator1 = new javax.swing.JSeparator();
+        firstname = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -127,8 +169,51 @@ public class adminDashboard extends javax.swing.JFrame {
         jLabel3.setText("Home");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 140, 30));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/adminreal.png"))); // NOI18N
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, -1, 550));
+        jLabel11.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel11.setText("Last Name");
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 100, 120, -1));
+
+        jLabel19.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel19.setText("Username");
+        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, 120, -1));
+
+        jLabel20.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel20.setText("User Type");
+        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 170, 120, -1));
+
+        jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel4.setText("Email");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 120, -1));
+
+        jLabel21.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jLabel21.setText("First Name");
+        jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 120, -1));
+
+        email.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jPanel2.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 264, 470, 20));
+
+        username.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jPanel2.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 194, 200, 30));
+
+        usertype.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jPanel2.add(usertype, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 194, 200, 20));
+
+        lastname.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jPanel2.add(lastname, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 124, 200, 30));
+        jPanel2.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 200, 10));
+        jPanel2.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 220, 200, 10));
+        jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, 470, 10));
+        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 150, 200, 10));
+        jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 150, 200, 10));
+
+        firstname.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jPanel2.add(firstname, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 200, 30));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/profile.png"))); // NOI18N
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, -1));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/profile.png"))); // NOI18N
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, -1, 550));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 510));
 
@@ -136,19 +221,15 @@ public class adminDashboard extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
+        // Optional: closes dashboard when profile opens
+    }//GEN-LAST:event_jLabel18MouseClicked
+
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
-        usersForm ut=  new usersForm();
-        ut.setVisible(true);
-        this.dispose();
+      
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel10MouseClicked
-
-    private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
-    new adminprofile(this.adminId).setVisible(true);
-    this.dispose(); // Optional: closes dashboard when profile opens
-
-    }//GEN-LAST:event_jLabel18MouseClicked
 
     /**
      * @param args the command line arguments
@@ -167,30 +248,30 @@ public class adminDashboard extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(adminDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(tenantprofile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(adminDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(tenantprofile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(adminDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(tenantprofile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(adminDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(tenantprofile.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new adminDashboard(0).setVisible(true);
+                new tenantprofile().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel email;
+    private javax.swing.JLabel firstname;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -198,14 +279,25 @@ public class adminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JLabel lastname;
+    private javax.swing.JLabel username;
+    private javax.swing.JLabel usertype;
     // End of variables declaration//GEN-END:variables
 }

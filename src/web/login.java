@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import Config.config;
 import admin.usersForm;
 import admin.adminDashboard;
+import tenant.tenantDashboard;
 
 public class login extends javax.swing.JFrame {
 
@@ -155,59 +156,74 @@ public class login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     
-    String userName = username.getText();
-    String pass = new String(password.getText());
+  String userName = username.getText().trim(); 
+    String pass = password.getText().trim();
 
+    // 1. Validation: Handle Empty Fields
     if (userName.isEmpty() || pass.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please enter username and password");
+        JOptionPane.showMessageDialog(this, "All fields are required!", "Validation Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
     String type = ""; 
-    String status = ""; // Variable to store account status
+    String status = ""; 
+    int userID = -1; // Variable to store the ID
     boolean loginSuccess = false;
 
-    // Step 1: Fetch user_type AND status
+    // 2. Database Check - Added 'id' to the SELECT statement
     try (Connection conn = config.connectDB();
          PreparedStatement pst = conn.prepareStatement(
-             "SELECT user_type, status FROM users WHERE username = ? AND password = ?")) {
+             "SELECT id, user_type, status FROM users WHERE (username = ? OR email = ?) AND password = ?")) {
 
         pst.setString(1, userName);
-        pst.setString(2, pass);
+        pst.setString(2, userName); 
+        pst.setString(3, pass);
 
         try (ResultSet rs = pst.executeQuery()) {
             if (rs.next()) {
+                userID = rs.getInt("id"); // Capture the ID as an int
                 type = rs.getString("user_type");
-                status = rs.getString("status"); // Get status from DB
+                status = rs.getString("status");
                 loginSuccess = true;
             }
         }
-
     } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Database connection failed!");
         e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage());
+        return;
     }
 
-    // Step 2: Logic for Success vs Status vs Failure
+    // 3. Evaluate Results
     if (loginSuccess) {
-        // Check if the account is Active
-        if (!status.equalsIgnoreCase("Active")) {
-            JOptionPane.showMessageDialog(this, "Inaccessible account. Status: " + status);
-        } else {
-            // If Active, proceed to redirect
+        // Handle Null or Inactive status
+        if (status == null || status.isEmpty()) {
+             JOptionPane.showMessageDialog(this, "Account status undefined. Contact Admin.", "Error", JOptionPane.ERROR_MESSAGE);
+        } 
+        else if (!status.equalsIgnoreCase("Active")) {
+            JOptionPane.showMessageDialog(this, 
+                "Your account is currently " + status + ".\nPlease contact the administrator.", 
+                "Account Inactive", 
+                JOptionPane.WARNING_MESSAGE);
+        } 
+        else {
+            // SUCCESSFUL LOGIN
             JOptionPane.showMessageDialog(this, "Login successful!");
-            saveLogin(userName); 
+            saveLogin(userName);
             
+            // Redirect based on Type - passing 'userID' (int) instead of userName
             if (type.equalsIgnoreCase("Admin")) {
-                new adminDashboard().setVisible(true);
+                new adminDashboard(userID).setVisible(true); 
             } else {
-                new usersForm().setVisible(true);
+                new tenantDashboard(userID).setVisible(true);
             }
             this.dispose();
         }
     } else {
-        JOptionPane.showMessageDialog(this, "Invalid username or password");
+        // 4. INVALID CREDENTIALS
+        JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Login Failed", JOptionPane.ERROR_MESSAGE);
     }
+
+
 
         
     }//GEN-LAST:event_jButton1ActionPerformed

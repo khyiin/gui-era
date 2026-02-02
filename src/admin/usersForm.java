@@ -132,7 +132,7 @@ public class usersForm extends javax.swing.JFrame {
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-users-30.png"))); // NOI18N
         jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 40, 30));
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-profile-30.png"))); // NOI18N
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 40, 30));
 
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-settings-30.png"))); // NOI18N
@@ -156,7 +156,12 @@ public class usersForm extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Reports");
+        jLabel11.setText("Profile");
+        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel11MouseClicked(evt);
+            }
+        });
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, 140, 30));
 
         jLabel10.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
@@ -177,6 +182,11 @@ public class usersForm extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Home");
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 140, 30));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/usersrealna.png"))); // NOI18N
@@ -190,6 +200,14 @@ public class usersForm extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel11MouseClicked
 
     /**
      * @param args the command line arguments

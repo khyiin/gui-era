@@ -13,11 +13,11 @@ public class signup extends javax.swing.JFrame {
      */
     public signup() {
     initComponents();
-   
-    this.setSize(780, 510); // Makes the window taller to fit the buttons
-    this.setLocationRelativeTo(null); // Centers it on your screen
+    // Overriding the pack() called in initComponents
+    // We add a little extra height (550) to account for the Windows Title Bar
+    this.setSize(820, 550); 
+    this.setLocationRelativeTo(null);
 }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -62,7 +62,7 @@ public class signup extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/signupreal.png"))); // NOI18N
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, 380, 530));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 500));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setMinimumSize(new java.awt.Dimension(400, 500));
@@ -193,7 +193,7 @@ public class signup extends javax.swing.JFrame {
         jLabel14.setText("First Name");
         jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 110, 20));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, -50, 440, 570));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, -40, 390, 540));
 
         pack();
         setLocationRelativeTo(null);
