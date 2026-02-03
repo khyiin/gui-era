@@ -6,6 +6,7 @@
 package admin;
 
 import Config.config;
+import javax.swing.JTable;
 
 /**
  *
@@ -17,20 +18,22 @@ public class usersForm extends javax.swing.JFrame {
      * Creates new form adminDashboard
      */
     public usersForm() {
-        initComponents();
-        displayUser();
+        initComponents(); // 1. Initialize UI first
+        displayUser();    // 2. Then fill it with data
         
-    this.setSize(780, 510); 
-    this.setResizable(false); // Recommended: prevents users from messing up your layout
-    this.setLocationRelativeTo(null);// Cen
+        this.setSize(780, 510); 
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
     }
     
-    void displayUser() {
-        config con = new config ();
-        String sql= "SELECT * FROM users";
-        con.displayData(sql, userTable);
-        
+    // This must be INSIDE the class
+    final void displayUser() {
+        config con = new config();
+        String sql = "SELECT * FROM users";
+        // Ensure userTable is the exact name in your Design properties
+        con.displayData(sql, userTable); 
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,9 +46,9 @@ public class usersForm extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -84,8 +87,6 @@ public class usersForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
         userTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -98,8 +99,11 @@ public class usersForm extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(userTable);
+        userTable.getAccessibleContext().setAccessibleParent(userTable);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 180, 480, 180));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 180, 480, 180));
+
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-search-25.png"))); // NOI18N
         jLabel4.setText("jLabel4");
@@ -190,7 +194,7 @@ public class usersForm extends javax.swing.JFrame {
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 140, 30));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/usersrealna.png"))); // NOI18N
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -50, 780, 600));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 510));
 
         jLabel1.setText("jLabel1");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 190, 30, 30));
@@ -206,6 +210,17 @@ public class usersForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
+
+       // 1. Create the instance of the new form
+        adminprofile profile = new adminprofile(config.session_id);
+        
+        // 2. Make the new form appear
+        profile.setVisible(true);
+        
+        // 3. Close or Hide the current form (optional)
+        this.dispose(); 
+
+        //Create an instance of the adminprofile form
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel11MouseClicked
 

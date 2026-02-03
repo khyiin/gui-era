@@ -13,9 +13,19 @@ public class signup extends javax.swing.JFrame {
      */
     public signup() {
     initComponents();
-    // Overriding the pack() called in initComponents
-    // We add a little extra height (550) to account for the Windows Title Bar
-    this.setSize(820, 550); 
+    
+    // 1. Force the panel to Y=0 so the top isn't cut off
+    // We keep the X at 390 so it sits right next to the image
+    // Increase the width here to 410 to ensure no labels are "ruined" or clipped
+    getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 0, 400, 540));
+
+    // 2. Set the window size to the EXACT total of your components
+    // Image(390) + Panel(410) = 800 total width
+    // Panel height is 540, so we add 38 for the Windows title bar
+    this.setSize(800, 540); 
+
+    // 3. This removes the "excess" gray by locking the window to your content
+    this.setResizable(false); 
     this.setLocationRelativeTo(null);
 }
     /**
@@ -34,7 +44,6 @@ public class signup extends javax.swing.JFrame {
         email = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         username = new javax.swing.JTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
         jLabel5 = new javax.swing.JLabel();
         firstname = new javax.swing.JTextField();
         lastname = new javax.swing.JTextField();
@@ -54,15 +63,15 @@ public class signup extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
 
         jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 500));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/signupreal.png"))); // NOI18N
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 500));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/signup540.png"))); // NOI18N
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 540));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setMinimumSize(new java.awt.Dimension(400, 500));
@@ -72,7 +81,7 @@ public class signup extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
         jLabel3.setText("Create Account");
         jLabel3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, 221, 52));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 221, 52));
 
         email.setBorder(null);
         email.addActionListener(new java.awt.event.ActionListener() {
@@ -80,7 +89,7 @@ public class signup extends javax.swing.JFrame {
                 emailActionPerformed(evt);
             }
         });
-        jPanel2.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 280, 20));
+        jPanel2.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 280, 20));
 
         jButton1.setBackground(new java.awt.Color(195, 183, 146));
         jButton1.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
@@ -95,7 +104,7 @@ public class signup extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 420, 280, 40));
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, 280, 40));
 
         username.setBorder(null);
         username.addActionListener(new java.awt.event.ActionListener() {
@@ -103,17 +112,7 @@ public class signup extends javax.swing.JFrame {
                 usernameActionPerformed(evt);
             }
         });
-        jPanel2.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, 280, 20));
-
-        jCheckBox1.setBackground(new java.awt.Color(255, 255, 255));
-        jCheckBox1.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
-        jCheckBox1.setText("I agree with privacy polcy");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 370, -1, -1));
+        jPanel2.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, 280, 20));
 
         jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jLabel5.setText("You already have an account? Login");
@@ -122,7 +121,7 @@ public class signup extends javax.swing.JFrame {
                 jLabel5MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 470, -1, 30));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 430, -1, 30));
 
         firstname.setBorder(null);
         firstname.addActionListener(new java.awt.event.ActionListener() {
@@ -130,7 +129,7 @@ public class signup extends javax.swing.JFrame {
                 firstnameActionPerformed(evt);
             }
         });
-        jPanel2.add(firstname, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 280, 20));
+        jPanel2.add(firstname, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 280, 20));
 
         lastname.setBorder(null);
         lastname.addActionListener(new java.awt.event.ActionListener() {
@@ -138,32 +137,32 @@ public class signup extends javax.swing.JFrame {
                 lastnameActionPerformed(evt);
             }
         });
-        jPanel2.add(lastname, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 206, 280, 20));
-        jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, 280, 10));
-        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, 280, 10));
-        jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 228, 280, -1));
-        jPanel2.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, 280, 20));
-        jPanel2.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, 280, 10));
+        jPanel2.add(lastname, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 280, 20));
+        jPanel2.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 290, 280, 10));
+        jPanel2.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 280, 10));
+        jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, 280, 20));
+        jPanel2.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 280, 20));
+        jPanel2.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, 280, 10));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/fname.png"))); // NOI18N
         jLabel6.setText("jLabel5");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 30, 30));
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 30, 30));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/lname.png"))); // NOI18N
         jLabel7.setText("jLabel5");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 30, 30));
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 30, 30));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/username.png"))); // NOI18N
         jLabel8.setText("jLabel5");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 30, 30));
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 30, 30));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/password.png"))); // NOI18N
         jLabel9.setText("jLabel5");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 30, 30));
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 30, 30));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/email.png"))); // NOI18N
         jLabel10.setText("jLabel5");
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 30, 40));
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 30, 40));
 
         password.setBorder(null);
         password.addActionListener(new java.awt.event.ActionListener() {
@@ -171,41 +170,66 @@ public class signup extends javax.swing.JFrame {
                 passwordActionPerformed(evt);
             }
         });
-        jPanel2.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 280, -1));
+        jPanel2.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, 280, -1));
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
         jLabel2.setText("Last Name");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, 110, 20));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, 110, 20));
 
         jLabel11.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
         jLabel11.setText("Email");
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 110, 20));
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, 110, 20));
 
         jLabel12.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
         jLabel12.setText("Username");
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, 110, -1));
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 110, -1));
 
         jLabel13.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
         jLabel13.setText("Password");
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, 110, 20));
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, 110, 20));
 
         jLabel14.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
         jLabel14.setText("First Name");
-        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 110, 20));
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 110, 20));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, -40, 390, 540));
+        jCheckBox1.setBackground(new java.awt.Color(255, 255, 255));
+        jCheckBox1.setFont(new java.awt.Font("Century Gothic", 0, 10)); // NOI18N
+        jCheckBox1.setText("I accept  the privacy policy");
+        jCheckBox1.setBorder(null);
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, -1, 30));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 0, 400, 560));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
+    private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_emailActionPerformed
+    }//GEN-LAST:event_passwordActionPerformed
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void lastnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lastnameActionPerformed
 
-    }//GEN-LAST:event_jButton1MouseClicked
+    private void firstnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_firstnameActionPerformed
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        login log= new login();
+        log.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_usernameActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String firstName = firstname.getText();        // First Name
@@ -245,31 +269,17 @@ public class signup extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_usernameActionPerformed
+    }//GEN-LAST:event_emailActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox1ActionPerformed
-
-    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-        login log= new login();
-        log.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jLabel5MouseClicked
-
-    private void firstnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstnameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_firstnameActionPerformed
-
-    private void lastnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastnameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lastnameActionPerformed
-
-    private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordActionPerformed
 
     /**
      * @param args the command line arguments

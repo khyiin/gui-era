@@ -210,6 +210,10 @@ public class login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Login successful!");
             saveLogin(userName);
             
+            config.session_id = userID;
+           
+            
+            
             // Redirect based on Type - passing 'userID' (int) instead of userName
             if (type.equalsIgnoreCase("Admin")) {
                 new adminDashboard(userID).setVisible(true); 
@@ -221,6 +225,7 @@ public class login extends javax.swing.JFrame {
     } else {
         // 4. INVALID CREDENTIALS
         JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Login Failed", JOptionPane.ERROR_MESSAGE);
+        
     }
 
 

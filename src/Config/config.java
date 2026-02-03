@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import net.proteanit.sql.DbUtils;
 
 
+
 public class config {
+   public static int session_id;
     
     public static Connection connectDB() {
         Connection con = null;
