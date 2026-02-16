@@ -8,6 +8,7 @@ import Config.config;
 import admin.usersForm;
 import admin.adminDashboard;
 import tenant.tenantDashboard;
+import landlord.landlord;
 
 public class login extends javax.swing.JFrame {
 
@@ -217,7 +218,13 @@ public class login extends javax.swing.JFrame {
             // Redirect based on Type - passing 'userID' (int) instead of userName
             if (type.equalsIgnoreCase("Admin")) {
                 new adminDashboard(userID).setVisible(true); 
-            } else {
+            } 
+            else if (type.equalsIgnoreCase("Landlord")) {
+                // This assumes your Landlord dashboard class is named 'landlordDashboard'
+                new landlord(userID).setVisible(true);
+            } 
+            else {
+                // Default to Tenant if not Admin or Landlord
                 new tenantDashboard(userID).setVisible(true);
             }
             this.dispose();
