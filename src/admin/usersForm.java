@@ -18,21 +18,40 @@ public class usersForm extends javax.swing.JFrame {
      * Creates new form adminDashboard
      */
     public usersForm() {
-        initComponents(); // 1. Initialize UI first
-        displayUser();    // 2. Then fill it with data
         
-        this.setSize(780, 510); 
-        this.setResizable(false);
-        this.setLocationRelativeTo(null);
+        
+        initComponents(); // 1. Initialize UI first
+        displayUser(); 
+        // 2. Then fill it with data
+        
+        
     }
     
     // This must be INSIDE the class
-    final void displayUser() {
-        config con = new config();
-        String sql = "SELECT * FROM users";
-        // Ensure userTable is the exact name in your Design properties
-        con.displayData(sql, userTable); 
-    }
+    public void displayUser() {
+    Config.config con = new Config.config();
+    
+    // 1. Get whatever is typed in the search box
+    String searchText = search.getText(); 
+    
+    // 2. SQL that filters based on that text
+    String sql = "SELECT id, first_name, last_name, gender, email, address, username, user_type, status FROM users "
+               + "WHERE first_name LIKE '%" + searchText + "%' "
+               + "OR last_name LIKE '%" + searchText + "%' "
+               + "OR email LIKE '%" + searchText + "%' "
+               + "OR id LIKE '%" + searchText + "%' "
+               + "OR username LIKE '%" + searchText + "%'";
+               
+    con.displayData(sql, userTable);
+
+    // 3. Keep columns hidden
+    userTable.getColumnModel().getColumn(3).setMinWidth(0);
+    userTable.getColumnModel().getColumn(3).setMaxWidth(0);
+    userTable.getColumnModel().getColumn(3).setWidth(0);
+    userTable.getColumnModel().getColumn(5).setMinWidth(0);
+    userTable.getColumnModel().getColumn(5).setMaxWidth(0);
+    userTable.getColumnModel().getColumn(5).setWidth(0);
+}
 
 
     /**
@@ -46,17 +65,18 @@ public class usersForm extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        search = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
-        jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -68,8 +88,8 @@ public class usersForm extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -87,6 +107,14 @@ public class usersForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        search.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        search.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        search.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 110, 210, 40));
+
+        userTable.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         userTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -101,40 +129,69 @@ public class usersForm extends javax.swing.JFrame {
         jScrollPane1.setViewportView(userTable);
         userTable.getAccessibleContext().setAccessibleParent(userTable);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 180, 480, 180));
-
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 180, 550, 270));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-search-25.png"))); // NOI18N
-        jLabel4.setText("jLabel4");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 110, 25, 25));
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 120, 25, 25));
 
         jButton5.setBackground(new java.awt.Color(255, 255, 255));
-        jButton5.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
+        jButton5.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jButton5.setText("Update");
-        jPanel2.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 110, 80, 30));
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, 80, 40));
 
         jButton4.setBackground(new java.awt.Color(255, 255, 255));
-        jButton4.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
+        jButton4.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jButton4.setText("Delete");
-        jPanel2.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, 80, 30));
-
-        jButton3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 110, 210, 30));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 110, 80, 40));
 
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jButton1.setText("Add");
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 110, 80, 30));
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 80, 40));
 
         jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-log-out-30.png"))); // NOI18N
-        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 40, 30));
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 470, 40, 30));
 
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-office-30.png"))); // NOI18N
         jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 40, 30));
 
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-users-30.png"))); // NOI18N
         jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 40, 30));
+
+        jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 30)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(46, 35, 6));
+        jLabel3.setText("Users");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 140, 30));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-profile-30.png"))); // NOI18N
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 40, 30));
@@ -151,7 +208,7 @@ public class usersForm extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Log Out");
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 420, 140, 30));
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 470, 140, 30));
 
         jLabel12.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
@@ -193,13 +250,13 @@ public class usersForm extends javax.swing.JFrame {
         });
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 140, 30));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/usersrealna.png"))); // NOI18N
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 510));
-
         jLabel1.setText("jLabel1");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 190, 30, 30));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 510));
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/bgreal.png"))); // NOI18N
+        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 530));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 530));
 
         pack();
         setLocationRelativeTo(null);
@@ -224,6 +281,78 @@ public class usersForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel11MouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       add addFrame = new add(); 
+       addFrame.setVisible(true);
+    
+    // This closes the current usersForm so you don't have too many windows open
+    this.dispose(); // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+     int row = userTable.getSelectedRow();
+        if (row != -1) {
+            String id = userTable.getValueAt(row, 0).toString();
+            String fn = userTable.getValueAt(row, 1).toString();
+            String ln = userTable.getValueAt(row, 2).toString();
+            String gn = userTable.getValueAt(row, 3).toString(); 
+            String em = userTable.getValueAt(row, 4).toString();
+            String ad = userTable.getValueAt(row, 5).toString(); 
+            String un = userTable.getValueAt(row, 6).toString();
+            String ut = userTable.getValueAt(row, 7).toString();
+            String st = userTable.getValueAt(row, 8).toString();
+
+            // Open the edit form with the 9 variables
+            edit ed = new edit(id, fn, ln, gn, em, ad, un, ut, st);
+            ed.setVisible(true);
+            this.dispose();
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(null, "Please select a user to update!");     
+    
+   // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+    }
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+     int row = userTable.getSelectedRow();
+    
+    if (row == -1) {
+        javax.swing.JOptionPane.showMessageDialog(null, "Please select a user to delete.");
+    } else {
+        // 1. Confirm with the user
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(null, 
+            "Are you sure you want to delete this user?", "Warning", javax.swing.JOptionPane.YES_NO_OPTION);
+            
+        if(confirm == javax.swing.JOptionPane.YES_OPTION){
+            // 2. Get the ID from the first column of the selected row
+            String id = userTable.getValueAt(row, 0).toString();
+            
+            // 3. Create the SQL and the Config object
+            Config.config con = new Config.config();
+            String sql = "DELETE FROM users WHERE id = ?";
+            
+            // 4. ACTUALLY run the delete command
+            con.updateRecord(sql, id); 
+            
+            // 5. Show success and REFRESH the table
+            javax.swing.JOptionPane.showMessageDialog(null, "Successfully Deleted");
+            displayUser(); 
+        }
+    }// Refresh the table   // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+       displayUser();// TODO add your handling code here:
+    }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel3MouseClicked
+
+   
     /**
      * @param args the command line arguments
      */
@@ -263,7 +392,6 @@ public class usersForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
@@ -275,6 +403,7 @@ public class usersForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -286,6 +415,7 @@ public class usersForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField search;
     private javax.swing.JTable userTable;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,13 +5,16 @@
         <group>
             <file>file:/C:/Users/corpu/OneDrive/Documents/gui%20reveche/gui-era/src/admin/adminprofile.java</file>
             <file>file:/C:/Users/corpu/OneDrive/Documents/gui%20reveche/gui-era/src/web/login.java</file>
+            <file>file:/C:/Users/corpu/OneDrive/Documents/gui%20reveche/gui-era/src/admin/add.java</file>
             <file>file:/C:/Users/corpu/OneDrive/Documents/gui%20reveche/gui-era/src/admin/adminDashboard.java</file>
+            <file>file:/C:/Users/corpu/OneDrive/Documents/gui%20reveche/gui-era/src/admin/edit.java</file>
             <file>file:/C:/Users/corpu/OneDrive/Documents/gui%20reveche/gui-era/src/admin/usersForm.java</file>
+            <file>file:/C:/Users/corpu/OneDrive/Documents/gui%20reveche/gui-era/src/landlord/landlord.java</file>
             <file>file:/C:/Users/corpu/OneDrive/Documents/gui%20reveche/gui-era/src/tenant/tenantDashboard.java</file>
             <file>file:/C:/Users/corpu/OneDrive/Documents/gui%20reveche/gui-era/src/tenant/tenantprofile.java</file>
-            <file>file:/C:/Users/corpu/OneDrive/Documents/gui%20reveche/gui-era/src/web/landing.java</file>
             <file>file:/C:/Users/corpu/OneDrive/Documents/gui%20reveche/gui-era/src/Config/config.java</file>
-            <file>file:/C:/Users/corpu/OneDrive/Documents/gui%20reveche/gui-era/src/web/signup.java</file>
+            <file>file:/C:/Users/corpu/OneDrive/Documents/gui%20reveche/gui-era/src/web/landing.java</file>
+            <file>file:/C:/Users/corpu/OneDrive/Documents/gui%20reveche/gui-era/src/landlord/landlordprofile.java</file>
         </group>
     </open-files>
 </project-private>

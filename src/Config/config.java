@@ -38,6 +38,21 @@ public class config {
         System.out.println("Error adding record: " + e.getMessage());
     }
 }
+    public void updateRecord(String sql, Object... values) {
+    try (Connection conn = connectDB();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        // This loop puts your new data into the ? placeholders
+        for (int i = 0; i < values.length; i++) {
+            pstmt.setObject(i + 1, values[i]);
+        }
+
+        pstmt.executeUpdate();
+        System.out.println("Record updated successfully!");
+    } catch (SQLException e) {
+        System.out.println("Error updating record: " + e.getMessage());
+    }
+}
     
     public String authenticate(String sql, Object... values) {
     try (Connection conn = connectDB();
@@ -69,8 +84,12 @@ public class config {
     } catch (SQLException e) {
         System.out.println("Error displaying data: " + e.getMessage());
     }
+    
+    
 }
 }
+
+
 
 
 
