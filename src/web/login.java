@@ -156,84 +156,111 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_usernameActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    
-  String userName = username.getText().trim(); 
+ String userName = username.getText().trim();
     String pass = password.getText().trim();
 
-    // 1. Validation: Handle Empty Fields
-    if (userName.isEmpty() || pass.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "All fields are required!", "Validation Error", JOptionPane.ERROR_MESSAGE);
+    // 1️⃣ Empty Fields Validation
+    if (userName.isEmpty()) {
+        JOptionPane.showMessageDialog(this, 
+            "Username is required!", 
+            "Validation Error", 
+            JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    String type = ""; 
-    String status = ""; 
-    int userID = -1; // Variable to store the ID
-    boolean loginSuccess = false;
+    if (pass.isEmpty()) {
+        JOptionPane.showMessageDialog(this, 
+            "Password is required!", 
+            "Validation Error", 
+            JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-    // 2. Database Check - Added 'id' to the SELECT statement
+    int userID = -1;
+    String type = null;
+    String status = null;
+
     try (Connection conn = config.connectDB();
          PreparedStatement pst = conn.prepareStatement(
-             "SELECT id, user_type, status FROM users WHERE (username = ? OR email = ?) AND password = ?")) {
+             "SELECT * FROM users WHERE (username = ? OR email = ?) AND password = ?")) {
 
         pst.setString(1, userName);
-        pst.setString(2, userName); 
+        pst.setString(2, userName);
         pst.setString(3, pass);
 
         try (ResultSet rs = pst.executeQuery()) {
-            if (rs.next()) {
-                userID = rs.getInt("id"); // Capture the ID as an int
-                type = rs.getString("user_type");
-                status = rs.getString("status");
-                loginSuccess = true;
-            }
-        }
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Database connection failed!");
-        e.printStackTrace();
-        return;
-    }
 
-    // 3. Evaluate Results
-    if (loginSuccess) {
-        // Handle Null or Inactive status
-        if (status == null || status.isEmpty()) {
-             JOptionPane.showMessageDialog(this, "Account status undefined. Contact Admin.", "Error", JOptionPane.ERROR_MESSAGE);
-        } 
-        else if (!status.equalsIgnoreCase("Active")) {
-            JOptionPane.showMessageDialog(this, 
-                "Your account is currently " + status + ".\nPlease contact the administrator.", 
-                "Account Inactive", 
-                JOptionPane.WARNING_MESSAGE);
-        } 
-        else {
-            // SUCCESSFUL LOGIN
+            // 2️⃣ Wrong Username or Password
+            if (!rs.next()) {
+                JOptionPane.showMessageDialog(this,
+                        "Invalid username/email or password!",
+                        "Login Failed",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            userID = rs.getInt("id");
+            type = rs.getString("user_type");
+            status = rs.getString("status");
+
+            // 3️⃣ Account Status Validation
+            if (status == null || !status.equals("Active")) {
+                JOptionPane.showMessageDialog(this,
+                        "Your account is currently " + status + ".\nPlease contact the administrator.",
+                        "Account Inactive",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // 4️⃣ Strict Role Validation (Case Sensitive)
+            if (!type.equals("Admin") && 
+                !type.equals("Landlord") && 
+                !type.equals("Tenant")) {
+
+                JOptionPane.showMessageDialog(this,
+                        "Invalid user role detected.\nContact administrator.",
+                        "Role Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // 5️⃣ Populate Session (NO getData to avoid DB lock)
+            config.Session sess = config.Session.getInstance();
+            sess.setUid(userID);
+            sess.setFirst_name(rs.getString("first_name"));
+            sess.setLast_name(rs.getString("last_name"));
+            sess.setEmail(rs.getString("email"));
+            sess.setUsername(rs.getString("username"));
+            sess.setUser_type(type);
+            sess.setStatus(status);
+
+            config.session_id = userID;
+
             JOptionPane.showMessageDialog(this, "Login successful!");
             saveLogin(userName);
-            
-            config.session_id = userID;
-           
-            
-            
-            // Redirect based on Type - passing 'userID' (int) instead of userName
-            if (type.equalsIgnoreCase("Admin")) {
-                new adminDashboard(userID).setVisible(true); 
+
+            // 6️⃣ Redirect (STRICT CASE)
+            if (type.equals("Admin")) {
+                new adminDashboard(userID).setVisible(true);
             } 
-            else if (type.equalsIgnoreCase("Landlord")) {
-                // This assumes your Landlord dashboard class is named 'landlordDashboard'
+            else if (type.equals("Landlord")) {
                 new landlord(userID).setVisible(true);
             } 
-            else {
-                // Default to Tenant if not Admin or Landlord
+            else if (type.equals("Tenant")) {
                 new tenantDashboard(userID).setVisible(true);
             }
+
             this.dispose();
         }
-    } else {
-        // 4. INVALID CREDENTIALS
-        JOptionPane.showMessageDialog(this, "Invalid Username or Password!", "Login Failed", JOptionPane.ERROR_MESSAGE);
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this,
+                "Database error: " + e.getMessage(),
+                "Database Error",
+                JOptionPane.ERROR_MESSAGE);
+        }
         
-    }
+    
 
 
 

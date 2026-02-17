@@ -5,6 +5,14 @@
  */
 package landlord;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import Config.config;
+import web.login; 
+
 /**
  *
  * @author corpu
@@ -15,7 +23,14 @@ public class landlord extends javax.swing.JFrame {
      * Creates new form landlord
      */
     public landlord(int id) {
-       
+        
+        config.Session sess = config.Session.getInstance();
+        if (sess.getUid() == 0) {
+        JOptionPane.showMessageDialog(null, "Please log in first!");
+        new login().setVisible(true);
+        this.dispose();
+        return;
+        }
         this.landlordId = id;
         initComponents();
         
@@ -89,6 +104,11 @@ public class landlord extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Log Out");
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel13MouseClicked(evt);
+            }
+        });
         jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, 140, 30));
 
         jLabel10.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
@@ -165,6 +185,20 @@ public class landlord extends javax.swing.JFrame {
     // 3. Close the current dashboard
     this.dispose(); // TODO add your handling code here:
     }//GEN-LAST:event_jLabel9MouseClicked
+
+    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+      config.Session sess = config.Session.getInstance();
+    sess.setUid(0); 
+  
+    config.session_id = 0;
+
+    javax.swing.JOptionPane.showMessageDialog(null, "You have been logged out.");
+
+    login login = new login();
+    login.setVisible(true);
+
+    this.dispose();  // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel13MouseClicked
 
     /**
      * @param args the command line arguments

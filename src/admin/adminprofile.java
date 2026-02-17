@@ -10,7 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import Config.config; // Ensure this matches your package and class name for DB connection
+import Config.config;
+import web.login; // Ensure this matches your package and class name for DB connection
 
 /**
  *
@@ -26,13 +27,17 @@ public class adminprofile extends javax.swing.JFrame {
 
     public adminprofile(int id) {
     // START OF MESSAGE CODE
-    if (id <= 0) {
-        javax.swing.JOptionPane.showMessageDialog(null, "Log in first");
-        System.exit(0);
+        config.Session sess = config.Session.getInstance();
+        if (sess.getUid() == 0) {
+        JOptionPane.showMessageDialog(null, "Please log in first!");
+        new login().setVisible(true);
+        this.dispose();
+        return;
     }
     // END OF MESSAGE CODE
 
     initComponents();
+    
     this.adminId = id;
     displayData(); // We will create this method in Step 3
 }
@@ -105,6 +110,7 @@ public void displayData() {
         jLabel4 = new javax.swing.JLabel();
         email = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
+        jLabel8 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -116,7 +122,7 @@ public void displayData() {
         jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(29, 21, 7));
         jLabel2.setText("My Profile");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 40, 250, 50));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, 250, 50));
 
         jLabel18.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
@@ -152,6 +158,11 @@ public void displayData() {
         jLabel13.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Log Out");
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel13MouseClicked(evt);
+            }
+        });
         jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 470, 140, 30));
 
         jLabel12.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
@@ -217,14 +228,22 @@ public void displayData() {
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 310, 120, -1));
 
         email.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jPanel2.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, 470, 20));
+        jPanel2.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 330, 470, 30));
         jPanel2.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 360, 470, 10));
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-edit-40.png"))); // NOI18N
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 60, 35, 35));
 
         jLabel6.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jLabel6.setText("Username");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 230, 120, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/bgreal.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/edit profile bg.png"))); // NOI18N
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 530));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 530));
@@ -245,6 +264,26 @@ public void displayData() {
         new adminprofile(this.adminId).setVisible(true);
         this.dispose(); // Optional: closes dashboard when profile opens
     }//GEN-LAST:event_jLabel18MouseClicked
+
+    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+    config.Session sess = config.Session.getInstance();
+    sess.setUid(0); 
+  
+    config.session_id = 0;
+
+    javax.swing.JOptionPane.showMessageDialog(null, "You have been logged out.");
+
+    login login = new login();
+    login.setVisible(true);
+
+    this.dispose();    // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel13MouseClicked
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+     editprofile edit = new editprofile();
+    edit.setVisible(true);
+    this.dispose();   // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel8MouseClicked
 
     /**
      * @param args the command line arguments
@@ -304,6 +343,7 @@ public void displayData() {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;

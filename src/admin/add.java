@@ -4,7 +4,14 @@
  * and open the template in the editor.
  */
 package admin;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import Config.config;
+import web.login;
 /**
  *
  * @author corpu
@@ -15,6 +22,13 @@ public class add extends javax.swing.JFrame {
      * Creates new form add
      */
     public add() {
+        config.Session sess = config.Session.getInstance();
+    if (sess.getUid() == 0) {
+        JOptionPane.showMessageDialog(null, "Please log in first!");
+        new login().setVisible(true);
+        this.dispose();
+        return;
+    }
         initComponents();
     }
 

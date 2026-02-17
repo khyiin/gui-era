@@ -5,6 +5,14 @@
  */
 package admin;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import Config.config; 
+import web.login;
+
 /**
  *
  * @author corpu
@@ -16,10 +24,12 @@ public class adminDashboard extends javax.swing.JFrame {
      * Creates new form usersForm
      */
     public adminDashboard(int id) {
-    // If the ID is 0 or less, it means they didn't come from the login screen
-    if (id <= 0) {
-        javax.swing.JOptionPane.showMessageDialog(null, "Log in first");
-        System.exit(0);
+      config.Session sess = config.Session.getInstance();
+    if (sess.getUid() == 0) {
+        JOptionPane.showMessageDialog(null, "Please log in first!");
+        new login().setVisible(true);
+        this.dispose();
+        return;
     }
 
     initComponents();
@@ -109,7 +119,7 @@ public class adminDashboard extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(60, 47, 15));
         jLabel4.setText("Admin Dashboard");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 40, 340, 30));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 340, 30));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-home-40.png"))); // NOI18N
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 40, 30));
@@ -117,6 +127,11 @@ public class adminDashboard extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Log Out");
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel13MouseClicked(evt);
+            }
+        });
         jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 470, 140, 30));
 
         jLabel12.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
@@ -161,6 +176,20 @@ public class adminDashboard extends javax.swing.JFrame {
     this.dispose(); // Optional: closes dashboard when profile opens
 
     }//GEN-LAST:event_jLabel18MouseClicked
+
+    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+    config.Session sess = config.Session.getInstance();
+    sess.setUid(0); 
+  
+    config.session_id = 0;
+
+    javax.swing.JOptionPane.showMessageDialog(null, "You have been logged out.");
+
+    login login = new login();
+    login.setVisible(true);
+
+    this.dispose(); // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel13MouseClicked
 
     /**
      * @param args the command line arguments

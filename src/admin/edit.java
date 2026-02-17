@@ -5,6 +5,14 @@
  */
 package admin;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import Config.config;
+import web.login;
+
 /**
  *
  * @author corpu
@@ -35,7 +43,14 @@ public class edit extends javax.swing.JFrame {
     
     // Keep your default constructor if NetBeans requires it for Design view
     public edit() {
+         config.Session sess = config.Session.getInstance();
+        if (sess.getUid() == 0) {
+        JOptionPane.showMessageDialog(null, "Please log in first!");
+        new login().setVisible(true);
+        this.dispose();
+        return;
         
+        }   
         
         initComponents();
     }

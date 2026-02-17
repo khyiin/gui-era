@@ -4,12 +4,14 @@
  * and open the template in the editor.
  */
 package landlord;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import Config.config;
+import web.login; 
 
 /**
  *
@@ -21,13 +23,26 @@ public class landlordprofile extends javax.swing.JFrame {
      * Creates new form landlordprofile
      */
     public landlordprofile(int id) { // Now it knows what 'id' is
-    if (id <= 0) {
-        javax.swing.JOptionPane.showMessageDialog(null, "Log in first");
-        System.exit(0);
+      config.Session sess = config.Session.getInstance();
+    
+    // 1. Security check
+    if (sess.getUid() == 0) {
+        JOptionPane.showMessageDialog(null, "Please log in first!");
+        new login().setVisible(true);
+        this.dispose();
+        return;
     }
+
+    // 2. Init components FIRST
     initComponents();
-    this.landlordId = id;
-    displayData();
+
+    // 3. Use the SESSION, not the ID/Database
+    firstname.setText(sess.getFirst_name()); 
+    lastname.setText(sess.getLast_name());  
+    username.setText(sess.getUsername());  
+    email.setText(sess.getEmail());
+    usertype.setText(sess.getUser_type());
+
 }
         
      public void displayData() {
@@ -71,10 +86,10 @@ public class landlordprofile extends javax.swing.JFrame {
         username = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         firstname = new javax.swing.JLabel();
+        email = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
-        email = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         jLabel12 = new javax.swing.JLabel();
@@ -94,6 +109,7 @@ public class landlordprofile extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -118,14 +134,14 @@ public class landlordprofile extends javax.swing.JFrame {
         firstname.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jPanel3.add(firstname, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, 200, 30));
 
+        email.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jPanel3.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 320, 470, 30));
+
         jLabel11.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jLabel11.setText("Username");
         jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 220, 120, -1));
         jPanel3.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 200, 200, 10));
         jPanel3.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 350, 470, 10));
-
-        email.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jPanel3.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 330, 470, 20));
 
         jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jLabel4.setText("Email");
@@ -182,6 +198,11 @@ public class landlordprofile extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Log Out");
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel13MouseClicked(evt);
+            }
+        });
         jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, 140, 30));
 
         jLabel10.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
@@ -204,12 +225,20 @@ public class landlordprofile extends javax.swing.JFrame {
         jLabel6.setText("View Reservations");
         jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 160, 30));
 
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-edit-40.png"))); // NOI18N
+        jLabel20.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel20MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 60, 35, 35));
+
         jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Home");
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, 140, 30));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/bgreal.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/edit profile bg.png"))); // NOI18N
         jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 530));
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 530));
@@ -232,6 +261,26 @@ public class landlordprofile extends javax.swing.JFrame {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel10MouseClicked
+
+    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+    config.Session sess = config.Session.getInstance();
+    sess.setUid(0); 
+  
+    config.session_id = 0;
+
+    javax.swing.JOptionPane.showMessageDialog(null, "You have been logged out.");
+
+    login login = new login();
+    login.setVisible(true);
+
+    this.dispose();    // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel13MouseClicked
+
+    private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
+        new editprofland().setVisible(true);
+        this.dispose();
+         // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel20MouseClicked
 
     /**
      * @param args the command line arguments
@@ -283,6 +332,7 @@ public class landlordprofile extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
