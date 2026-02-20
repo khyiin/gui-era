@@ -47,7 +47,6 @@ public addroom() {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         btn_save = new javax.swing.JButton();
         r_description = new javax.swing.JTextField();
         jLabel28 = new javax.swing.JLabel();
@@ -83,16 +82,13 @@ public addroom() {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-
         btn_save.setText("Save");
         btn_save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_saveActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_save, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 470, 210, 30));
+        getContentPane().add(btn_save, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 470, 210, 30));
 
         r_description.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         r_description.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -101,23 +97,23 @@ public addroom() {
                 r_descriptionActionPerformed(evt);
             }
         });
-        getContentPane().add(r_description, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 280, 210, 150));
+        getContentPane().add(r_description, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 280, 210, 150));
 
         jLabel28.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel28.setText("Description");
-        getContentPane().add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 260, -1, -1));
+        getContentPane().add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 260, -1, -1));
 
         jLabel25.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel25.setText("Room Type");
-        getContentPane().add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, -1, -1));
+        getContentPane().add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, -1, -1));
 
         jLabel26.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel26.setText("Price");
-        getContentPane().add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 380, -1, -1));
+        getContentPane().add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 380, -1, -1));
 
         jLabel27.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel27.setText("Location");
-        getContentPane().add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 440, -1, -1));
+        getContentPane().add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 440, -1, -1));
 
         r_type.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         r_type.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -126,7 +122,7 @@ public addroom() {
                 r_typeActionPerformed(evt);
             }
         });
-        getContentPane().add(r_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 340, 210, 30));
+        getContentPane().add(r_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 210, 30));
 
         r_price.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         r_price.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -135,7 +131,7 @@ public addroom() {
                 r_priceActionPerformed(evt);
             }
         });
-        getContentPane().add(r_price, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 400, 210, 30));
+        getContentPane().add(r_price, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 400, 210, 30));
 
         r_location.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         r_location.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -144,7 +140,7 @@ public addroom() {
                 r_locationActionPerformed(evt);
             }
         });
-        getContentPane().add(r_location, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 470, 210, 30));
+        getContentPane().add(r_location, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 470, 210, 30));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-home-40.png"))); // NOI18N
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 40, 30));
@@ -183,12 +179,12 @@ public addroom() {
                 r_nameActionPerformed(evt);
             }
         });
-        getContentPane().add(r_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 280, 210, 30));
+        getContentPane().add(r_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, 210, 30));
 
         jLabel11.setFont(new java.awt.Font("Century Gothic", 1, 34)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(60, 47, 15));
-        jLabel11.setText("Landlord Dashboard");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 30, 370, 30));
+        jLabel11.setText("Add Room");
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 30, 370, 30));
 
         jLabel10.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -202,7 +198,7 @@ public addroom() {
 
         jLabel14.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel14.setText("Room Name");
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, -1, -1));
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, -1, -1));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-profile-30.png"))); // NOI18N
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 40, 30));
@@ -230,7 +226,7 @@ public addroom() {
         });
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, 140, 30));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/bgreal.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/edit profile bg.png"))); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 530));
 
         jLabel20.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -412,7 +408,6 @@ public addroom() {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField r_description;

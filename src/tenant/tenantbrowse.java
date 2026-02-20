@@ -21,7 +21,7 @@ public class tenantbrowse extends javax.swing.JFrame {
      * Creates new form tenantbrowse
      */
     public tenantbrowse() {
-        config.Session sess = config.Session.getInstance();
+       config.Session sess = config.Session.getInstance();
         if (sess.getUid() == 0) {
         JOptionPane.showMessageDialog(null, "Please log in first!");
         new login().setVisible(true);
@@ -65,55 +65,138 @@ public class tenantbrowse extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        type = new javax.swing.JLabel();
-        price = new javax.swing.JLabel();
-        location = new javax.swing.JLabel();
-        description = new javax.swing.JLabel();
-        name = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
-        jSeparator3 = new javax.swing.JSeparator();
-        jSeparator4 = new javax.swing.JSeparator();
-        jSeparator5 = new javax.swing.JSeparator();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        search = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel23 = new javax.swing.JLabel();
+        name1 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        type1 = new javax.swing.JLabel();
+        price1 = new javax.swing.JLabel();
+        location1 = new javax.swing.JLabel();
+        description1 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
+        name = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        type = new javax.swing.JLabel();
+        price = new javax.swing.JLabel();
+        location = new javax.swing.JLabel();
+        description = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(type, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 340, 210, 30));
-        jPanel1.add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 400, 210, 30));
-        jPanel1.add(location, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 460, 210, 30));
-        jPanel1.add(description, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 280, 210, 30));
-        jPanel1.add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 280, 210, 30));
-        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 430, 210, 20));
-        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 310, 210, 20));
-        jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 310, 210, 20));
-        jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 490, 210, 20));
-        jPanel1.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 370, 210, 20));
+
+        jLabel36.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        jLabel36.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel36.setText("Profile");
+        jLabel36.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel36MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 140, 30));
+
+        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
+        jLabel21.setText("jLabel7");
+        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 30, 30));
+
+        jLabel24.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setText("Requests");
+        jLabel24.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel24MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, -1, 30));
+
+        jLabel35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-profile-30.png"))); // NOI18N
+        jPanel1.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 40, 30));
+
+        search.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        search.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        search.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel1.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 20, 210, 40));
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-search-25.png"))); // NOI18N
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 30, 25, 20));
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel23.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jLabel23.setText("Room Name:");
+        jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
+
+        name1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel3.add(name1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 150, 20));
+
+        jLabel29.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jLabel29.setText("Price:");
+        jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 40, -1));
+
+        jLabel30.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jLabel30.setText("Room Type:");
+        jPanel3.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, -1, -1));
+
+        jLabel31.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jLabel31.setText("Location:");
+        jPanel3.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, -1, -1));
+
+        jLabel32.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jLabel32.setText("Description:");
+        jPanel3.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, -1, -1));
+
+        jButton3.setBackground(new java.awt.Color(255, 255, 255));
+        jButton3.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+        jButton3.setText("Reserve Room");
+        jButton3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 160, 130, 30));
+        jPanel3.add(type1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 210, 20));
+        jPanel3.add(price1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 210, 20));
+        jPanel3.add(location1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 210, 20));
+        jPanel3.add(description1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 110, 210, 20));
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/backgroundr.png"))); // NOI18N
+        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 190, 160));
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 290, 570, 200));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-home-40.png"))); // NOI18N
         jLabel7.setText("jLabel7");
@@ -147,61 +230,6 @@ public class tenantbrowse extends javax.swing.JFrame {
         });
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, -1, -1));
 
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
-        jLabel17.setText("jLabel7");
-        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 30, 30));
-
-        jLabel12.setFont(new java.awt.Font("Century Gothic", 1, 15)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Cancel Reservation");
-        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel12MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, -1, 30));
-
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
-        jLabel10.setText("jLabel7");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 30, 30));
-
-        jLabel14.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("Requests");
-        jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel14MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, -1, 30));
-
-        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
-        jLabel19.setText("jLabel7");
-        jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 30, 30));
-
-        jLabel13.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Leave Status");
-        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel13MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, -1, 30));
-
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-profile-30.png"))); // NOI18N
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 40, 30));
-
-        jLabel18.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setText("Profile");
-        jLabel18.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel18MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 140, 30));
-
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-log-out-30.png"))); // NOI18N
         jLabel11.setText("jLabel7");
         jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 30, 30));
@@ -216,38 +244,53 @@ public class tenantbrowse extends javax.swing.JFrame {
         });
         jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, 140, 30));
 
-        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/addimage.png"))); // NOI18N
-        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, 260, 170));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel22.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel22.setText("Room Name");
-        jPanel1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, -1, -1));
+        jLabel22.setText("Room Name:");
+        jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
 
-        jLabel25.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel25.setText("Room Type");
-        jPanel1.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, -1, -1));
+        name.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel2.add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 150, 20));
 
         jLabel26.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel26.setText("Price");
-        jPanel1.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 380, -1, -1));
+        jLabel26.setText("Price:");
+        jPanel2.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 40, -1));
+
+        jLabel25.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        jLabel25.setText("Room Type:");
+        jPanel2.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, -1, -1));
 
         jLabel27.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel27.setText("Location");
-        jPanel1.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 440, -1, -1));
+        jLabel27.setText("Location:");
+        jPanel2.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, -1, -1));
 
         jLabel28.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel28.setText("Description");
-        jPanel1.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 260, -1, -1));
+        jLabel28.setText("Description:");
+        jPanel2.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, -1, -1));
 
-        jButton1.setText("Reserve Room");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.setBackground(new java.awt.Color(255, 255, 255));
+        jButton2.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+        jButton2.setText("Reserve Room");
+        jButton2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 460, 210, 40));
+        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 160, 130, 30));
+        jPanel2.add(type, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 210, 20));
+        jPanel2.add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 210, 20));
+        jPanel2.add(location, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 210, 20));
+        jPanel2.add(description, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 110, 210, 20));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/bgreal.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/backgroundr.png"))); // NOI18N
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 190, 160));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 570, 200));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/edit profile bg.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 530));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 530));
@@ -259,39 +302,6 @@ public class tenantbrowse extends javax.swing.JFrame {
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
                // TODO add your handling code here:
     }//GEN-LAST:event_jLabel4MouseClicked
-
-    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel12MouseClicked
-
-    private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel14MouseClicked
-
-    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel13MouseClicked
-
-    private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
-        // Optional: closes dashboard when profile opens
-    }//GEN-LAST:event_jLabel18MouseClicked
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    
-    String selectedRoom = name.getText(); 
-
-    // 2. Check if the room is valid
-    if (selectedRoom.isEmpty() || selectedRoom.equals("None Available")) {
-        JOptionPane.showMessageDialog(this, "No room selected to reserve.");
-    } else {
-        // 3. Open tenantreserve and pass the room name
-        tenantreserve trp = new tenantreserve(selectedRoom);
-        trp.setVisible(true);
-        
-        // 4. Close the current browse window
-        this.dispose(); 
-    }// TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
     config.Session sess = config.Session.getInstance();
@@ -306,6 +316,28 @@ public class tenantbrowse extends javax.swing.JFrame {
 
     this.dispose();    // TODO add your handling code here:
     }//GEN-LAST:event_jLabel20MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel9MouseClicked
+
+    private void jLabel24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel24MouseClicked
+
+    private void jLabel36MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel36MouseClicked
+        config.Session sess = config.Session.getInstance();
+        new tenantprofile(sess.getUid()).setVisible(true);
+        this.dispose();  // Optional: closes dashboard when profile opens
+    }//GEN-LAST:event_jLabel36MouseClicked
 
     /**
      * @param args the command line arguments
@@ -344,39 +376,46 @@ public class tenantbrowse extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel description;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel description1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel location;
+    private javax.swing.JLabel location1;
     private javax.swing.JLabel name;
+    private javax.swing.JLabel name1;
     private javax.swing.JLabel price;
+    private javax.swing.JLabel price1;
+    private javax.swing.JTextField search;
     private javax.swing.JLabel type;
+    private javax.swing.JLabel type1;
     // End of variables declaration//GEN-END:variables
 }

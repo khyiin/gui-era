@@ -140,8 +140,8 @@ public class managehome extends javax.swing.JFrame {
 
         jLabel21.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(60, 47, 15));
-        jLabel21.setText("Landlord Dashboard");
-        getContentPane().add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 30, 370, 30));
+        jLabel21.setText("Manage Rooms");
+        getContentPane().add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 40, 370, 30));
 
         jLabel10.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));

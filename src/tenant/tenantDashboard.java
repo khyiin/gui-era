@@ -49,27 +49,65 @@ public tenantDashboard(int id) {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel40 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel40.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        jLabel40.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel40.setText("Profile");
+        jLabel40.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel40MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 140, 30));
+
+        jLabel33.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel33.setText("Requests");
+        jLabel33.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel33MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, -1, 30));
+
+        jLabel39.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-profile-30.png"))); // NOI18N
+        getContentPane().add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 40, 30));
+
+        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
+        jLabel22.setText("jLabel7");
+        getContentPane().add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 30, 30));
 
         jLabel9.setFont(new java.awt.Font("Century Gothic", 1, 34)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(60, 47, 15));
@@ -94,64 +132,9 @@ public tenantDashboard(int id) {
         jLabel16.setText("jLabel7");
         getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 30, 30));
 
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
-        jLabel17.setText("jLabel7");
-        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 30, 30));
-
-        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
-        jLabel19.setText("jLabel7");
-        getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 30, 30));
-
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-profile-30.png"))); // NOI18N
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 40, 30));
-
-        jLabel18.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setText("Profile");
-        jLabel18.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel18MouseClicked(evt);
-            }
-        });
-        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 140, 30));
-
-        jLabel14.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("Requests");
-        jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel14MouseClicked(evt);
-            }
-        });
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, -1, 30));
-
-        jLabel13.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Leave Status");
-        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel13MouseClicked(evt);
-            }
-        });
-        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, -1, 30));
-
-        jLabel12.setFont(new java.awt.Font("Century Gothic", 1, 15)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Cancel Reservation");
-        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel12MouseClicked(evt);
-            }
-        });
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, -1, 30));
-
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-log-out-30.png"))); // NOI18N
         jLabel11.setText("jLabel7");
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 30, 30));
-
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
-        jLabel10.setText("jLabel7");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 30, 30));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-home-40.png"))); // NOI18N
         jLabel7.setText("jLabel7");
@@ -182,8 +165,108 @@ public tenantDashboard(int id) {
         jLabel2.setText("Home");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, -1));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/bgreal.png"))); // NOI18N
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 530));
+        jLabel31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/edit profile bg.png"))); // NOI18N
+        getContentPane().add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 530));
+
+        jLabel37.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        jLabel37.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel37.setText("Profile");
+        jLabel37.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel37MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, 140, 30));
+
+        jLabel34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
+        jLabel34.setText("jLabel7");
+        getContentPane().add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 30, 30));
+
+        jLabel32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
+        jLabel32.setText("jLabel7");
+        getContentPane().add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 30, 30));
+
+        jLabel35.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        jLabel35.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel35.setText("Status");
+        jLabel35.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel35MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, -1, 30));
+
+        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-profile-30.png"))); // NOI18N
+        getContentPane().add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 40, 30));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
+        jLabel10.setText("jLabel7");
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 30, 30));
+
+        jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
+        jLabel25.setText("jLabel7");
+        getContentPane().add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 30, 30));
+
+        jLabel26.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel26.setText("Status");
+        jLabel26.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel26MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, -1, 30));
+
+        jLabel14.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Requests");
+        jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel14MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, -1, 30));
+
+        jLabel29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-profile-30.png"))); // NOI18N
+        getContentPane().add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 40, 30));
+
+        jLabel24.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setText("Requests");
+        jLabel24.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel24MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, -1, 30));
+
+        jLabel30.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel30.setText("Profile");
+        jLabel30.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel30MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, 140, 30));
+
+        jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
+        jLabel23.setText("jLabel7");
+        getContentPane().add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 30, 30));
+
+        jLabel27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
+        jLabel27.setText("jLabel7");
+        getContentPane().add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 30, 30));
+
+        jLabel28.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel28.setText("Status");
+        jLabel28.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel28MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, -1, 30));
 
         pack();
         setLocationRelativeTo(null);
@@ -194,23 +277,6 @@ public tenantDashboard(int id) {
     tp.setVisible(true);
     this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jLabel4MouseClicked
-
-    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel12MouseClicked
-
-    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel13MouseClicked
-
-    private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel14MouseClicked
-
-    private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
-     new tenantprofile(this.tenantId).setVisible(true);
-     this.dispose();  // Optional: closes dashboard when profile opens
-    }//GEN-LAST:event_jLabel18MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
        tenantbrowse tb = new tenantbrowse();
@@ -236,6 +302,48 @@ public tenantDashboard(int id) {
     this.dispose();   // TODO add your handling code here:
     }//GEN-LAST:event_jLabel20MouseClicked
 
+    private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel14MouseClicked
+
+    private void jLabel26MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel26MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel26MouseClicked
+
+    private void jLabel24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel24MouseClicked
+
+    private void jLabel28MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel28MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel28MouseClicked
+
+    private void jLabel30MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel30MouseClicked
+        config.Session sess = config.Session.getInstance();
+        new tenantprofile(sess.getUid()).setVisible(true);
+        this.dispose();  // Optional: closes dashboard when profile opens
+    }//GEN-LAST:event_jLabel30MouseClicked
+
+    private void jLabel35MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel35MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel35MouseClicked
+
+    private void jLabel37MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel37MouseClicked
+        config.Session sess = config.Session.getInstance();
+        new tenantprofile(sess.getUid()).setVisible(true);
+        this.dispose();  // Optional: closes dashboard when profile opens
+    }//GEN-LAST:event_jLabel37MouseClicked
+
+    private void jLabel33MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel33MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel33MouseClicked
+
+    private void jLabel40MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel40MouseClicked
+        config.Session sess = config.Session.getInstance();
+        new tenantprofile(sess.getUid()).setVisible(true);
+        this.dispose();  // Optional: closes dashboard when profile opens
+    }//GEN-LAST:event_jLabel40MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -253,21 +361,32 @@ public tenantDashboard(int id) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     // End of variables declaration//GEN-END:variables
 }

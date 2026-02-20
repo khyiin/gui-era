@@ -76,12 +76,8 @@ public class editproftenant extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -217,23 +213,9 @@ public class editproftenant extends javax.swing.JFrame {
         });
         jPanel2.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, -1, -1));
 
-        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
-        jLabel24.setText("jLabel7");
-        jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 30, 30));
-
-        jLabel12.setFont(new java.awt.Font("Century Gothic", 1, 15)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Cancel Reservation");
-        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel12MouseClicked(evt);
-            }
-        });
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, -1, 30));
-
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
         jLabel10.setText("jLabel7");
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 30, 30));
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 30, 30));
 
         jLabel14.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
@@ -243,24 +225,10 @@ public class editproftenant extends javax.swing.JFrame {
                 jLabel14MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, -1, 30));
-
-        jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
-        jLabel25.setText("jLabel7");
-        jPanel2.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 30, 30));
-
-        jLabel26.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel26.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel26.setText("Leave Status");
-        jLabel26.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel26MouseClicked(evt);
-            }
-        });
-        jPanel2.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, -1, 30));
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, -1, 30));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-profile-30.png"))); // NOI18N
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 40, 30));
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 40, 30));
 
         jLabel18.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
@@ -270,7 +238,7 @@ public class editproftenant extends javax.swing.JFrame {
                 jLabel18MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 140, 30));
+        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 140, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/edit profile bg.png"))); // NOI18N
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 530));
@@ -287,17 +255,9 @@ public class editproftenant extends javax.swing.JFrame {
     this.dispose();  // Optional: closes dashboard when profile opens
     }//GEN-LAST:event_jLabel18MouseClicked
 
-    private void jLabel26MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel26MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel26MouseClicked
-
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel14MouseClicked
-
-    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel12MouseClicked
 
     private void jLabel23MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel23MouseClicked
        config.Session sess = config.Session.getInstance();
@@ -419,7 +379,6 @@ public class editproftenant extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -430,9 +389,6 @@ public class editproftenant extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel4;

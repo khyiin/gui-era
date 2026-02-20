@@ -68,15 +68,6 @@ public class tenantreserve extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
@@ -88,6 +79,10 @@ public class tenantreserve extends javax.swing.JFrame {
         jLabel34 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
@@ -107,7 +102,7 @@ public class tenantreserve extends javax.swing.JFrame {
                 room_displayActionPerformed(evt);
             }
         });
-        getContentPane().add(room_display, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 80, 280, 50));
+        getContentPane().add(room_display, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 80, 340, 50));
 
         name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,65 +143,6 @@ public class tenantreserve extends javax.swing.JFrame {
         });
         getContentPane().add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, -1, -1));
 
-        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
-        jLabel24.setText("jLabel7");
-        getContentPane().add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 30, 30));
-
-        jLabel12.setFont(new java.awt.Font("Century Gothic", 1, 15)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Cancel Reservation");
-        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel12MouseClicked(evt);
-            }
-        });
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, -1, 30));
-
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
-        jLabel10.setText("jLabel7");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 30, 30));
-
-        jLabel20.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
-        jLabel20.setText("Room Reservation");
-        getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 30, -1, -1));
-
-        jLabel14.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("Requests");
-        jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel14MouseClicked(evt);
-            }
-        });
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, -1, 30));
-
-        jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
-        jLabel25.setText("jLabel7");
-        getContentPane().add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 30, 30));
-
-        jLabel26.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel26.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel26.setText("Leave Status");
-        jLabel26.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel26MouseClicked(evt);
-            }
-        });
-        getContentPane().add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, -1, 30));
-
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-profile-30.png"))); // NOI18N
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 40, 30));
-
-        jLabel18.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setText("Profile");
-        jLabel18.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel18MouseClicked(evt);
-            }
-        });
-        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 140, 30));
-
         jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-log-out-30.png"))); // NOI18N
         getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 40, 30));
 
@@ -222,7 +158,7 @@ public class tenantreserve extends javax.swing.JFrame {
 
         jLabel30.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel30.setText("Room Name");
-        getContentPane().add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 90, 110, 30));
+        getContentPane().add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 50, 110, 30));
 
         jButton1.setText("Save");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -230,7 +166,7 @@ public class tenantreserve extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 450, 170, 40));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 470, 170, 40));
         getContentPane().add(moveindate, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 330, 490, 40));
         getContentPane().add(duration, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 400, 490, 40));
         getContentPane().add(contact, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 490, 40));
@@ -248,8 +184,35 @@ public class tenantreserve extends javax.swing.JFrame {
         getContentPane().add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, 100, 30));
 
         jLabel36.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel36.setText("Duration:");
+        jLabel36.setText("Contract:");
         getContentPane().add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 370, 80, 30));
+
+        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
+        jLabel28.setText("jLabel7");
+        getContentPane().add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 30, 30));
+
+        jLabel39.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-profile-30.png"))); // NOI18N
+        getContentPane().add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 40, 30));
+
+        jLabel24.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setText("Requests");
+        jLabel24.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel24MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, -1, 30));
+
+        jLabel40.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        jLabel40.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel40.setText("Profile");
+        jLabel40.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel40MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 140, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/bgreal.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 530));
@@ -281,22 +244,6 @@ public class tenantreserve extends javax.swing.JFrame {
     private void jLabel23MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel23MouseClicked
              // TODO add your handling code here:
     }//GEN-LAST:event_jLabel23MouseClicked
-
-    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel12MouseClicked
-
-    private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel14MouseClicked
-
-    private void jLabel26MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel26MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel26MouseClicked
-
-    private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
-     
-    }//GEN-LAST:event_jLabel18MouseClicked
 
     private void room_displayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_room_displayActionPerformed
         // TODO add your handling code here:
@@ -347,6 +294,16 @@ public class tenantreserve extends javax.swing.JFrame {
     this.dispose();    // TODO add your handling code here:
     }//GEN-LAST:event_jLabel13MouseClicked
 
+    private void jLabel24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel24MouseClicked
+
+    private void jLabel40MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel40MouseClicked
+        config.Session sess = config.Session.getInstance();
+        new tenantprofile(sess.getUid()).setVisible(true);
+        this.dispose();  // Optional: closes dashboard when profile opens
+    }//GEN-LAST:event_jLabel40MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -387,23 +344,17 @@ public class tenantreserve extends javax.swing.JFrame {
     private javax.swing.JTextField duration;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
@@ -411,10 +362,11 @@ public class tenantreserve extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel39;
+    private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField moveindate;
     private javax.swing.JTextField name;
