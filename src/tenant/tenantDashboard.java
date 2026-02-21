@@ -273,9 +273,8 @@ public tenantDashboard(int id) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-    tenantprofile tp = new tenantprofile(this.tenantId); 
-    tp.setVisible(true);
-    this.dispose();        // TODO add your handling code here:
+    new myreservation().setVisible(true);
+    this.dispose();       // TODO add your handling code here:
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked

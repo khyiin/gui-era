@@ -16,33 +16,39 @@ import web.login;
  * @author corpu
  */
 public class tenantreserve extends javax.swing.JFrame {
+    private int roomId;
+    private int landlordId;
+    
 
     /**
    
      */
-    public tenantreserve(String selectedRoom) {
+    public tenantreserve(int rId, int lId, String selectedRoom) { // Added rId and lId
         config.Session sess = config.Session.getInstance();
-        if (sess.getUid() == 0) {
+    if (sess.getUid() == 0) {
         JOptionPane.showMessageDialog(null, "Please log in first!");
         new login().setVisible(true);
         this.dispose();
         return;
-        }
-    initComponents();
+    }
     
-    // Set the room name to your text field
+    initComponents();
+    this.roomId = rId;
+    this.landlordId = lId;
     room_display.setText(selectedRoom);
     
-    // Fetch user details from DB
+    int currentUserId = sess.getUid(); 
+
     try (Connection conn = config.connectDB()) {
-        String sql = "SELECT fullname, contact FROM users WHERE id = ?";
+        // REMOVED 'contact' from here since it's not in the users table
+        String sql = "SELECT first_name FROM users WHERE id = ?"; 
         PreparedStatement pst = conn.prepareStatement(sql);
-        pst.setInt(1, config.session_id); 
+        pst.setInt(1, currentUserId); 
         ResultSet rs = pst.executeQuery();
         
         if(rs.next()){
-            name.setText(rs.getString("fullname"));
-            contact.setText(rs.getString("contact"));
+            name.setText(rs.getString("first_name"));
+            // contact.setText(""); // Leave this empty for the tenant to type into
         }
     } catch (SQLException e) {
         System.out.println("Error: " + e.getMessage());
@@ -73,7 +79,7 @@ public class tenantreserve extends javax.swing.JFrame {
         jLabel30 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         moveindate = new javax.swing.JTextField();
-        duration = new javax.swing.JTextField();
+        contract = new javax.swing.JTextField();
         contact = new javax.swing.JTextField();
         jLabel33 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
@@ -168,7 +174,7 @@ public class tenantreserve extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 470, 170, 40));
         getContentPane().add(moveindate, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 330, 490, 40));
-        getContentPane().add(duration, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 400, 490, 40));
+        getContentPane().add(contract, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 400, 490, 40));
         getContentPane().add(contact, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 490, 40));
 
         jLabel33.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
@@ -254,27 +260,29 @@ public class tenantreserve extends javax.swing.JFrame {
     }//GEN-LAST:event_nameActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    String rName = room_display.getText(); // The room name passed from browse
-    String moveDate = moveindate.getText(); // e.g., "2024-05-20"
-    String stayDuration = duration.getText(); // e.g., "6 months"
-    int tID = config.session_id; // Your global session ID
+    String moveDate = moveindate.getText(); 
+    String stayDuration = contract.getText(); // This is the text from the UI field
+    config.Session sess = config.Session.getInstance();
+    int tID = sess.getUid(); 
 
-    // 2. Validate that the user filled everything
     if (moveDate.isEmpty() || stayDuration.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Please fill in all fields!");
         return;
     }
 
-    // 3. Prepare the SQL and use your config standard
     config conf = new config();
-    String sql = "INSERT INTO reservations (tenant_id, room_name, move_in_date, duration, status) VALUES (?, ?, ?, ?, ?)";
-    
-    // 4. Execute using your 'addRecord' method
-    conf.addRecord(sql, tID, rName, moveDate, stayDuration, "Pending");
+    /* UPDATED SQL: 
+       - Uses 'id' for the tenant.
+       - Uses 'r_id' for the room.
+       - Removed landlord_id (Redundant).
+    */
+    String sql = "INSERT INTO reservations (id, r_id, contact, move_in_date, contract, status) VALUES (?, ?, ?, ?, ?, 'Pending')";
+
+// Make sure contact.getText() is included here!
+conf.addRecord(sql, sess.getUid(), roomId, contact.getText(), moveindate.getText(), contract.getText());
 
     JOptionPane.showMessageDialog(this, "Reservation Sent! Waiting for Landlord approval.");
     
-    // 5. Go back to browse or dashboard
     new tenantbrowse().setVisible(true);
     this.dispose();
 // TODO add your handling code here:
@@ -334,14 +342,14 @@ public class tenantreserve extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-               new tenantreserve("").setVisible(true);
+               new tenantreserve(0, 0, "").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField contact;
-    private javax.swing.JTextField duration;
+    private javax.swing.JTextField contract;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;

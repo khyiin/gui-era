@@ -23,8 +23,32 @@ public class myreservation extends javax.swing.JFrame {
      * Creates new form myreservation
      */
     public myreservation() {
+        
         initComponents();
+        displayMyReservations();
+        
     }
+    public void displayMyReservations() {
+    Config.config con = new Config.config();
+    Config.config.Session sess = Config.config.Session.getInstance();
+    int tenantId = sess.getUid(); 
+    
+    // SQL UPDATED: Added res.contact AS 'Contact'
+    String sql = "SELECT res.res_id, r.r_name AS 'Room Name', r.r_location AS 'Location', " +
+                 "res.contact AS 'Contact', " + // New column added here
+                 "res.move_in_date AS 'Move-in Date', res.contract AS 'Stay Duration', res.status AS 'Status' " +
+                 "FROM reservations res " +
+                 "JOIN rooms r ON res.r_id = r.r_id " +
+                 "WHERE res.id = " + tenantId;
+
+    con.displayData(sql, myrestable); 
+
+    // Note: If you hide column 0 (res_id), the Contact is now column index 3.
+    myrestable.getColumnModel().getColumn(0).setMinWidth(0);
+    myrestable.getColumnModel().getColumn(0).setMaxWidth(0);
+    myrestable.getColumnModel().getColumn(0).setWidth(0);
+}
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,8 +69,9 @@ public class myreservation extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        myrestable = new javax.swing.JTable();
         search = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
@@ -128,7 +153,17 @@ public class myreservation extends javax.swing.JFrame {
         });
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jButton5.setBackground(new java.awt.Color(255, 255, 255));
+        jButton5.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        jButton5.setText("Cancel Reservation");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 460, 180, 40));
+
+        myrestable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -139,14 +174,14 @@ public class myreservation extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(myrestable);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, 560, 360));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, 560, 310));
 
         search.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         search.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         search.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 60, 210, 40));
+        getContentPane().add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 70, 210, 40));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-search-25.png"))); // NOI18N
         jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -154,7 +189,7 @@ public class myreservation extends javax.swing.JFrame {
                 jLabel9MouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 70, 25, 20));
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 80, 25, 20));
 
         jLabel22.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(255, 255, 255));
@@ -234,6 +269,7 @@ public class myreservation extends javax.swing.JFrame {
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 530));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
@@ -264,10 +300,6 @@ public class myreservation extends javax.swing.JFrame {
         this.dispose();   // TODO add your handling code here:
     }//GEN-LAST:event_jLabel20MouseClicked
 
-    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel9MouseClicked
-
     private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel14MouseClicked
@@ -293,8 +325,42 @@ public class myreservation extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel24MouseClicked
 
     private void jLabel29MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel29MouseClicked
-          // TODO add your handling code here:
+    int row = myrestable.getSelectedRow();
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a reservation to edit.");
+    } else {
+        // Grab the Res ID from the first column
+        String id = myrestable.getValueAt(row, 0).toString();
+        
+        // Open the TENANT-specific edit file
+        new updatereservation(id).setVisible(true);
+        this.dispose();   
+    }// TODO add your handling code here:
     }//GEN-LAST:event_jLabel29MouseClicked
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    int row = myrestable.getSelectedRow();
+    if(row == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a reservation to cancel.");
+        return;
+    }
+    
+    // Get the res_id from the hidden column 0
+    String resId = myrestable.getModel().getValueAt(row, 0).toString();
+    
+    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel this reservation?", "Warning", JOptionPane.YES_NO_OPTION);
+    
+    if(confirm == JOptionPane.YES_OPTION) {
+        Config.config conf = new Config.config();
+        // Delete the record from the database
+        conf.updateRecord("DELETE FROM reservations WHERE res_id = ?", resId);
+        displayMyReservations(); // Refresh the table
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+    }
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel9MouseClicked
 
     /**
      * @param args the command line arguments
@@ -332,6 +398,7 @@ public class myreservation extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -357,7 +424,7 @@ public class myreservation extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable myrestable;
     private javax.swing.JTextField search;
     // End of variables declaration//GEN-END:variables
 }

@@ -273,10 +273,6 @@ public addroom() {
         this.dispose();   // Optional: closes dashboard when profile opens
     }//GEN-LAST:event_jLabel18MouseClicked
 
-    private void r_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_nameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_r_nameActionPerformed
-
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
@@ -284,55 +280,6 @@ public addroom() {
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
-
-    private void r_descriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_descriptionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_r_descriptionActionPerformed
-
-    private void r_typeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_typeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_r_typeActionPerformed
-
-    private void r_priceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_priceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_r_priceActionPerformed
-
-    private void r_locationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_locationActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_r_locationActionPerformed
-
-    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
-       try (Connection conn = config.connectDB()) {
-    // We do NOT include r_id because it's AUTOINCREMENT
-    String sql = "INSERT INTO rooms (landlord_id, r_name, r_type, r_price, r_location, r_description) VALUES (?, ?, ?, ?, ?, ?)";
-    PreparedStatement pst = conn.prepareStatement(sql);
-    
-    // Use the landlordId we passed from the Login screen earlier!
-    pst.setInt(1, this.landlordId); 
-    pst.setString(2, r_name.getText());
-    pst.setString(3, r_type.getText().toString());
-    
-    // Convert text to a number for the price
-    pst.setDouble(4, Double.parseDouble(r_price.getText()));
-    
-    pst.setString(5, r_location.getText());
-    pst.setString(6, r_description.getText());
-
-    pst.executeUpdate();
-    JOptionPane.showMessageDialog(null, "Room successfully listed!");
-    
-    // Clear fields after saving
-    r_name.setText("");
-    r_price.setText("");
-    r_location.setText("");
-    r_description.setText("");
-    
-} catch (NumberFormatException nfe) {
-    JOptionPane.showMessageDialog(null, "Please enter a valid number for the price.");
-} catch (SQLException e) {
-    JOptionPane.showMessageDialog(null, "Database Error: " + e.getMessage());
-} // TODO add your handling code here:
-    }//GEN-LAST:event_btn_saveActionPerformed
 
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
       config.Session sess = config.Session.getInstance();
@@ -347,6 +294,59 @@ public addroom() {
 
     this.dispose();  // TODO add your handling code here:
     }//GEN-LAST:event_jLabel13MouseClicked
+
+    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
+        try (Connection conn = config.connectDB()) {
+            // We do NOT include r_id because it's AUTOINCREMENT
+            String sql = "INSERT INTO rooms (id, r_name, r_type, r_price, r_location, r_description) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement pst = conn.prepareStatement(sql);
+
+            // Use the landlordId we passed from the Login screen earlier!
+            pst.setInt(1, this.landlordId);
+            pst.setString(2, r_name.getText());
+            pst.setString(3, r_type.getText().toString());
+
+            // Convert text to a number for the price
+            pst.setDouble(4, Double.parseDouble(r_price.getText()));
+
+            pst.setString(5, r_location.getText());
+            pst.setString(6, r_description.getText());
+
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Room successfully listed!");
+
+            // Clear fields after saving
+            r_name.setText("");
+            r_price.setText("");
+            r_location.setText("");
+            r_description.setText("");
+
+        } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid number for the price.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Database Error: " + e.getMessage());
+        } // TODO add your handling code here:
+    }//GEN-LAST:event_btn_saveActionPerformed
+
+    private void r_locationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_locationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_r_locationActionPerformed
+
+    private void r_priceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_priceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_r_priceActionPerformed
+
+    private void r_typeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_typeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_r_typeActionPerformed
+
+    private void r_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_nameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_r_nameActionPerformed
+
+    private void r_descriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_r_descriptionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_r_descriptionActionPerformed
 
     /**
      * @param args the command line arguments

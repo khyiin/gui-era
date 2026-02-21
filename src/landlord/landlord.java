@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import Config.config;
+import tenant.myreservation;
 import web.login; 
 
 /**
@@ -134,6 +135,11 @@ public class landlord extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("View Reservations");
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 160, 30));
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
@@ -199,6 +205,12 @@ public class landlord extends javax.swing.JFrame {
 
     this.dispose();  // TODO add your handling code here:
     }//GEN-LAST:event_jLabel13MouseClicked
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+    reservations rs = new reservations();
+    rs.setVisible(true);
+    this.dispose();   // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel6MouseClicked
 
     /**
      * @param args the command line arguments

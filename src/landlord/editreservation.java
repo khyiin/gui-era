@@ -10,6 +10,7 @@ package landlord;
  * @author corpu
  */
 public class editreservation extends javax.swing.JFrame {
+    String reservationID;
 
     /**
      * Creates new form editreservation
@@ -17,6 +18,40 @@ public class editreservation extends javax.swing.JFrame {
     public editreservation() {
         initComponents();
     }
+    public editreservation(String resId) {
+        initComponents();
+        this.reservationID = resId;
+        loadDetails();
+    }
+
+    private void loadDetails() {
+        try (java.sql.Connection conn = Config.config.connectDB()) {
+        // Simple SQL: We only need the reservation table since contact is there now
+        String sql = "SELECT * FROM reservations WHERE res_id = ?";
+        
+        java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, reservationID);
+        java.sql.ResultSet rs = pst.executeQuery();
+
+        if (rs.next()) {
+            // Use the exact column names from your database
+            reservationid.setText(rs.getString("res_id"));
+            userid.setText(rs.getString("id"));
+            roomid.setText(rs.getString("r_id"));
+            moveindate.setText(rs.getString("move_in_date"));
+            contract.setText(rs.getString("contract"));
+            contact.setText(rs.getString("contact")); // This should work now
+            
+            String dbStatus = rs.getString("status");
+            status.setSelectedItem(dbStatus); 
+        }
+    } catch (java.sql.SQLException e) {
+        System.out.println("Error loading details: " + e.getMessage());
+        }
+    }
+
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,6 +81,7 @@ public class editreservation extends javax.swing.JFrame {
         status = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -64,9 +100,11 @@ public class editreservation extends javax.swing.JFrame {
         });
         jPanel2.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 430, 260, 40));
 
+        roomid.setEditable(false);
         roomid.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel2.add(roomid, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 290, 260, 30));
 
+        userid.setEditable(false);
         userid.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         userid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -75,6 +113,7 @@ public class editreservation extends javax.swing.JFrame {
         });
         jPanel2.add(userid, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 230, 260, 30));
 
+        contract.setEditable(false);
         contract.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         contract.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -83,9 +122,11 @@ public class editreservation extends javax.swing.JFrame {
         });
         jPanel2.add(contract, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 290, 260, 30));
 
+        moveindate.setEditable(false);
         moveindate.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel2.add(moveindate, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 230, 260, 30));
 
+        contact.setEditable(false);
         contact.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         contact.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,6 +141,7 @@ public class editreservation extends javax.swing.JFrame {
         jLabel2.setText("Room ID");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, -1, 20));
 
+        reservationid.setEditable(false);
         reservationid.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         reservationid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,13 +185,13 @@ public class editreservation extends javax.swing.JFrame {
         jLabel4.setText("Status");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 360, -1, 20));
 
-        status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Approve", "Reject" }));
+        status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Approved", "Rejected" }));
         status.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 statusActionPerformed(evt);
             }
         });
-        jPanel2.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 380, 260, 30));
+        jPanel2.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 380, 260, 40));
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -160,13 +202,30 @@ public class editreservation extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/crud.png"))); // NOI18N
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 530));
 
+        jLabel6.setText("jLabel6");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, -1, -1));
+
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
-        // TODO add your handling code here:
+     String newStatus = status.getSelectedItem().toString();
+
+    // 2. Use your existing config.java method to update the DB
+    Config.config conf = new Config.config();
+    String sql = "UPDATE reservations SET status = ? WHERE res_id = ?";
+    
+    // 3. Pass the new status and the reservationID global variable
+    conf.updateRecord(sql, newStatus, reservationID);
+
+    javax.swing.JOptionPane.showMessageDialog(this, "Status successfully updated to: " + newStatus);
+    
+    // 4. Return to the list page (Replace with your actual class name)
+    new reservations().setVisible(true);
+    this.dispose();   // TODO add your handling code here:
     }//GEN-LAST:event_updateActionPerformed
 
     private void useridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useridActionPerformed
@@ -181,13 +240,13 @@ public class editreservation extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_contactActionPerformed
 
-    private void reservationidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationidActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_reservationidActionPerformed
-
     private void statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_statusActionPerformed
+
+    private void reservationidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservationidActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_reservationidActionPerformed
 
     /**
      * @param args the command line arguments
@@ -234,6 +293,7 @@ public class editreservation extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;

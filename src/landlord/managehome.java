@@ -86,6 +86,11 @@ public class managehome extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 390, 70, 60));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-edit-70 (1).png"))); // NOI18N
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 390, 70, 60));
 
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-log-out-30.png"))); // NOI18N
@@ -102,7 +107,7 @@ public class managehome extends javax.swing.JFrame {
         getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, 140, 30));
 
         jLabel17.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel17.setText("Delete Rooms");
+        jLabel17.setText("My Rooms");
         getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 450, -1, 20));
 
         jLabel13.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
@@ -208,6 +213,12 @@ public class managehome extends javax.swing.JFrame {
 
     this.dispose();    // TODO add your handling code here:
     }//GEN-LAST:event_jLabel20MouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+    editroom er = new editroom();
+    er.setVisible(true);
+    this.dispose();    // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
      * @param args the command line arguments

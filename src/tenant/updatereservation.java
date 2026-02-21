@@ -10,14 +10,45 @@ package tenant;
  * @author corpu
  */
 public class updatereservation extends javax.swing.JFrame {
+    String resID;
 
     /**
      * Creates new form updatereservation
      */
-    public updatereservation() {
+    public updatereservation(String id) {
         initComponents();
+        this.resID = id;
+        loadReservationData();
     }
+    private void loadReservationData() {
+        try (java.sql.Connection conn = Config.config.connectDB()) {
+            // We only need the reservations table
+            String sql = "SELECT * FROM reservations WHERE res_id = ?";
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, resID);
+            java.sql.ResultSet rs = pst.executeQuery();
 
+            if (rs.next()) {
+                // Fixed/Non-editable fields
+                reservationid.setText(rs.getString("res_id"));
+                userid.setText(rs.getString("id"));
+                roomid.setText(rs.getString("r_id"));
+                
+                // Editable fields for the tenant
+                contact.setText(rs.getString("contact"));
+                moveindate.setText(rs.getString("move_in_date"));
+                contract.setText(rs.getString("contract"));
+                
+                
+              
+            }
+        } catch (java.sql.SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        
+    
+
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -63,9 +94,11 @@ public class updatereservation extends javax.swing.JFrame {
         });
         jPanel1.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 400, 260, 40));
 
+        roomid.setEditable(false);
         roomid.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(roomid, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 290, 260, 30));
 
+        userid.setEditable(false);
         userid.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         userid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,6 +132,7 @@ public class updatereservation extends javax.swing.JFrame {
         jLabel2.setText("Room ID");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, -1, 20));
 
+        reservationid.setEditable(false);
         reservationid.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         reservationid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -167,10 +201,31 @@ public class updatereservation extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
-          // TODO add your handling code here:
+    String newContact = contact.getText();
+    String newDate = moveindate.getText();
+    String newContract = contract.getText();
+
+    // Validation: Don't let them save empty fields
+    if (newContact.isEmpty() || newDate.isEmpty() || newContract.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "All fields must be filled!");
+        return;
+    }
+
+    Config.config conf = new Config.config();
+    // SQL: We only update the fields the tenant is allowed to change
+    String sql = "UPDATE reservations SET contact = ?, move_in_date = ?, contract = ? WHERE res_id = ?";
+    
+    conf.updateRecord(sql, newContact, newDate, newContract, resID);
+
+    javax.swing.JOptionPane.showMessageDialog(this, "Your reservation has been updated!");
+    
+    // Go back to the Tenant's My Reservation list
+    new myreservation().setVisible(true);
+    this.dispose();     // TODO add your handling code here:
     }//GEN-LAST:event_updateActionPerformed
 
     private void useridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useridActionPerformed
@@ -219,7 +274,7 @@ public class updatereservation extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new updatereservation().setVisible(true);
+                new updatereservation("").setVisible(true);
             }
         });
     }

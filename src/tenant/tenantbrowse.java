@@ -30,29 +30,33 @@ public class tenantbrowse extends javax.swing.JFrame {
         }
         initComponents();
         
-         loadRoomData();
+         loadRooms();
     } 
-    public void loadRoomData() {
-    String sql = "SELECT * FROM rooms WHERE r_status = 'Available' LIMIT 1";
+    public void loadRooms() {
+    mainRoompanel.removeAll();
+    String sql = "SELECT * FROM rooms";
 
     try (Connection conn = config.connectDB(); 
-         PreparedStatement pstmt = conn.prepareStatement(sql);
+         PreparedStatement pstmt = conn.prepareStatement(sql); 
          ResultSet rs = pstmt.executeQuery()) {
 
-        if (rs.next()) {
-            // Use the correct variable names from your declaration
-            name.setText(rs.getString("r_name"));
-            type.setText(rs.getString("r_type"));
-            price.setText(rs.getString("r_price"));
-            location.setText(rs.getString("r_location"));
-            description.setText(rs.getString("r_description"));
-        } else {
-            // Set default text if nothing is found
-            name.setText("None Available");
-            JOptionPane.showMessageDialog(this, "No available rooms found.");
+        while (rs.next()) {
+            int rId = rs.getInt("r_id"); 
+            int lId = rs.getInt("id"); // CHANGED from landlord_id to id
+
+            String rName = rs.getString("r_name");
+            String rType = rs.getString("r_type");
+            String rPrice = rs.getString("r_price");
+            String rLoc = rs.getString("r_location");
+            String rDesc = rs.getString("r_description");
+
+            roomcard card = new roomcard(rId, lId, rName, rType, rPrice, rLoc, rDesc);
+            mainRoompanel.add(card);
         }
+        mainRoompanel.revalidate();
+        mainRoompanel.repaint();
     } catch (SQLException e) {
-        System.out.println("Error: " + e.getMessage());
+        System.out.println("Error loading rooms: " + e.getMessage());
     }
 }
     /**
@@ -71,19 +75,6 @@ public class tenantbrowse extends javax.swing.JFrame {
         jLabel35 = new javax.swing.JLabel();
         search = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel23 = new javax.swing.JLabel();
-        name1 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        type1 = new javax.swing.JLabel();
-        price1 = new javax.swing.JLabel();
-        location1 = new javax.swing.JLabel();
-        description1 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -91,20 +82,9 @@ public class tenantbrowse extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        mainRoompanel = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel22 = new javax.swing.JLabel();
-        name = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        type = new javax.swing.JLabel();
-        price = new javax.swing.JLabel();
-        location = new javax.swing.JLabel();
-        description = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -152,52 +132,6 @@ public class tenantbrowse extends javax.swing.JFrame {
         });
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 30, 25, 20));
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel23.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel23.setText("Room Name:");
-        jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
-
-        name1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jPanel3.add(name1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 150, 20));
-
-        jLabel29.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel29.setText("Price:");
-        jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 40, -1));
-
-        jLabel30.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel30.setText("Room Type:");
-        jPanel3.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, -1, -1));
-
-        jLabel31.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel31.setText("Location:");
-        jPanel3.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, -1, -1));
-
-        jLabel32.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel32.setText("Description:");
-        jPanel3.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, -1, -1));
-
-        jButton3.setBackground(new java.awt.Color(255, 255, 255));
-        jButton3.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
-        jButton3.setText("Reserve Room");
-        jButton3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 160, 130, 30));
-        jPanel3.add(type1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 210, 20));
-        jPanel3.add(price1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 210, 20));
-        jPanel3.add(location1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 210, 20));
-        jPanel3.add(description1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 110, 210, 20));
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/backgroundr.png"))); // NOI18N
-        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 190, 160));
-
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 290, 570, 200));
-
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-home-40.png"))); // NOI18N
         jLabel7.setText("jLabel7");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 30, 30));
@@ -234,6 +168,11 @@ public class tenantbrowse extends javax.swing.JFrame {
         jLabel11.setText("jLabel7");
         jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, 30, 30));
 
+        mainRoompanel.setLayout(new java.awt.GridLayout(0, 1));
+        jScrollPane1.setViewportView(mainRoompanel);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, 600, 440));
+
         jLabel20.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setText("Log Out");
@@ -243,52 +182,6 @@ public class tenantbrowse extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, 140, 30));
-
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel22.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel22.setText("Room Name:");
-        jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
-
-        name.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jPanel2.add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 150, 20));
-
-        jLabel26.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel26.setText("Price:");
-        jPanel2.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 40, -1));
-
-        jLabel25.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel25.setText("Room Type:");
-        jPanel2.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, -1, -1));
-
-        jLabel27.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel27.setText("Location:");
-        jPanel2.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, -1, -1));
-
-        jLabel28.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel28.setText("Description:");
-        jPanel2.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, -1, -1));
-
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
-        jButton2.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
-        jButton2.setText("Reserve Room");
-        jButton2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 160, 130, 30));
-        jPanel2.add(type, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 210, 20));
-        jPanel2.add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 210, 20));
-        jPanel2.add(location, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 210, 20));
-        jPanel2.add(description, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 110, 210, 20));
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/backgroundr.png"))); // NOI18N
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 190, 160));
-
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 570, 200));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/edit profile bg.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 530));
@@ -316,14 +209,6 @@ public class tenantbrowse extends javax.swing.JFrame {
 
     this.dispose();    // TODO add your handling code here:
     }//GEN-LAST:event_jLabel20MouseClicked
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
         // TODO add your handling code here:
@@ -375,10 +260,6 @@ public class tenantbrowse extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel description;
-    private javax.swing.JLabel description1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel15;
@@ -386,36 +267,16 @@ public class tenantbrowse extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JLabel location;
-    private javax.swing.JLabel location1;
-    private javax.swing.JLabel name;
-    private javax.swing.JLabel name1;
-    private javax.swing.JLabel price;
-    private javax.swing.JLabel price1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel mainRoompanel;
     private javax.swing.JTextField search;
-    private javax.swing.JLabel type;
-    private javax.swing.JLabel type1;
     // End of variables declaration//GEN-END:variables
 }

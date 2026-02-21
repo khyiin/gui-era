@@ -23,7 +23,35 @@ public class reservations extends javax.swing.JFrame {
      */
     public reservations() {
         initComponents();
+        displayLandlordReservations();
     }
+    public void displayLandlordReservations() {
+    Config.config con = new Config.config();
+    Config.config.Session sess = Config.config.Session.getInstance();
+    int landlordId = sess.getUid();
+    
+    String searchText = ""; // If you have a search field, use: search.getText();
+    
+    // SQL UPDATED: Pulling 'contact' from the 'reservations' (res) table
+    String sql = "SELECT res.res_id AS 'Res ID', r.r_name AS 'Room Name', " +
+                 "u.first_name || ' ' || u.last_name AS 'Tenant', res.contact AS 'Contact', " +
+                 "res.move_in_date AS 'Move-in', res.contract AS 'Contract', res.status AS 'Status' " +
+                 "FROM reservations res " +
+                 "JOIN rooms r ON res.r_id = r.r_id " +
+                 "JOIN users u ON res.id = u.id " +
+                 "WHERE r.id = " + landlordId + " " +
+                 "AND (u.first_name LIKE '%" + searchText + "%' OR r.r_name LIKE '%" + searchText + "%')";
+
+    con.displayData(sql, reservationstable);
+
+
+    // If you want to hide specific columns (like the ID), use your column hiding logic:
+    /*
+    yourJTableVariable.getColumnModel().getColumn(0).setMinWidth(0);
+    yourJTableVariable.getColumnModel().getColumn(0).setMaxWidth(0);
+    yourJTableVariable.getColumnModel().getColumn(0).setWidth(0);
+    */
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,7 +64,7 @@ public class reservations extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        reservationstable = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -60,7 +88,7 @@ public class reservations extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        reservationstable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -71,7 +99,7 @@ public class reservations extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(reservationstable);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 570, 340));
 
@@ -175,6 +203,7 @@ public class reservations extends javax.swing.JFrame {
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
@@ -215,9 +244,22 @@ public class reservations extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel11MouseClicked
 
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
-           // TODO add your handling code here:
+    int row = reservationstable.getSelectedRow();
+    
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Please choose a reservation to edit!");
+    } else {
+        // Get the model from your table
+        javax.swing.table.TableModel model = reservationstable.getModel();
+        
+        // Extract data from the selected row
+        String resId = model.getValueAt(row, 0).toString();
+        
+        // Create the edit frame and pass the ID
+        String id = reservationstable.getValueAt(row, 0).toString();
+        new editreservation(id).setVisible(true);      // TODO add your handling code here:
     }//GEN-LAST:event_jLabel12MouseClicked
-
+    }
     /**
      * @param args the command line arguments
      */
@@ -272,7 +314,7 @@ public class reservations extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable reservationstable;
     private javax.swing.JTextField search;
     // End of variables declaration//GEN-END:variables
 }
