@@ -4,6 +4,13 @@
  * and open the template in the editor.
  */
 package landlord;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import Config.config;
+import web.login;
 
 /**
  *
@@ -16,6 +23,13 @@ public class editreservation extends javax.swing.JFrame {
      * Creates new form editreservation
      */
     public editreservation() {
+        config.Session sess = config.Session.getInstance();
+        if (sess.getUid() == 0) {
+        JOptionPane.showMessageDialog(null, "Please log in first!");
+        new login().setVisible(true);
+        this.dispose();
+        return;
+        }
         initComponents();
     }
     public editreservation(String resId) {
@@ -93,6 +107,7 @@ public class editreservation extends javax.swing.JFrame {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         update.setText("Update");
+        update.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateActionPerformed(evt);
@@ -152,8 +167,8 @@ public class editreservation extends javax.swing.JFrame {
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
-        jLabel12.setText("Reservations");
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, -1, 40));
+        jLabel12.setText("Reservation Form");
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, 40));
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N

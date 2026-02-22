@@ -24,6 +24,16 @@ public class tenantprofile extends javax.swing.JFrame {
     public int userId; 
 
     public tenantprofile(int id) {
+        
+        initComponents();
+        this.userId = id; 
+        displayData();
+        
+            // Fetch data immediately
+    }
+    
+    // Keep your default constructor for NetBeans design view
+    public tenantprofile() {
         config.Session sess = config.Session.getInstance();
         if (sess.getUid() == 0) {
         JOptionPane.showMessageDialog(null, "Please log in first!");
@@ -31,20 +41,24 @@ public class tenantprofile extends javax.swing.JFrame {
         this.dispose();
         return;
         }
-        // ADD THIS HERE
        
-        
         initComponents();
-        this.userId = id; // Set the ID passed from login
-        displayData();    // Fetch data immediately
-    }
     
-    // Keep your default constructor for NetBeans design view
-    public tenantprofile() {
+    // 1. Get the current logged-in ID from the Session
+       
+        this.userId = sess.getUid(); 
+    
+    // 2. Only fetch data if we actually have a valid ID
+        if (this.userId != 0) {
+        displayData();
+    }   else {
+        // Fallback if someone runs the file directly without logging in
+        System.out.println("No active session found.");
         // ALSO ADD THIS HERE (Prevents "Run File" from working)
        
         
         initComponents();
+        }
     }
     
     public void displayData() {
@@ -104,10 +118,10 @@ public class tenantprofile extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel35 = new javax.swing.JLabel();
-        jLabel36 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
@@ -192,13 +206,18 @@ public class tenantprofile extends javax.swing.JFrame {
         jLabel2.setText("Home");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, -1));
 
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-browse-30 (1).png"))); // NOI18N
         jLabel15.setText("jLabel7");
         jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 30, 30));
 
         jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Browse Rooms");
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, -1));
 
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
@@ -215,32 +234,26 @@ public class tenantprofile extends javax.swing.JFrame {
         });
         jPanel2.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, -1, -1));
 
-        jLabel29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
-        jLabel29.setText("jLabel7");
-        jPanel2.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 30, 30));
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-profile-30.png"))); // NOI18N
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 40, 30));
 
-        jLabel24.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel24.setText("Requests");
-        jLabel24.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel18.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setText("Profile");
+        jLabel18.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel24MouseClicked(evt);
+                jLabel18MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, -1, 30));
+        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 140, 30));
 
-        jLabel35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-profile-30.png"))); // NOI18N
-        jPanel2.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 40, 30));
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-settings-30.png"))); // NOI18N
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 40, 30));
 
-        jLabel36.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel36.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel36.setText("Profile");
-        jLabel36.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel36MouseClicked(evt);
-            }
-        });
-        jPanel2.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 140, 30));
+        jLabel12.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Settings");
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 140, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/edit profile bg.png"))); // NOI18N
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 530));
@@ -265,9 +278,9 @@ public class tenantprofile extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel23MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel23MouseClicked
-       tenantprofile tp = new tenantprofile(this.userId); 
-       tp.setVisible(true);
-       this.dispose();       // TODO add your handling code here:
+    myreservation mr = new myreservation();
+    mr.setVisible(true);
+    this.dispose();       // TODO add your handling code here:
     }//GEN-LAST:event_jLabel23MouseClicked
 
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
@@ -296,15 +309,15 @@ public class tenantprofile extends javax.swing.JFrame {
         this.dispose();  // Optional: closes dashboard when profile opens
     }//GEN-LAST:event_jLabel28MouseClicked
 
-    private void jLabel24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel24MouseClicked
+    private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
+        // Optional: closes dashboard when profile opens
+    }//GEN-LAST:event_jLabel18MouseClicked
 
-    private void jLabel36MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel36MouseClicked
-        config.Session sess = config.Session.getInstance();
-        new tenantprofile(sess.getUid()).setVisible(true);
-        this.dispose();  // Optional: closes dashboard when profile opens
-    }//GEN-LAST:event_jLabel36MouseClicked
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+    tenantbrowse tb = new tenantbrowse();
+    tb.setVisible(true);
+    this.dispose();    // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel5MouseClicked
 
     /**
      * @param args the command line arguments
@@ -346,26 +359,26 @@ public class tenantprofile extends javax.swing.JFrame {
     private javax.swing.JLabel firstname;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;

@@ -4,6 +4,13 @@
  * and open the template in the editor.
  */
 package tenant;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import Config.config;
+import web.login;
 
 /**
  *
@@ -16,6 +23,13 @@ public class updatereservation extends javax.swing.JFrame {
      * Creates new form updatereservation
      */
     public updatereservation(String id) {
+        config.Session sess = config.Session.getInstance();
+        if (sess.getUid() == 0) {
+        JOptionPane.showMessageDialog(null, "Please log in first!");
+        new login().setVisible(true);
+        this.dispose();
+        return;
+        }
         initComponents();
         this.resID = id;
         loadReservationData();

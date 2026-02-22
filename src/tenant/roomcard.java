@@ -88,7 +88,7 @@ public class roomcard extends javax.swing.JPanel {
         reserve.setBackground(new java.awt.Color(255, 255, 255));
         reserve.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         reserve.setText("Reserve Room");
-        reserve.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        reserve.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         reserve.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 reserveActionPerformed(evt);

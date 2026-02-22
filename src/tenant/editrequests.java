@@ -61,6 +61,7 @@ public class editrequests extends javax.swing.JFrame {
         jPanel2.add(request, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 160, 260, 30));
 
         update.setText("Update");
+        update.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateActionPerformed(evt);

@@ -17,6 +17,7 @@ import web.login;
  * @author corpu
  */
 public class requests extends javax.swing.JFrame {
+    public int landlordId;
 
     /**
      * Creates new form requests
@@ -183,9 +184,9 @@ public class requests extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
-        managehome mh = new managehome();
+        managerooms mr = new managerooms();
         // 2. Show the new frame
-        mh.setVisible(true);
+        mr.setVisible(true);
         // 3. Close the current dashboard
         this.dispose(); // TODO add your handling code here:
     }//GEN-LAST:event_jLabel9MouseClicked

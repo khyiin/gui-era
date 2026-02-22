@@ -16,6 +16,8 @@ import web.login;
  * @author corpu
  */
 public class addroom extends javax.swing.JFrame {
+    managerooms parentPanel;
+  
     public int landlordId;
 
     /**
@@ -23,8 +25,15 @@ public class addroom extends javax.swing.JFrame {
      */
     public addroom(int id) {
     initComponents();
+   
     this.landlordId = id; // Save the ID passed from login/dashboard
 }
+    public addroom(managerooms parent) {
+        initComponents();
+        this.parentPanel = parent;
+        config.Session sess = config.Session.getInstance();
+        this.landlordId = sess.getUid();
+    }
 
 // Keep this one for the NetBeans Design view to work
 public addroom() {
@@ -47,6 +56,8 @@ public addroom() {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel19 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
         btn_save = new javax.swing.JButton();
         r_description = new javax.swing.JTextField();
         jLabel28 = new javax.swing.JLabel();
@@ -59,17 +70,15 @@ public addroom() {
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        manageroom = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
+        viewres = new javax.swing.JLabel();
         r_name = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
+        profile = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -81,6 +90,14 @@ public addroom() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-settings-30.png"))); // NOI18N
+        getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 40, 40));
+
+        jLabel21.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setText("Settings");
+        getContentPane().add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 140, 40));
 
         btn_save.setText("Save");
         btn_save.addActionListener(new java.awt.event.ActionListener() {
@@ -153,10 +170,15 @@ public addroom() {
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-office-30.png"))); // NOI18N
         getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 40, 30));
 
-        jLabel9.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Manage Rooms");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 140, 30));
+        manageroom.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
+        manageroom.setForeground(new java.awt.Color(255, 255, 255));
+        manageroom.setText("Manage Rooms");
+        manageroom.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                manageroomMouseClicked(evt);
+            }
+        });
+        getContentPane().add(manageroom, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 140, 30));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 40, 30));
@@ -164,13 +186,15 @@ public addroom() {
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/addimage.png"))); // NOI18N
         getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, 260, 170));
 
-        jLabel6.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("View Reservations");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 160, 30));
-
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-users-30.png"))); // NOI18N
-        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 40, 30));
+        viewres.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        viewres.setForeground(new java.awt.Color(255, 255, 255));
+        viewres.setText("View Reservations");
+        viewres.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                viewresMouseClicked(evt);
+            }
+        });
+        getContentPane().add(viewres, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 160, 30));
 
         r_name.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         r_name.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -186,32 +210,22 @@ public addroom() {
         jLabel11.setText("Add Room");
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 30, 370, 30));
 
-        jLabel10.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("View Requests");
-        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel10MouseClicked(evt);
-            }
-        });
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, 140, 30));
-
         jLabel14.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel14.setText("Room Name");
         getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, -1, -1));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-profile-30.png"))); // NOI18N
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 40, 30));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 40, 40));
 
-        jLabel18.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setText("Profile");
-        jLabel18.addMouseListener(new java.awt.event.MouseAdapter() {
+        profile.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
+        profile.setForeground(new java.awt.Color(255, 255, 255));
+        profile.setText("Profile");
+        profile.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel18MouseClicked(evt);
+                profileMouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 140, 30));
+        getContentPane().add(profile, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 140, 40));
 
         jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-log-out-30.png"))); // NOI18N
         getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 470, 40, 30));
@@ -261,17 +275,12 @@ public addroom() {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
-
-        this.dispose();
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel10MouseClicked
-
-    private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
-        
-        this.dispose();   // Optional: closes dashboard when profile opens
-    }//GEN-LAST:event_jLabel18MouseClicked
+    private void profileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileMouseClicked
+    landlordprofile lp = new landlordprofile();
+    lp.setVisible(true);
+    this.dispose();    
+          // Optional: closes dashboard when profile opens
+    }//GEN-LAST:event_profileMouseClicked
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
@@ -348,6 +357,18 @@ public addroom() {
         // TODO add your handling code here:
     }//GEN-LAST:event_r_descriptionActionPerformed
 
+    private void manageroomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageroomMouseClicked
+    managerooms mr = new managerooms();
+    mr.setVisible(true);
+    this.dispose();   // TODO add your handling code here:
+    }//GEN-LAST:event_manageroomMouseClicked
+
+    private void viewresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewresMouseClicked
+    reservations rs = new reservations();
+    rs.setVisible(true);
+    this.dispose();    // TODO add your handling code here:
+    }//GEN-LAST:event_viewresMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -385,17 +406,16 @@ public addroom() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_save;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
@@ -404,16 +424,17 @@ public addroom() {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JLabel manageroom;
+    private javax.swing.JLabel profile;
     private javax.swing.JTextField r_description;
     private javax.swing.JTextField r_location;
     private javax.swing.JTextField r_name;
     private javax.swing.JTextField r_price;
     private javax.swing.JTextField r_type;
+    private javax.swing.JLabel viewres;
     // End of variables declaration//GEN-END:variables
 }

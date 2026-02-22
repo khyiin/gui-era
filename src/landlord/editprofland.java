@@ -57,18 +57,18 @@ public class editprofland extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
+        profile = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        manage = new javax.swing.JLabel();
+        viewres = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         email = new javax.swing.JTextField();
         firstname = new javax.swing.JTextField();
@@ -95,20 +95,28 @@ public class editprofland extends javax.swing.JFrame {
 
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-settings-30.png"))); // NOI18N
+        jPanel4.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 40, 40));
+
+        jLabel24.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setText("Settings");
+        jPanel4.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 140, 40));
+
         jLabel19.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(29, 21, 7));
         jLabel19.setText("My Profile");
         jPanel4.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 50, 250, 50));
 
-        jLabel18.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setText("Profile");
-        jLabel18.addMouseListener(new java.awt.event.MouseAdapter() {
+        profile.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
+        profile.setForeground(new java.awt.Color(255, 255, 255));
+        profile.setText("Profile");
+        profile.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel18MouseClicked(evt);
+                profileMouseClicked(evt);
             }
         });
-        jPanel4.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 140, 30));
+        jPanel4.add(profile, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, 140, 30));
 
         jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-log-out-30.png"))); // NOI18N
         jPanel4.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 470, 40, 30));
@@ -116,11 +124,8 @@ public class editprofland extends javax.swing.JFrame {
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-office-30.png"))); // NOI18N
         jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 40, 30));
 
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-users-30.png"))); // NOI18N
-        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 40, 30));
-
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-profile-30.png"))); // NOI18N
-        jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 40, 30));
+        jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 40, 30));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
         jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 40, 30));
@@ -138,25 +143,25 @@ public class editprofland extends javax.swing.JFrame {
         });
         jPanel4.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, 140, 30));
 
-        jLabel10.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("View Requests");
-        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+        manage.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
+        manage.setForeground(new java.awt.Color(255, 255, 255));
+        manage.setText("Manage Rooms");
+        manage.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel10MouseClicked(evt);
+                manageMouseClicked(evt);
             }
         });
-        jPanel4.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, 140, 30));
+        jPanel4.add(manage, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 140, 30));
 
-        jLabel9.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Manage Rooms");
-        jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 140, 30));
-
-        jLabel6.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("View Reservations");
-        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 160, 30));
+        viewres.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
+        viewres.setForeground(new java.awt.Color(255, 255, 255));
+        viewres.setText("View Reservations");
+        viewres.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                viewresMouseClicked(evt);
+            }
+        });
+        jPanel4.add(viewres, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 160, 30));
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 17)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -239,7 +244,7 @@ public class editprofland extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jButton1.setText("Save Changes");
-        jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -262,13 +267,6 @@ public class editprofland extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
-
-        this.dispose();
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel10MouseClicked
-
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
         config.Session sess = config.Session.getInstance();
         sess.setUid(0);
@@ -283,9 +281,11 @@ public class editprofland extends javax.swing.JFrame {
         this.dispose();    // TODO add your handling code here:
     }//GEN-LAST:event_jLabel13MouseClicked
 
-    private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
-        // Optional: closes dashboard when profile opens
-    }//GEN-LAST:event_jLabel18MouseClicked
+    private void profileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileMouseClicked
+     landlordprofile lp = new landlordprofile();
+    lp.setVisible(true);
+    this.dispose();   // Optional: closes dashboard when profile opens
+    }//GEN-LAST:event_profileMouseClicked
 
     private void firstnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstnameActionPerformed
         // TODO add your handling code here:
@@ -334,7 +334,7 @@ public class editprofland extends javax.swing.JFrame {
         int currentID = config.Session.getInstance().getUid();
 
         // Pass that ID into the constructor
-        new landlordprofile(currentID).setVisible(true);
+        new landlordprofile().setVisible(true);
         this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -344,6 +344,18 @@ public class editprofland extends javax.swing.JFrame {
         edit.setVisible(true);
         this.dispose();   // TODO add your handling code here:
     }//GEN-LAST:event_jLabel22MouseClicked
+
+    private void manageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageMouseClicked
+    managerooms mr = new managerooms();
+    mr.setVisible(true);
+    this.dispose();   // TODO add your handling code here:
+    }//GEN-LAST:event_manageMouseClicked
+
+    private void viewresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewresMouseClicked
+    reservations rs = new reservations();
+    rs.setVisible(true);
+    this.dispose();    // TODO add your handling code here:
+    }//GEN-LAST:event_viewresMouseClicked
 
     /**
      * @param args the command line arguments
@@ -384,32 +396,32 @@ public class editprofland extends javax.swing.JFrame {
     private javax.swing.JTextField email;
     private javax.swing.JTextField firstname;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField lastname;
+    private javax.swing.JLabel manage;
+    private javax.swing.JLabel profile;
     private javax.swing.JTextField username;
     private javax.swing.JTextField usertype;
+    private javax.swing.JLabel viewres;
     // End of variables declaration//GEN-END:variables
 }
