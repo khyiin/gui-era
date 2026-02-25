@@ -64,7 +64,9 @@ public class config {
     }
 
     public void displayData(String sql, javax.swing.JTable table) {
-        try (Connection conn = connectDB(); PreparedStatement pstmt = conn.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+        try (Connection conn = connectDB(); 
+                PreparedStatement pstmt = conn.prepareStatement(sql); 
+                   ResultSet rs = pstmt.executeQuery()) {
             table.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (SQLException e) {
             System.out.println("Error displaying data: " + e.getMessage());

@@ -64,7 +64,6 @@ public class tenantreserve extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         room_display = new javax.swing.JTextField();
         name = new javax.swing.JTextField();
@@ -98,9 +97,6 @@ public class tenantreserve extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, -1, -1));
 
         room_display.addActionListener(new java.awt.event.ActionListener() {
@@ -378,7 +374,6 @@ conf.addRecord(sql, sess.getUid(), roomId, contact.getText(), moveindate.getText
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField moveindate;
     private javax.swing.JTextField name;
     private javax.swing.JTextField room_display;
