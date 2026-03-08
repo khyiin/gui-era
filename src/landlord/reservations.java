@@ -79,6 +79,7 @@ public class reservations extends javax.swing.JFrame {
         reservationstable = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
+        viewlease = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -113,7 +114,7 @@ public class reservations extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(reservationstable);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 570, 340));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 570, 310));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-edit-40.png"))); // NOI18N
         jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -127,6 +128,16 @@ public class reservations extends javax.swing.JFrame {
         jLabel21.setForeground(new java.awt.Color(60, 47, 15));
         jLabel21.setText("Reservations");
         jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 60, 240, 30));
+
+        viewlease.setBackground(new java.awt.Color(255, 255, 255));
+        viewlease.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        viewlease.setText("View Lease");
+        viewlease.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewleaseActionPerformed(evt);
+            }
+        });
+        jPanel1.add(viewlease, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 470, 170, 30));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-home-40.png"))); // NOI18N
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 40, 30));
@@ -273,6 +284,11 @@ public class reservations extends javax.swing.JFrame {
     rs.setVisible(true);
     this.dispose();    // TODO add your handling code here:
     }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void viewleaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewleaseActionPerformed
+         // Refresh the table
+            // TODO add your handling code here:
+    }//GEN-LAST:event_viewleaseActionPerformed
     
     /**
      * @param args the command line arguments
@@ -330,5 +346,6 @@ public class reservations extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable reservationstable;
     private javax.swing.JTextField search;
+    private javax.swing.JButton viewlease;
     // End of variables declaration//GEN-END:variables
 }

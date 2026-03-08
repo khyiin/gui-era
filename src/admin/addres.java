@@ -5,17 +5,79 @@
  */
 package admin;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import Config.config;
+
 /**
  *
  * @author corpu
  */
 public class addres extends javax.swing.JFrame {
+    private reservations parentFrame;
 
     /**
      * Creates new form addres
      */
     public addres() {
         initComponents();
+        loadAutoFillData();
+    }
+
+    public addres(reservations parent) {
+        initComponents();
+        this.parentFrame = parent;
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                if (parentFrame != null) {
+                    parentFrame.setVisible(true);
+                }
+            }
+        });
+        loadAutoFillData();
+    }
+
+    private void loadAutoFillData() {
+        resid.setText("(Auto-generated)");
+        try (Connection conn = config.connectDB()) {
+            ResultSet rs = conn.createStatement().executeQuery("SELECT COALESCE(MAX(res_id), 0) + 1 AS next_id FROM reservations");
+            if (rs.next()) {
+                resid.setText(String.valueOf(rs.getInt("next_id")));
+            }
+        } catch (SQLException e) {
+            resid.setText("Auto");
+        }
+        DefaultComboBoxModel<String> roomModel = new DefaultComboBoxModel<>();
+        roomModel.addElement("-- Select Room --");
+        DefaultComboBoxModel<String> userModel = new DefaultComboBoxModel<>();
+        userModel.addElement("-- Select User --");
+        try (Connection conn = config.connectDB()) {
+            ResultSet rs = conn.createStatement().executeQuery("SELECT r_id, r_name FROM rooms ORDER BY r_id");
+            while (rs.next()) {
+                roomModel.addElement(rs.getInt("r_id") + " - " + rs.getString("r_name"));
+            }
+            rs = conn.createStatement().executeQuery("SELECT id, username FROM users ORDER BY id");
+            while (rs.next()) {
+                userModel.addElement(rs.getInt("id") + " - " + rs.getString("username"));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error loading rooms/users: " + e.getMessage());
+        }
+        roomid1.setModel(roomModel);
+        userid.setModel(userModel);
+        if (roomModel.getSize() > 1) {
+            roomid1.setSelectedIndex(1);
+        }
+        if (userModel.getSize() > 1) {
+            userid.setSelectedIndex(1);
+        }
     }
 
     /**
@@ -30,8 +92,6 @@ public class addres extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         save = new javax.swing.JButton();
-        userid = new javax.swing.JTextField();
-        roomid = new javax.swing.JTextField();
         moveindate = new javax.swing.JTextField();
         contract = new javax.swing.JTextField();
         contact = new javax.swing.JTextField();
@@ -39,7 +99,9 @@ public class addres extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         resid = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
+        userid = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
+        roomid1 = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -64,17 +126,6 @@ public class addres extends javax.swing.JFrame {
             }
         });
         jPanel2.add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 410, 260, 40));
-
-        userid.setBorder(null);
-        jPanel2.add(userid, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 260, 30));
-
-        roomid.setBorder(null);
-        roomid.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                roomidActionPerformed(evt);
-            }
-        });
-        jPanel2.add(roomid, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 260, 30));
 
         moveindate.setBorder(null);
         moveindate.addActionListener(new java.awt.event.ActionListener() {
@@ -104,6 +155,7 @@ public class addres extends javax.swing.JFrame {
         jLabel2.setText("User ID ");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 230, -1, 20));
 
+        resid.setEditable(false);
         resid.setBorder(null);
         resid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -117,11 +169,17 @@ public class addres extends javax.swing.JFrame {
         jLabel12.setText("Reservations Form");
         jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, -1, 40));
 
+        userid.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(userid, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 260, 40));
+
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Contact");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 290, -1, 20));
+
+        roomid1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(roomid1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 260, 40));
 
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
         jLabel7.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -163,13 +221,43 @@ public class addres extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-      
-        // TODO add your handling code here:
+        Object roomSel = roomid1.getSelectedItem();
+        Object userSel = userid.getSelectedItem();
+        if (roomSel == null || roomSel.toString().startsWith("--") || userSel == null || userSel.toString().startsWith("--")
+                || contact.getText().trim().isEmpty() || moveindate.getText().trim().isEmpty() || status.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please select Room and User, and fill in all required fields.");
+            return;
+        }
+        try {
+            int roomId = Integer.parseInt(roomSel.toString().split(" - ")[0]);
+            int userId = Integer.parseInt(userSel.toString().split(" - ")[0]);
+            int adminId = config.Session.getInstance().getUid();
+            Connection conn = config.connectDB();
+            String sql = "INSERT INTO reservations (id, r_id, contact, move_in_date, contract, status, admin_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, userId);
+            pst.setInt(2, roomId);
+            pst.setString(3, contact.getText().trim());
+            pst.setString(4, moveindate.getText().trim());
+            pst.setString(5, contract.getText().trim());
+            pst.setString(6, status.getText().trim());
+            pst.setInt(7, adminId);
+            pst.executeUpdate();
+            conn.close();
+            JOptionPane.showMessageDialog(this, "Reservation saved successfully.");
+            if (parentFrame != null) {
+                parentFrame.displayAllReservations();
+                parentFrame.setVisible(true);
+            } else {
+                new reservations().setVisible(true);
+            }
+            this.dispose();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please enter valid numbers for User ID and Room ID.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error saving reservation: " + e.getMessage());
+        }
     }//GEN-LAST:event_saveActionPerformed
-
-    private void roomidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roomidActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_roomidActionPerformed
 
     private void moveindateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveindateActionPerformed
         // TODO add your handling code here:
@@ -234,9 +322,9 @@ public class addres extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField moveindate;
     private javax.swing.JTextField resid;
-    private javax.swing.JTextField roomid;
+    private javax.swing.JComboBox<String> roomid1;
     private javax.swing.JButton save;
     private javax.swing.JTextField status;
-    private javax.swing.JTextField userid;
+    private javax.swing.JComboBox<String> userid;
     // End of variables declaration//GEN-END:variables
 }

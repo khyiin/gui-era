@@ -123,7 +123,7 @@ public class usersForm extends javax.swing.JFrame {
         search.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         search.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         search.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel2.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 110, 210, 40));
+        jPanel2.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 120, 210, 30));
 
         userTable.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         userTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -140,7 +140,7 @@ public class usersForm extends javax.swing.JFrame {
         jScrollPane1.setViewportView(userTable);
         userTable.getAccessibleContext().setAccessibleParent(userTable);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 180, 550, 270));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 180, 560, 270));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-search-25.png"))); // NOI18N
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -158,7 +158,7 @@ public class usersForm extends javax.swing.JFrame {
                 jButton5ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, 80, 40));
+        jPanel2.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 120, 80, 30));
 
         jButton4.setBackground(new java.awt.Color(255, 255, 255));
         jButton4.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
@@ -168,7 +168,7 @@ public class usersForm extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 110, 80, 40));
+        jPanel2.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 120, 80, 30));
 
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
@@ -183,7 +183,7 @@ public class usersForm extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 80, 40));
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 120, 80, 30));
 
         jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-log-out-30.png"))); // NOI18N
         jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 470, 40, 30));
@@ -202,7 +202,7 @@ public class usersForm extends javax.swing.JFrame {
                 jLabel3MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 40, 140, 30));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 140, 30));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-profile-30.png"))); // NOI18N
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 40, 30));

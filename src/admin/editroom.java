@@ -5,17 +5,63 @@
  */
 package admin;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import Config.config;
+
 /**
  *
  * @author corpu
  */
 public class editroom extends javax.swing.JFrame {
+    private String roomID;
+    private rooms parentFrame;
 
     /**
      * Creates new form editroom
      */
     public editroom() {
         initComponents();
+    }
+
+    public editroom(String rId, rooms parent) {
+        initComponents();
+        this.roomID = rId;
+        this.parentFrame = parent;
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                if (parentFrame != null) {
+                    parentFrame.setVisible(true);
+                }
+            }
+        });
+        loadDetails();
+    }
+
+    private void loadDetails() {
+        try (Connection conn = config.connectDB()) {
+            String sql = "SELECT * FROM rooms WHERE r_id = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, roomID);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                roomname.setText(rs.getString("r_name"));
+                type.setText(rs.getString("r_type"));
+                price.setText(rs.getString("r_price"));
+                location.setText(rs.getString("r_location"));
+                description.setText(rs.getString("r_description"));
+                try {
+                    status.setText(rs.getString("r_status"));
+                } catch (SQLException ignored) { /* r_status column may not exist */ }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error loading room: " + e.getMessage());
+        }
     }
 
     /**
@@ -32,23 +78,19 @@ public class editroom extends javax.swing.JFrame {
         select = new javax.swing.JButton();
         save = new javax.swing.JButton();
         roomname = new javax.swing.JTextField();
-        userid = new javax.swing.JTextField();
         price = new javax.swing.JTextField();
         location = new javax.swing.JTextField();
         type = new javax.swing.JTextField();
         description = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        roomid = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         status = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        imageselect = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -67,7 +109,7 @@ public class editroom extends javax.swing.JFrame {
                 selectActionPerformed(evt);
             }
         });
-        jPanel2.add(select, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 410, 260, 40));
+        jPanel2.add(select, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 350, 260, 40));
 
         save.setBackground(new java.awt.Color(255, 255, 255));
         save.setText("Update");
@@ -76,18 +118,10 @@ public class editroom extends javax.swing.JFrame {
                 saveActionPerformed(evt);
             }
         });
-        jPanel2.add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 460, 260, 40));
+        jPanel2.add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 400, 260, 40));
 
         roomname.setBorder(null);
-        jPanel2.add(roomname, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 260, 30));
-
-        userid.setBorder(null);
-        userid.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                useridActionPerformed(evt);
-            }
-        });
-        jPanel2.add(userid, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 260, 30));
+        jPanel2.add(roomname, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 260, 30));
 
         price.setBorder(null);
         price.addActionListener(new java.awt.event.ActionListener() {
@@ -95,7 +129,7 @@ public class editroom extends javax.swing.JFrame {
                 priceActionPerformed(evt);
             }
         });
-        jPanel2.add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 360, 260, 30));
+        jPanel2.add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, 260, 30));
 
         location.setBorder(null);
         location.addActionListener(new java.awt.event.ActionListener() {
@@ -103,36 +137,28 @@ public class editroom extends javax.swing.JFrame {
                 locationActionPerformed(evt);
             }
         });
-        jPanel2.add(location, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 420, 260, 30));
+        jPanel2.add(location, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, 260, 30));
 
         type.setBorder(null);
-        jPanel2.add(type, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 310, 260, 30));
+        jPanel2.add(type, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 260, 30));
 
         description.setBorder(null);
-        jPanel2.add(description, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 130, 260, 30));
+        jPanel2.add(description, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 360, 260, 30));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Room Name");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 230, -1, 20));
-
-        roomid.setBorder(null);
-        roomid.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                roomidActionPerformed(evt);
-            }
-        });
-        jPanel2.add(roomid, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 260, 30));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, -1, 20));
 
         jLabel13.setBackground(new java.awt.Color(255, 255, 255));
         jLabel13.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Status");
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 170, -1, 20));
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 400, -1, 20));
 
         status.setBorder(null);
-        jPanel2.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 190, 260, 30));
+        jPanel2.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 420, 260, 30));
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Century Gothic", 1, 36)); // NOI18N
@@ -143,40 +169,28 @@ public class editroom extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Room Type");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 290, -1, 20));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, -1, 20));
 
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
         jLabel7.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Price");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 340, -1, 20));
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, -1, 20));
 
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Location");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 400, -1, 20));
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, -1, 20));
 
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/addimage.png"))); // NOI18N
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 240, 260, 150));
+        imageselect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/addimage.png"))); // NOI18N
+        jPanel2.add(imageselect, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 180, 260, 150));
 
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Description");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 110, -1, 20));
-
-        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel10.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("User ID");
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, -1, 20));
-
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Room ID");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, -1, 20));
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 340, -1, 20));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/crud.png"))); // NOI18N
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 530));
@@ -184,6 +198,7 @@ public class editroom extends javax.swing.JFrame {
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectActionPerformed
@@ -191,13 +206,42 @@ public class editroom extends javax.swing.JFrame {
     }//GEN-LAST:event_selectActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-
-        // TODO add your handling code here:
+        if (roomID == null) {
+            JOptionPane.showMessageDialog(this, "No room loaded.");
+            return;
+        }
+        try {
+            Connection conn = config.connectDB();
+            String sql = "UPDATE rooms SET r_name = ?, r_type = ?, r_price = ?, r_location = ?, r_description = ? WHERE r_id = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, roomname.getText().trim());
+            pst.setString(2, type.getText().trim());
+            pst.setDouble(3, Double.parseDouble(price.getText().trim()));
+            pst.setString(4, location.getText().trim());
+            pst.setString(5, description.getText().trim());
+            pst.setString(6, roomID);
+            pst.executeUpdate();
+            try {
+                PreparedStatement pst2 = conn.prepareStatement("UPDATE rooms SET r_status = ? WHERE r_id = ?");
+                pst2.setString(1, status.getText().trim().isEmpty() ? "Available" : status.getText().trim());
+                pst2.setString(2, roomID);
+                pst2.executeUpdate();
+            } catch (SQLException ignored) { /* r_status column may not exist */ }
+            conn.close();
+            JOptionPane.showMessageDialog(this, "Room updated successfully.");
+            if (parentFrame != null) {
+                parentFrame.displayAllRooms();
+                parentFrame.setVisible(true);
+            } else {
+                new rooms().setVisible(true);
+            }
+            this.dispose();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid number for Price.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error updating room: " + e.getMessage());
+        }
     }//GEN-LAST:event_saveActionPerformed
-
-    private void useridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useridActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_useridActionPerformed
 
     private void priceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_priceActionPerformed
         // TODO add your handling code here:
@@ -206,10 +250,6 @@ public class editroom extends javax.swing.JFrame {
     private void locationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_locationActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_locationActionPerformed
-
-    private void roomidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_roomidActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_roomidActionPerformed
 
     /**
      * @param args the command line arguments
@@ -248,13 +288,11 @@ public class editroom extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField description;
+    private javax.swing.JLabel imageselect;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -263,12 +301,10 @@ public class editroom extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField location;
     private javax.swing.JTextField price;
-    private javax.swing.JTextField roomid;
     private javax.swing.JTextField roomname;
     private javax.swing.JButton save;
     private javax.swing.JButton select;
     private javax.swing.JTextField status;
     private javax.swing.JTextField type;
-    private javax.swing.JTextField userid;
     // End of variables declaration//GEN-END:variables
 }

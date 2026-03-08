@@ -71,6 +71,7 @@ public class myreservation extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        viewlease = new javax.swing.JButton();
         jLabel29 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
@@ -87,6 +88,7 @@ public class myreservation extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
         jLabel26 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -124,6 +126,16 @@ public class myreservation extends javax.swing.JFrame {
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Settings");
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 140, 30));
+
+        viewlease.setBackground(new java.awt.Color(255, 255, 255));
+        viewlease.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        viewlease.setText("View Lease");
+        viewlease.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewleaseActionPerformed(evt);
+            }
+        });
+        getContentPane().add(viewlease, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 460, 170, 30));
 
         jLabel29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-edit-40.png"))); // NOI18N
         jLabel29.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -192,7 +204,7 @@ public class myreservation extends javax.swing.JFrame {
                 jButton5ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 460, 180, 40));
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 460, 170, 30));
 
         myrestable.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         myrestable.setModel(new javax.swing.table.DefaultTableModel(
@@ -228,6 +240,16 @@ public class myreservation extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/edit profile bg.png"))); // NOI18N
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 530));
+
+        jButton6.setBackground(new java.awt.Color(255, 255, 255));
+        jButton6.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        jButton6.setText("Cancel Reservation");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 460, 170, 30));
 
         jLabel26.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
@@ -365,6 +387,14 @@ public class myreservation extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel19MouseEntered
 
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void viewleaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewleaseActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_viewleaseActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -402,6 +432,7 @@ public class myreservation extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -429,5 +460,6 @@ public class myreservation extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable myrestable;
     private javax.swing.JTextField search;
+    private javax.swing.JButton viewlease;
     // End of variables declaration//GEN-END:variables
 }

@@ -30,7 +30,20 @@ public class reservations extends javax.swing.JFrame {
         return;
         }
         initComponents();
+        ensureAdminIdColumn();
         displayAllReservations();
+    }
+
+    private void ensureAdminIdColumn() {
+        try {
+            Connection conn = config.connectDB();
+            conn.createStatement().execute("ALTER TABLE reservations ADD COLUMN admin_id INTEGER");
+            conn.close();
+        } catch (SQLException e) {
+            if (!e.getMessage().contains("duplicate column")) {
+                System.out.println("Note: " + e.getMessage());
+            }
+        }
     }
     public void displayAllReservations() {
     try {
@@ -40,6 +53,7 @@ public class reservations extends javax.swing.JFrame {
                      "rm.r_name AS 'Room', " +
                      "res.contact AS 'Contact', " +
                      "res.move_in_date AS 'Date', " +
+                     "res.contract AS 'Contract', " +
                      "res.status AS 'Status' " +
                      "FROM reservations res " +
                      "LEFT JOIN users u ON res.id = u.id " +
@@ -108,7 +122,7 @@ public class reservations extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(reservationstable);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 570, 340));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 570, 310));
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-home-40.png"))); // NOI18N
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 40, 30));
@@ -296,23 +310,58 @@ public class reservations extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        add addFrame = new add();
-        addFrame.setVisible(true);
-
-        // This closes the current usersForm so you don't have too many windows open
-        this.dispose(); // TODO add your handling code here:
+        try {
+            addres addFrame = new addres(this);
+            addFrame.setVisible(true);
+            this.setVisible(false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error opening Add Reservation: " + e.getMessage());
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        
-            
-        // Refresh the table   // TODO add your handling code here:
+        int selectedRow = reservationstable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Select a reservation to delete.");
+            return;
+        }
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this reservation?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
+        try {
+            Object resIdObj = reservationstable.getValueAt(selectedRow, 0);
+            String resId = resIdObj != null ? resIdObj.toString() : "";
+            Connection conn = config.connectDB();
+            String sql = "DELETE FROM reservations WHERE res_id = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, resId);
+            pst.executeUpdate();
+            conn.close();
+            displayAllReservations();
+            JOptionPane.showMessageDialog(this, "Reservation deleted successfully.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error deleting reservation: " + e.getMessage());
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        
-
-            // TODO add your handling code here:
+        int selectedRow = reservationstable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Select a reservation before updating.");
+            return;
+        }
+        Object resIdObj = reservationstable.getValueAt(selectedRow, 0);
+        String resId = resIdObj != null ? resIdObj.toString() : "";
+        try {
+            editres editFrame = new editres(resId, this);
+            editFrame.setVisible(true);
+            this.setVisible(false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error opening Edit Reservation: " + e.getMessage());
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**

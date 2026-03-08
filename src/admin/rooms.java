@@ -30,24 +30,35 @@ public class rooms extends javax.swing.JFrame {
         return;
         }
         initComponents();
-        displayAllRooms();        // Add this!
-    
+        ensureRoomsAdminIdColumn();
+        displayAllRooms();
+    }
+
+    private void ensureRoomsAdminIdColumn() {
+        try {
+            Connection conn = config.connectDB();
+            conn.createStatement().execute("ALTER TABLE rooms ADD COLUMN admin_id INTEGER");
+            conn.close();
+        } catch (SQLException e) {
+            if (!e.getMessage().contains("duplicate column")) {
+                System.out.println("Note: " + e.getMessage());
+            }
+        }
     }
     public void displayAllRooms() {
     try {
         Connection conn = config.connectDB();
-        // u1 = Landlord, u2 = Tenant
         String sql = "SELECT r.r_id AS 'ID', " +
-                     "u1.username AS 'Landlord', " +
-                     "u2.username AS 'Tenant', " +
+                     "COALESCE(u1.username, admin.username, '(Admin)') AS 'Landlord', " +
                      "r.r_name AS 'Room', " +
+                     "r.r_type AS 'Type', " +
+                     "r.r_location AS 'Location', " +
                      "r.r_price AS 'Price', " +
                      "r.r_status AS 'Status', " +
                      "r.r_description AS 'Desc' " +
                      "FROM rooms r " +
                      "LEFT JOIN users u1 ON r.id = u1.id " +
-                     "LEFT JOIN reservations res ON r.r_id = res.r_id " + 
-                     "LEFT JOIN users u2 ON res.id = u2.id";
+                     "LEFT JOIN users admin ON r.admin_id = admin.id";
         
         PreparedStatement pst = conn.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
@@ -122,7 +133,7 @@ public class rooms extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(roomstable);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 580, 340));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 580, 320));
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-home-40.png"))); // NOI18N
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 40, 30));
@@ -311,21 +322,48 @@ public class rooms extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        add addFrame = new add();
+        addroom addFrame = new addroom(this);
         addFrame.setVisible(true);
-
-        // This closes the current usersForm so you don't have too many windows open
-        this.dispose(); // TODO add your handling code here:
+        this.setVisible(false); // Hide rooms while addroom is open
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-
-        // TODO add your handling code here:
+        int selectedRow = roomstable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Select a room before updating.");
+            return;
+        }
+        Object roomIdObj = roomstable.getValueAt(selectedRow, 0);
+        String roomId = roomIdObj != null ? roomIdObj.toString() : "";
+        editroom editFrame = new editroom(roomId, this);
+        editFrame.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-
-        // Refresh the table   // TODO add your handling code here:
+        int selectedRow = roomstable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Select a room to delete.");
+            return;
+        }
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this room?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
+        try {
+            Object roomIdObj = roomstable.getValueAt(selectedRow, 0);
+            String roomId = roomIdObj != null ? roomIdObj.toString() : "";
+            Connection conn = config.connectDB();
+            String sql = "DELETE FROM rooms WHERE r_id = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, roomId);
+            pst.executeUpdate();
+            conn.close();
+            displayAllRooms();
+            JOptionPane.showMessageDialog(this, "Room deleted successfully.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error deleting room: " + e.getMessage());
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
