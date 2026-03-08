@@ -231,9 +231,9 @@ public class addres extends javax.swing.JFrame {
         try {
             int roomId = Integer.parseInt(roomSel.toString().split(" - ")[0]);
             int userId = Integer.parseInt(userSel.toString().split(" - ")[0]);
-            int adminId = config.Session.getInstance().getUid();
             Connection conn = config.connectDB();
-            String sql = "INSERT INTO reservations (id, r_id, contact, move_in_date, contract, status, admin_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO reservations (id, r_id, contact, move_in_date, contract, status) "
+                       + "VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setInt(1, userId);
             pst.setInt(2, roomId);
@@ -241,7 +241,6 @@ public class addres extends javax.swing.JFrame {
             pst.setString(4, moveindate.getText().trim());
             pst.setString(5, contract.getText().trim());
             pst.setString(6, status.getText().trim());
-            pst.setInt(7, adminId);
             pst.executeUpdate();
             conn.close();
             JOptionPane.showMessageDialog(this, "Reservation saved successfully.");

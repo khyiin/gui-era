@@ -121,7 +121,7 @@ public class signup extends javax.swing.JFrame {
                 jLabel5MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 430, -1, 30));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 440, -1, 30));
 
         firstname.setBorder(null);
         firstname.addActionListener(new java.awt.event.ActionListener() {

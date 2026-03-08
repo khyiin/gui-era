@@ -9,6 +9,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
+import javax.swing.ImageIcon;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import Config.config;
 import web.login;
 
@@ -17,6 +23,7 @@ import web.login;
  * @author corpu
  */
 public class editroom extends javax.swing.JFrame {
+    private byte[] roomImageBytes;
 
     /**
      * Creates new form editroom
@@ -38,13 +45,39 @@ public class editroom extends javax.swing.JFrame {
     this.roomID = id;
     this.parent = parent;
     
-    // Set text to your JTextFields
     r_name.setText(name);
     r_type.setText(type);
     r_price.setText(price);
     r_location.setText(loc);
     r_description.setText(desc);
+
+    loadRoomImage();
 }
+
+    private void loadRoomImage() {
+        if (roomID == null || roomID.isEmpty()) {
+            return;
+        }
+        try (Connection conn = config.connectDB()) {
+            PreparedStatement pst = conn.prepareStatement("SELECT r_image FROM rooms WHERE r_id = ?");
+            pst.setString(1, roomID);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                roomImageBytes = rs.getBytes("r_image");
+                if (roomImageBytes != null) {
+                    ImageIcon icon = new ImageIcon(roomImageBytes);
+                    Image scaled = icon.getImage().getScaledInstance(
+                            roomimageselector.getWidth(),
+                            roomimageselector.getHeight(),
+                            Image.SCALE_SMOOTH
+                    );
+                    roomimageselector.setIcon(new ImageIcon(scaled));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error loading room image: " + e.getMessage());
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -64,7 +97,7 @@ public class editroom extends javax.swing.JFrame {
         r_price = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         r_location = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
+        roomimageselector = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         r_description = new javax.swing.JTextField();
         r_type = new javax.swing.JTextField();
@@ -137,8 +170,13 @@ public class editroom extends javax.swing.JFrame {
         });
         getContentPane().add(r_location, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 470, 210, 30));
 
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/addimage.png"))); // NOI18N
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, 260, 170));
+        roomimageselector.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/addimage.png"))); // NOI18N
+        roomimageselector.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                roomimageselectorMouseClicked(evt);
+            }
+        });
+        getContentPane().add(roomimageselector, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, 260, 170));
 
         jLabel26.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jLabel26.setText("Price");
@@ -292,6 +330,26 @@ public class editroom extends javax.swing.JFrame {
     this.dispose();   // TODO add your handling code here:
     }//GEN-LAST:event_jLabel6MouseClicked
 
+    private void roomimageselectorMouseClicked(java.awt.event.MouseEvent evt) {
+        JFileChooser chooser = new JFileChooser();
+        int result = chooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();
+            try {
+                roomImageBytes = Files.readAllBytes(file.toPath());
+                ImageIcon icon = new ImageIcon(roomImageBytes);
+                Image scaled = icon.getImage().getScaledInstance(
+                        roomimageselector.getWidth(),
+                        roomimageselector.getHeight(),
+                        Image.SCALE_SMOOTH
+                );
+                roomimageselector.setIcon(new ImageIcon(scaled));
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Failed to load image: " + e.getMessage());
+            }
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -330,7 +388,6 @@ public class editroom extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;
@@ -355,5 +412,6 @@ public class editroom extends javax.swing.JFrame {
     private javax.swing.JTextField r_name;
     private javax.swing.JTextField r_price;
     private javax.swing.JTextField r_type;
+    private javax.swing.JLabel roomimageselector;
     // End of variables declaration//GEN-END:variables
 }

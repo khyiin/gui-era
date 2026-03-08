@@ -10,6 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
+import javax.swing.ImageIcon;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import Config.config;
 import web.login;
 
@@ -19,27 +25,52 @@ import web.login;
  */
 public class edit extends javax.swing.JFrame {
     public String userID;
+    private byte[] userImageBytes;
     
    public edit(String id, String fn, String ln, String gn, String em, String ad, String un, String ut, String st) {
-    initComponents();
-    
-    // Store the ID for the database update
-    this.userID = id;
-    
-    // Fill the UI components with the data passed from the JTable
-    userid.setText(id);
-    firstname.setText(fn);
-    lastname.setText(ln);
-    gender.setSelectedItem(gn); // Selects "Male" or "Female" in the dropdown
-    email.setText(em);
-    address.setText(ad);
-    username.setText(un);
-    type.setText(ut);
-    status.setText(st);
-    
-    // Keep the ID read-only so it doesn't get messed up
-    userid.setEditable(false);
-    }
+       initComponents();
+       
+       this.userID = id;
+       
+       userid.setText(id);
+       firstname.setText(fn);
+       lastname.setText(ln);
+       gender.setSelectedItem(gn);
+       email.setText(em);
+       address.setText(ad);
+       username.setText(un);
+       type.setText(ut);
+       status.setText(st);
+       
+       userid.setEditable(false);
+
+       loadUserImage();
+   }
+
+   private void loadUserImage() {
+       if (userID == null || userID.isEmpty()) {
+           return;
+       }
+       try (Connection conn = config.connectDB()) {
+           PreparedStatement pst = conn.prepareStatement("SELECT u_image FROM users WHERE id = ?");
+           pst.setString(1, userID);
+           ResultSet rs = pst.executeQuery();
+           if (rs.next()) {
+               userImageBytes = rs.getBytes("u_image");
+               if (userImageBytes != null) {
+                   ImageIcon icon = new ImageIcon(userImageBytes);
+                   Image scaled = icon.getImage().getScaledInstance(
+                           userimageselector.getWidth(),
+                           userimageselector.getHeight(),
+                           Image.SCALE_SMOOTH
+                   );
+                   userimageselector.setIcon(new ImageIcon(scaled));
+               }
+           }
+       } catch (SQLException e) {
+           System.out.println("Error loading user image: " + e.getMessage());
+       }
+   }
     
     // Keep your default constructor if NetBeans requires it for Design view
     public edit() {
@@ -90,7 +121,7 @@ public class edit extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        userimageselector = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -169,6 +200,7 @@ public class edit extends javax.swing.JFrame {
         jLabel2.setText("Last Name");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 200, -1, 20));
 
+        userid.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         userid.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         userid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -230,8 +262,8 @@ public class edit extends javax.swing.JFrame {
         jLabel3.setText("User ID");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, -1, 20));
 
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/addimage.png"))); // NOI18N
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 220, 260, 170));
+        userimageselector.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/addimage.png"))); // NOI18N
+        jPanel1.add(userimageselector, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 220, 260, 170));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/crud.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 530));
@@ -252,26 +284,43 @@ public class edit extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectActionPerformed
-        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+        int result = chooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();
+            try {
+                userImageBytes = Files.readAllBytes(file.toPath());
+                ImageIcon icon = new ImageIcon(userImageBytes);
+                Image scaled = icon.getImage().getScaledInstance(
+                        userimageselector.getWidth(),
+                        userimageselector.getHeight(),
+                        Image.SCALE_SMOOTH
+                );
+                userimageselector.setIcon(new ImageIcon(scaled));
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Failed to load image: " + e.getMessage());
+            }
+        }
     }//GEN-LAST:event_selectActionPerformed
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
      Config.config con = new Config.config();
     
     // 1. Updated SQL to include 'gender' and 'address'
-    String sql = "UPDATE users SET first_name = ?, last_name = ?, gender = ?, email = ?, address = ?, username = ?, user_type = ?, status = ? WHERE id = ?";
+    String sql = "UPDATE users SET first_name = ?, last_name = ?, gender = ?, email = ?, address = ?, username = ?, user_type = ?, status = ?, u_image = ? WHERE id = ?";
     
     // 2. Call updateRecord with ALL fields in the correct order
     con.updateRecord(sql, 
         firstname.getText(), 
         lastname.getText(), 
-        gender.getSelectedItem().toString(), // Get selected gender
+        gender.getSelectedItem().toString(),
         email.getText(), 
         address.getText(), 
         username.getText(), 
         type.getText(), 
-        status.getText(), 
-        userID); // This is the unique ID for the WHERE clause
+        status.getText(),
+        userImageBytes,
+        userID);
     
     javax.swing.JOptionPane.showMessageDialog(null, "Update Successful!");
     
@@ -348,7 +397,6 @@ public class edit extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> gender;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -365,6 +413,7 @@ public class edit extends javax.swing.JFrame {
     private javax.swing.JTextField type;
     private javax.swing.JButton update;
     private javax.swing.JTextField userid;
+    private javax.swing.JLabel userimageselector;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }

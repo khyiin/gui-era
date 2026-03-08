@@ -170,11 +170,16 @@ public class landlord extends javax.swing.JFrame {
     // 3. Close the current dashboard window
     this.dispose();   // Optional: closes dashboard when profile opens
     }//GEN-LAST:event_jLabel18MouseClicked
-
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
-     managerooms mr = new managerooms();
-     mr.setVisible(true); 
-     this.dispose(); // TODO add your handling code here:
+        try {
+            managerooms mr = new managerooms();
+            mr.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Error opening Manage Rooms: " + e.getMessage());
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_jLabel9MouseClicked
 
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked

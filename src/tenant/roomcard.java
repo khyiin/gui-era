@@ -5,6 +5,13 @@
  */
 package tenant;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.ImageIcon;
+import java.awt.Image;
+
 /**
  *
  * @author corpu
@@ -12,17 +19,19 @@ package tenant;
 public class roomcard extends javax.swing.JPanel {
     private int currentRoomId;
     private int currentLandlordId;
+    private String currentStatus;
 
     /**
      * Creates new form roomcard
      */
-   public roomcard(int rId, int lId, String rName, String rType, String rPrice, String rLocation, String rDesc) {
+   public roomcard(int rId, int lId, String rName, String rType, String rPrice, String rLocation, String rDesc, String rStatus) {
       
         initComponents(); 
         
         // FIX: You MUST assign the parameters to your class variables here
         this.currentRoomId = rId;
         this.currentLandlordId = lId;
+        this.currentStatus = rStatus != null ? rStatus : "Available";
     
         // Set your labels
         name.setText(rName);
@@ -30,8 +39,48 @@ public class roomcard extends javax.swing.JPanel {
         price.setText(rPrice);
         location.setText(rLocation);
         description.setText(rDesc);
+
+        if ("Not Available".equalsIgnoreCase(this.currentStatus)) {
+            reserve.setEnabled(false);
+            reserve.setText("Not Available");
+        } else {
+            reserve.setEnabled(true);
+            reserve.setText("Reserve Room");
+        }
+
+        loadRoomImage();
     
 }
+
+    private void loadRoomImage() {
+        try (Connection conn = Config.config.connectDB()) {
+            PreparedStatement pst = conn.prepareStatement("SELECT r_image FROM rooms WHERE r_id = ?");
+            pst.setInt(1, currentRoomId);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                byte[] img = rs.getBytes("r_image");
+                if (img != null) {
+                    ImageIcon icon = new ImageIcon(img);
+
+                    int w = roomimageselector.getWidth();
+                    int h = roomimageselector.getHeight();
+                    if (w <= 0 || h <= 0) {
+                        w = roomimageselector.getPreferredSize().width;
+                        h = roomimageselector.getPreferredSize().height;
+                    }
+
+                    if (w > 0 && h > 0) {
+                        Image scaled = icon.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
+                        roomimageselector.setIcon(new ImageIcon(scaled));
+                    } else {
+                        roomimageselector.setIcon(icon);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error loading room image: " + e.getMessage());
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -54,7 +103,7 @@ public class roomcard extends javax.swing.JPanel {
         price = new javax.swing.JLabel();
         location = new javax.swing.JLabel();
         description = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        roomimageselector = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -100,8 +149,8 @@ public class roomcard extends javax.swing.JPanel {
         jPanel3.add(location, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 210, 20));
         jPanel3.add(description, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 110, 210, 20));
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/backgroundr.png"))); // NOI18N
-        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 190, 160));
+        roomimageselector.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/backgroundr.png"))); // NOI18N
+        jPanel3.add(roomimageselector, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 190, 160));
 
         add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 210));
     }// </editor-fold>//GEN-END:initComponents
@@ -119,12 +168,12 @@ public class roomcard extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel location;
     private javax.swing.JLabel name;
     private javax.swing.JLabel price;
     private javax.swing.JButton reserve;
+    private javax.swing.JLabel roomimageselector;
     private javax.swing.JLabel type;
     // End of variables declaration//GEN-END:variables
 }

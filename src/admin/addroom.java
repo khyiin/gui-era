@@ -9,6 +9,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
+import javax.swing.ImageIcon;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import Config.config;
 
 /**
@@ -16,6 +22,7 @@ import Config.config;
  * @author corpu
  */
 public class addroom extends javax.swing.JFrame {
+    private byte[] roomImageBytes;
     private rooms parentFrame;
 
     /**
@@ -64,7 +71,7 @@ public class addroom extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        imageselect = new javax.swing.JLabel();
+        roomimageselector = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -95,9 +102,11 @@ public class addroom extends javax.swing.JFrame {
         });
         jPanel2.add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 400, 260, 40));
 
+        roomname.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         roomname.setBorder(null);
         jPanel2.add(roomname, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 260, 30));
 
+        price.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         price.setBorder(null);
         price.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,6 +115,7 @@ public class addroom extends javax.swing.JFrame {
         });
         jPanel2.add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 230, 260, 30));
 
+        location.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         location.setBorder(null);
         location.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,9 +124,11 @@ public class addroom extends javax.swing.JFrame {
         });
         jPanel2.add(location, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 290, 260, 30));
 
+        type.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         type.setBorder(null);
         jPanel2.add(type, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, 260, 30));
 
+        description.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         description.setBorder(null);
         jPanel2.add(description, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 350, 260, 30));
 
@@ -132,6 +144,7 @@ public class addroom extends javax.swing.JFrame {
         jLabel13.setText("Status");
         jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 390, -1, 20));
 
+        status.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         status.setBorder(null);
         jPanel2.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 410, 260, 30));
 
@@ -158,8 +171,8 @@ public class addroom extends javax.swing.JFrame {
         jLabel8.setText("Location");
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 270, -1, 20));
 
-        imageselect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/addimage.png"))); // NOI18N
-        jPanel2.add(imageselect, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 180, 260, 150));
+        roomimageselector.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/addimage.png"))); // NOI18N
+        jPanel2.add(roomimageselector, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 180, 260, 150));
 
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -177,7 +190,23 @@ public class addroom extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectActionPerformed
-        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+        int result = chooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();
+            try {
+                roomImageBytes = Files.readAllBytes(file.toPath());
+                ImageIcon icon = new ImageIcon(roomImageBytes);
+                Image scaled = icon.getImage().getScaledInstance(
+                        roomimageselector.getWidth(),
+                        roomimageselector.getHeight(),
+                        Image.SCALE_SMOOTH
+                );
+                roomimageselector.setIcon(new ImageIcon(scaled));
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Failed to load image: " + e.getMessage());
+            }
+        }
     }//GEN-LAST:event_selectActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
@@ -186,17 +215,19 @@ public class addroom extends javax.swing.JFrame {
             return;
         }
         try {
-            int adminId = config.Session.getInstance().getUid();
+            int ownerId = config.Session.getInstance().getUid();
             Connection conn = config.connectDB();
-            String sql = "INSERT INTO rooms (r_name, r_type, r_price, r_location, r_description, r_status, admin_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO rooms (id, r_name, r_type, r_price, r_location, r_description, r_status, r_image) "
+                       + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, roomname.getText().trim());
-            pst.setString(2, type.getText().trim());
-            pst.setDouble(3, Double.parseDouble(price.getText().trim()));
-            pst.setString(4, location.getText().trim());
-            pst.setString(5, description.getText().trim());
-            pst.setString(6, status.getText().trim().isEmpty() ? "Available" : status.getText().trim());
-            pst.setInt(7, adminId);
+            pst.setInt(1, ownerId);
+            pst.setString(2, roomname.getText().trim());
+            pst.setString(3, type.getText().trim());
+            pst.setDouble(4, Double.parseDouble(price.getText().trim()));
+            pst.setString(5, location.getText().trim());
+            pst.setString(6, description.getText().trim());
+            pst.setString(7, status.getText().trim().isEmpty() ? "Available" : status.getText().trim());
+            pst.setBytes(8, roomImageBytes);
             pst.executeUpdate();
             conn.close();
             JOptionPane.showMessageDialog(this, "Room saved successfully.");
@@ -259,7 +290,6 @@ public class addroom extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField description;
-    private javax.swing.JLabel imageselect;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -272,6 +302,7 @@ public class addroom extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField location;
     private javax.swing.JTextField price;
+    private javax.swing.JLabel roomimageselector;
     private javax.swing.JTextField roomname;
     private javax.swing.JButton save;
     private javax.swing.JButton select;

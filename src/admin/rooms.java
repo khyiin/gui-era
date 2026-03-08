@@ -30,26 +30,14 @@ public class rooms extends javax.swing.JFrame {
         return;
         }
         initComponents();
-        ensureRoomsAdminIdColumn();
         displayAllRooms();
     }
 
-    private void ensureRoomsAdminIdColumn() {
-        try {
-            Connection conn = config.connectDB();
-            conn.createStatement().execute("ALTER TABLE rooms ADD COLUMN admin_id INTEGER");
-            conn.close();
-        } catch (SQLException e) {
-            if (!e.getMessage().contains("duplicate column")) {
-                System.out.println("Note: " + e.getMessage());
-            }
-        }
-    }
     public void displayAllRooms() {
     try {
         Connection conn = config.connectDB();
         String sql = "SELECT r.r_id AS 'ID', " +
-                     "COALESCE(u1.username, admin.username, '(Admin)') AS 'Landlord', " +
+                     "COALESCE(u1.username, '(Owner)') AS 'Owner', " +
                      "r.r_name AS 'Room', " +
                      "r.r_type AS 'Type', " +
                      "r.r_location AS 'Location', " +
@@ -57,8 +45,7 @@ public class rooms extends javax.swing.JFrame {
                      "r.r_status AS 'Status', " +
                      "r.r_description AS 'Desc' " +
                      "FROM rooms r " +
-                     "LEFT JOIN users u1 ON r.id = u1.id " +
-                     "LEFT JOIN users admin ON r.admin_id = admin.id";
+                     "LEFT JOIN users u1 ON r.id = u1.id";
         
         PreparedStatement pst = conn.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();

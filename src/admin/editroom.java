@@ -10,6 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
+import javax.swing.ImageIcon;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import Config.config;
 
 /**
@@ -17,6 +23,7 @@ import Config.config;
  * @author corpu
  */
 public class editroom extends javax.swing.JFrame {
+    private byte[] roomImageBytes;
     private String roomID;
     private rooms parentFrame;
 
@@ -58,6 +65,19 @@ public class editroom extends javax.swing.JFrame {
                 try {
                     status.setText(rs.getString("r_status"));
                 } catch (SQLException ignored) { /* r_status column may not exist */ }
+
+                try {
+                    roomImageBytes = rs.getBytes("r_image");
+                    if (roomImageBytes != null) {
+                        ImageIcon icon = new ImageIcon(roomImageBytes);
+                        Image scaled = icon.getImage().getScaledInstance(
+                                roomimageselector.getWidth(),
+                                roomimageselector.getHeight(),
+                                Image.SCALE_SMOOTH
+                        );
+                        roomimageselector.setIcon(new ImageIcon(scaled));
+                    }
+                } catch (SQLException ignored) { /* r_image column may not exist */ }
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Error loading room: " + e.getMessage());
@@ -89,7 +109,7 @@ public class editroom extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        imageselect = new javax.swing.JLabel();
+        roomimageselector = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -183,8 +203,8 @@ public class editroom extends javax.swing.JFrame {
         jLabel8.setText("Location");
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, -1, 20));
 
-        imageselect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/addimage.png"))); // NOI18N
-        jPanel2.add(imageselect, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 180, 260, 150));
+        roomimageselector.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/addimage.png"))); // NOI18N
+        jPanel2.add(roomimageselector, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 180, 260, 150));
 
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -202,7 +222,23 @@ public class editroom extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectActionPerformed
-        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+        int result = chooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();
+            try {
+                roomImageBytes = Files.readAllBytes(file.toPath());
+                ImageIcon icon = new ImageIcon(roomImageBytes);
+                Image scaled = icon.getImage().getScaledInstance(
+                        roomimageselector.getWidth(),
+                        roomimageselector.getHeight(),
+                        Image.SCALE_SMOOTH
+                );
+                roomimageselector.setIcon(new ImageIcon(scaled));
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Failed to load image: " + e.getMessage());
+            }
+        }
     }//GEN-LAST:event_selectActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
@@ -227,6 +263,16 @@ public class editroom extends javax.swing.JFrame {
                 pst2.setString(2, roomID);
                 pst2.executeUpdate();
             } catch (SQLException ignored) { /* r_status column may not exist */ }
+
+            if (roomImageBytes != null) {
+                try {
+                    PreparedStatement pst3 = conn.prepareStatement("UPDATE rooms SET r_image = ? WHERE r_id = ?");
+                    pst3.setBytes(1, roomImageBytes);
+                    pst3.setString(2, roomID);
+                    pst3.executeUpdate();
+                } catch (SQLException ignored) { /* r_image column may not exist */ }
+            }
+
             conn.close();
             JOptionPane.showMessageDialog(this, "Room updated successfully.");
             if (parentFrame != null) {
@@ -288,7 +334,6 @@ public class editroom extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField description;
-    private javax.swing.JLabel imageselect;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -301,6 +346,7 @@ public class editroom extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField location;
     private javax.swing.JTextField price;
+    private javax.swing.JLabel roomimageselector;
     private javax.swing.JTextField roomname;
     private javax.swing.JButton save;
     private javax.swing.JButton select;

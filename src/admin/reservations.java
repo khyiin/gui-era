@@ -30,21 +30,9 @@ public class reservations extends javax.swing.JFrame {
         return;
         }
         initComponents();
-        ensureAdminIdColumn();
         displayAllReservations();
     }
 
-    private void ensureAdminIdColumn() {
-        try {
-            Connection conn = config.connectDB();
-            conn.createStatement().execute("ALTER TABLE reservations ADD COLUMN admin_id INTEGER");
-            conn.close();
-        } catch (SQLException e) {
-            if (!e.getMessage().contains("duplicate column")) {
-                System.out.println("Note: " + e.getMessage());
-            }
-        }
-    }
     public void displayAllReservations() {
     try {
         Connection conn = config.connectDB();

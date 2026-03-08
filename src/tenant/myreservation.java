@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import Config.config;
 import web.login;
+import web.leasewindow;
 
 /**
  *
@@ -36,25 +37,40 @@ public class myreservation extends javax.swing.JFrame {
         
     }
     public void displayMyReservations() {
-    Config.config con = new Config.config();
-    Config.config.Session sess = Config.config.Session.getInstance();
-    int tenantId = sess.getUid(); 
-    
-    // SQL UPDATED: Added res.contact AS 'Contact'
-    String sql = "SELECT res.res_id, r.r_name AS 'Room Name', r.r_location AS 'Location', " +
-                 "res.contact AS 'Contact', " + // New column added here
-                 "res.move_in_date AS 'Move-in Date', res.contract AS 'Stay Duration', res.status AS 'Status' " +
-                 "FROM reservations res " +
-                 "JOIN rooms r ON res.r_id = r.r_id " +
-                 "WHERE res.id = " + tenantId;
+        Config.config con = new Config.config();
+        Config.config.Session sess = Config.config.Session.getInstance();
+        int tenantId = sess.getUid(); 
+        
+        String searchText = search.getText().trim();
 
-    con.displayData(sql, myrestable); 
+        String sql = "SELECT res.res_id, " +
+                     "r.r_name AS 'Room Name', " +
+                     "r.r_location AS 'Location', " +
+                     "res.contact AS 'Contact', " +
+                     "res.move_in_date AS 'Move-in Date', " +
+                     "res.contract AS 'Stay Duration', " +
+                     "res.status AS 'Status' " +
+                     "FROM reservations res " +
+                     "JOIN rooms r ON res.r_id = r.r_id " +
+                     "WHERE res.id = " + tenantId;
 
-    // Note: If you hide column 0 (res_id), the Contact is now column index 3.
-    myrestable.getColumnModel().getColumn(0).setMinWidth(0);
-    myrestable.getColumnModel().getColumn(0).setMaxWidth(0);
-    myrestable.getColumnModel().getColumn(0).setWidth(0);
-}
+        if (!searchText.isEmpty()) {
+            sql += " AND ("
+                + "r.r_name LIKE '%" + searchText + "%' OR "
+                + "r.r_location LIKE '%" + searchText + "%' OR "
+                + "res.contact LIKE '%" + searchText + "%' OR "
+                + "res.move_in_date LIKE '%" + searchText + "%' OR "
+                + "res.contract LIKE '%" + searchText + "%' OR "
+                + "res.status LIKE '%" + searchText + "%'"
+                + ")";
+        }
+
+        con.displayData(sql, myrestable); 
+
+        myrestable.getColumnModel().getColumn(0).setMinWidth(0);
+        myrestable.getColumnModel().getColumn(0).setMaxWidth(0);
+        myrestable.getColumnModel().getColumn(0).setWidth(0);
+    }
     
 
     /**
@@ -85,7 +101,7 @@ public class myreservation extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         myrestable = new javax.swing.JTable();
         search = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
+        searchicon = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
@@ -227,13 +243,13 @@ public class myreservation extends javax.swing.JFrame {
         search.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 70, 210, 40));
 
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-search-25.png"))); // NOI18N
-        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+        searchicon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-search-25.png"))); // NOI18N
+        searchicon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel9MouseClicked(evt);
+                searchiconMouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 80, 25, 20));
+        getContentPane().add(searchicon, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 80, 25, 20));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/edit profile bg.png"))); // NOI18N
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 530));
@@ -354,28 +370,45 @@ public class myreservation extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel29MouseClicked
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-    int row = myrestable.getSelectedRow();
-    if(row == -1) {
-        JOptionPane.showMessageDialog(this, "Please select a reservation to cancel.");
-        return;
-    }
-    
-    // Get the res_id from the hidden column 0
-    String resId = myrestable.getModel().getValueAt(row, 0).toString();
-    
-    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel this reservation?", "Warning", JOptionPane.YES_NO_OPTION);
-    
-    if(confirm == JOptionPane.YES_OPTION) {
-        Config.config conf = new Config.config();
-        // Delete the record from the database
-        conf.updateRecord("DELETE FROM reservations WHERE res_id = ?", resId);
-        displayMyReservations(); // Refresh the table
-        // TODO add your handling code here:
+        int row = myrestable.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a reservation to cancel.");
+            return;
+        }
+        
+        String resId = myrestable.getModel().getValueAt(row, 0).toString();
+        
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Are you sure you want to cancel this reservation?",
+                "Warning",
+                JOptionPane.YES_NO_OPTION
+        );
+        
+        if (confirm == JOptionPane.YES_OPTION) {
+            Config.config conf = new Config.config();
+            conf.updateRecord("UPDATE reservations SET status = 'Cancelled' WHERE res_id = ?", resId);
+
+            try (Connection conn = config.connectDB()) {
+                PreparedStatement pst = conn.prepareStatement("SELECT r_id FROM reservations WHERE res_id = ?");
+                pst.setString(1, resId);
+                ResultSet rs = pst.executeQuery();
+                if (rs.next()) {
+                    int roomId = rs.getInt("r_id");
+                    PreparedStatement pst2 = conn.prepareStatement("UPDATE rooms SET r_status = 'Available' WHERE r_id = ?");
+                    pst2.setInt(1, roomId);
+                    pst2.executeUpdate();
+                }
+            } catch (SQLException e) {
+                System.out.println("Error updating room status after cancel: " + e.getMessage());
+            }
+
+            displayMyReservations();
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
-    }
-    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel9MouseClicked
+    private void searchiconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchiconMouseClicked
+        displayMyReservations();
+    }//GEN-LAST:event_searchiconMouseClicked
 
     private void jLabel19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MouseClicked
     tenantprofile tp = new tenantprofile();
@@ -388,11 +421,26 @@ public class myreservation extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel19MouseEntered
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        jButton5ActionPerformed(evt);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void viewleaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewleaseActionPerformed
-        // TODO add your handling code here:
+        int row = myrestable.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a reservation to view lease.");
+            return;
+        }
+
+        javax.swing.table.TableModel model = myrestable.getModel();
+        String statusValue = model.getValueAt(row, 6).toString();
+
+        if (!"Approved".equalsIgnoreCase(statusValue) && !"Confirmed".equalsIgnoreCase(statusValue)) {
+            JOptionPane.showMessageDialog(this, "Reservation Not Valid");
+            return;
+        }
+
+        String resId = model.getValueAt(row, 0).toString();
+        new leasewindow(resId).setVisible(true);
     }//GEN-LAST:event_viewleaseActionPerformed
 
     /**
@@ -455,11 +503,11 @@ public class myreservation extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable myrestable;
     private javax.swing.JTextField search;
+    private javax.swing.JLabel searchicon;
     private javax.swing.JButton viewlease;
     // End of variables declaration//GEN-END:variables
 }

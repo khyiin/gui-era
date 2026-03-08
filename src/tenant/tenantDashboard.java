@@ -272,9 +272,15 @@ public tenantDashboard(int id) {
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-       tenantbrowse tb = new tenantbrowse();
-       tb.setVisible(true);
-       this.dispose(); // TODO add your handling code here:
+       try {
+           tenantbrowse tb = new tenantbrowse();
+           tb.setVisible(true);
+           this.dispose();
+       } catch (Exception e) {
+           javax.swing.JOptionPane.showMessageDialog(this,
+                   "Error opening Browse Rooms: " + e.getMessage());
+           e.printStackTrace();
+       }
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked

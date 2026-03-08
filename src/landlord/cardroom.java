@@ -5,6 +5,13 @@
  */
 package landlord;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.ImageIcon;
+import java.awt.Image;
+
 /**
  *
  * @author corpu
@@ -27,12 +34,43 @@ public class cardroom extends javax.swing.JPanel {
         description.setText(desc); // Ensure this label is wide enough for text
         roomstatus.setText(status);
     
-    // Status color logic
-    if(status.equalsIgnoreCase("Available")){
-        roomstatus.setForeground(new java.awt.Color(0, 153, 0)); // Dark Green
-    } else {
-        roomstatus.setForeground(java.awt.Color.RED);
+        if(status.equalsIgnoreCase("Available")){
+            roomstatus.setForeground(new java.awt.Color(0, 153, 0));
+        } else {
+            roomstatus.setForeground(java.awt.Color.RED);
+        }
+
+        loadRoomImage();
     }
+
+    private void loadRoomImage() {
+        try (Connection conn = Config.config.connectDB()) {
+            PreparedStatement pst = conn.prepareStatement("SELECT r_image FROM rooms WHERE r_id = ?");
+            pst.setString(1, r_id);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                byte[] img = rs.getBytes("r_image");
+                if (img != null) {
+                    ImageIcon icon = new ImageIcon(img);
+
+                    int w = roomimageselector.getWidth();
+                    int h = roomimageselector.getHeight();
+                    if (w <= 0 || h <= 0) {
+                        w = roomimageselector.getPreferredSize().width;
+                        h = roomimageselector.getPreferredSize().height;
+                    }
+
+                    if (w > 0 && h > 0) {
+                        Image scaled = icon.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
+                        roomimageselector.setIcon(new ImageIcon(scaled));
+                    } else {
+                        roomimageselector.setIcon(icon);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error loading room image: " + e.getMessage());
+        }
     }
 
     /**
@@ -59,7 +97,7 @@ public class cardroom extends javax.swing.JPanel {
         roomprice = new javax.swing.JLabel();
         roomlocation = new javax.swing.JLabel();
         description = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        roomimageselector = new javax.swing.JLabel();
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -129,8 +167,8 @@ public class cardroom extends javax.swing.JPanel {
         description.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jPanel3.add(description, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 110, 210, 20));
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/backgroundr.png"))); // NOI18N
-        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 190, 160));
+        roomimageselector.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/backgroundr.png"))); // NOI18N
+        jPanel3.add(roomimageselector, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 190, 160));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -195,9 +233,9 @@ public class cardroom extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JButton remove;
+    private javax.swing.JLabel roomimageselector;
     private javax.swing.JLabel roomlocation;
     private javax.swing.JLabel roomname;
     private javax.swing.JLabel roomprice;

@@ -200,7 +200,7 @@ public class editreservation extends javax.swing.JFrame {
         jLabel4.setText("Status");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 360, -1, 20));
 
-        status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Approved", "Rejected" }));
+        status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Approved", "Rejected", "Cancelled" }));
         status.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 statusActionPerformed(evt);
@@ -227,20 +227,35 @@ public class editreservation extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
-     String newStatus = status.getSelectedItem().toString();
+        String newStatus = status.getSelectedItem().toString();
 
-    // 2. Use your existing config.java method to update the DB
-    Config.config conf = new Config.config();
-    String sql = "UPDATE reservations SET status = ? WHERE res_id = ?";
-    
-    // 3. Pass the new status and the reservationID global variable
-    conf.updateRecord(sql, newStatus, reservationID);
+        Config.config conf = new Config.config();
+        String sql = "UPDATE reservations SET status = ? WHERE res_id = ?";
+        conf.updateRecord(sql, newStatus, reservationID);
 
-    javax.swing.JOptionPane.showMessageDialog(this, "Status successfully updated to: " + newStatus);
-    
-    // 4. Return to the list page (Replace with your actual class name)
-    new reservations().setVisible(true);
-    this.dispose();   // TODO add your handling code here:
+        try (Connection conn = config.connectDB()) {
+            PreparedStatement pst = conn.prepareStatement("SELECT r_id FROM reservations WHERE res_id = ?");
+            pst.setString(1, reservationID);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                int roomId = rs.getInt("r_id");
+                String roomStatus = "Available";
+                if ("Approved".equalsIgnoreCase(newStatus) || "Confirmed".equalsIgnoreCase(newStatus)) {
+                    roomStatus = "Not Available";
+                }
+                PreparedStatement pst2 = conn.prepareStatement("UPDATE rooms SET r_status = ? WHERE r_id = ?");
+                pst2.setString(1, roomStatus);
+                pst2.setInt(2, roomId);
+                pst2.executeUpdate();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error updating room availability from reservation: " + e.getMessage());
+        }
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Status successfully updated to: " + newStatus);
+
+        new reservations().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_updateActionPerformed
 
     private void useridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useridActionPerformed

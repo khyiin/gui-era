@@ -38,32 +38,32 @@ public class reservations extends javax.swing.JFrame {
         displayLandlordReservations();
     }
     public void displayLandlordReservations() {
-    Config.config con = new Config.config();
-    Config.config.Session sess = Config.config.Session.getInstance();
-    int landlordId = sess.getUid();
-    
-    String searchText = ""; // If you have a search field, use: search.getText();
-    
-    // SQL UPDATED: Pulling 'contact' from the 'reservations' (res) table
-    String sql = "SELECT res.res_id AS 'Res ID', r.r_name AS 'Room Name', " +
-                 "u.first_name || ' ' || u.last_name AS 'Tenant', res.contact AS 'Contact', " +
-                 "res.move_in_date AS 'Move-in', res.contract AS 'Contract', res.status AS 'Status' " +
-                 "FROM reservations res " +
-                 "JOIN rooms r ON res.r_id = r.r_id " +
-                 "JOIN users u ON res.id = u.id " +
-                 "WHERE r.id = " + landlordId + " " +
-                 "AND (u.first_name LIKE '%" + searchText + "%' OR r.r_name LIKE '%" + searchText + "%')";
+        Config.config con = new Config.config();
+        Config.config.Session sess = Config.config.Session.getInstance();
+        int landlordId = sess.getUid();
 
-    con.displayData(sql, reservationstable);
+        String searchText = search.getText().trim();
 
+        String sql = "SELECT res.res_id AS 'Res ID', r.r_name AS 'Room Name', " +
+                     "u.first_name || ' ' || u.last_name AS 'Tenant', res.contact AS 'Contact', " +
+                     "res.move_in_date AS 'Move-in', res.contract AS 'Contract', res.status AS 'Status' " +
+                     "FROM reservations res " +
+                     "JOIN rooms r ON res.r_id = r.r_id " +
+                     "JOIN users u ON res.id = u.id " +
+                     "WHERE r.id = " + landlordId;
 
-    // If you want to hide specific columns (like the ID), use your column hiding logic:
-    /*
-    yourJTableVariable.getColumnModel().getColumn(0).setMinWidth(0);
-    yourJTableVariable.getColumnModel().getColumn(0).setMaxWidth(0);
-    yourJTableVariable.getColumnModel().getColumn(0).setWidth(0);
-    */
-}
+        if (!searchText.isEmpty()) {
+            sql += " AND ("
+                + "u.first_name LIKE '%" + searchText + "%' OR "
+                + "u.last_name LIKE '%" + searchText + "%' OR "
+                + "r.r_name LIKE '%" + searchText + "%' OR "
+                + "res.status LIKE '%" + searchText + "%' OR "
+                + "res.move_in_date LIKE '%" + searchText + "%'"
+                + ")";
+        }
+
+        con.displayData(sql, reservationstable);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -89,7 +89,7 @@ public class reservations extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         search = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
+        searchicon = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
@@ -191,13 +191,13 @@ public class reservations extends javax.swing.JFrame {
         search.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 60, 210, 40));
 
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-search-25.png"))); // NOI18N
-        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+        searchicon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-search-25.png"))); // NOI18N
+        searchicon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel11MouseClicked(evt);
+                searchiconMouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 70, 25, 20));
+        jPanel1.add(searchicon, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 70, 25, 20));
 
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-profile-30.png"))); // NOI18N
         jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 40, 30));
@@ -251,9 +251,9 @@ public class reservations extends javax.swing.JFrame {
         this.dispose();  // TODO add your handling code here:
     }//GEN-LAST:event_jLabel13MouseClicked
 
-    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel11MouseClicked
+    private void searchiconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchiconMouseClicked
+        displayLandlordReservations();
+    }//GEN-LAST:event_searchiconMouseClicked
 
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
     int row = reservationstable.getSelectedRow();
@@ -286,8 +286,22 @@ public class reservations extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void viewleaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewleaseActionPerformed
-         // Refresh the table
-            // TODO add your handling code here:
+        int row = reservationstable.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a reservation to view lease.");
+            return;
+        }
+
+        javax.swing.table.TableModel model = reservationstable.getModel();
+        String statusValue = model.getValueAt(row, 6).toString();
+
+        if (!"Approved".equalsIgnoreCase(statusValue) && !"Confirmed".equalsIgnoreCase(statusValue)) {
+            JOptionPane.showMessageDialog(this, "Reservation Not Valid");
+            return;
+        }
+
+        String resId = model.getValueAt(row, 0).toString();
+        new web.leasewindow(resId).setVisible(true);
     }//GEN-LAST:event_viewleaseActionPerformed
     
     /**
@@ -326,7 +340,6 @@ public class reservations extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -346,6 +359,7 @@ public class reservations extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable reservationstable;
     private javax.swing.JTextField search;
+    private javax.swing.JLabel searchicon;
     private javax.swing.JButton viewlease;
     // End of variables declaration//GEN-END:variables
 }

@@ -33,32 +33,55 @@ public class tenantbrowse extends javax.swing.JFrame {
          loadRooms();
     } 
     public void loadRooms() {
-    mainRoompanel.removeAll();
-    String sql = "SELECT * FROM rooms";
+        mainRoompanel.removeAll();
 
-    try (Connection conn = config.connectDB(); 
-         PreparedStatement pstmt = conn.prepareStatement(sql); 
-         ResultSet rs = pstmt.executeQuery()) {
+        String keyword = search.getText().trim();
+        String baseSql = "SELECT * FROM rooms";
+        String sql = baseSql;
 
-        while (rs.next()) {
-            int rId = rs.getInt("r_id"); 
-            int lId = rs.getInt("id"); // CHANGED from landlord_id to id
-
-            String rName = rs.getString("r_name");
-            String rType = rs.getString("r_type");
-            String rPrice = rs.getString("r_price");
-            String rLoc = rs.getString("r_location");
-            String rDesc = rs.getString("r_description");
-
-            roomcard card = new roomcard(rId, lId, rName, rType, rPrice, rLoc, rDesc);
-            mainRoompanel.add(card);
+        boolean hasSearch = !keyword.isEmpty();
+        if (hasSearch) {
+            sql += " WHERE r_name LIKE ? OR r_type LIKE ? OR r_location LIKE ?";
         }
-        mainRoompanel.revalidate();
-        mainRoompanel.repaint();
-    } catch (SQLException e) {
-        System.out.println("Error loading rooms: " + e.getMessage());
+
+        try (Connection conn = config.connectDB();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            if (hasSearch) {
+                String like = "%" + keyword + "%";
+                pstmt.setString(1, like);
+                pstmt.setString(2, like);
+                pstmt.setString(3, like);
+            }
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    int rId = rs.getInt("r_id");
+                    int lId = rs.getInt("id");
+
+                    String rName = rs.getString("r_name");
+                    String rType = rs.getString("r_type");
+                    String rPrice = rs.getString("r_price");
+                    String rLoc = rs.getString("r_location");
+                    String rDesc = rs.getString("r_description");
+                    String rStatus = null;
+                    try {
+                        rStatus = rs.getString("r_status");
+                    } catch (SQLException ignored) {
+                        rStatus = "Available";
+                    }
+
+                    roomcard card = new roomcard(rId, lId, rName, rType, rPrice, rLoc, rDesc, rStatus);
+                    mainRoompanel.add(card);
+                }
+            }
+
+            mainRoompanel.revalidate();
+            mainRoompanel.repaint();
+        } catch (SQLException e) {
+            System.out.println("Error loading rooms: " + e.getMessage());
+        }
     }
-}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -70,7 +93,7 @@ public class tenantbrowse extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         search = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
+        searchicon = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -97,13 +120,13 @@ public class tenantbrowse extends javax.swing.JFrame {
         search.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 20, 210, 40));
 
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-search-25.png"))); // NOI18N
-        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+        searchicon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-search-25.png"))); // NOI18N
+        searchicon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel9MouseClicked(evt);
+                searchiconMouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 30, 25, 20));
+        jPanel1.add(searchicon, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 30, 25, 20));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-home-40.png"))); // NOI18N
         jLabel7.setText("jLabel7");
@@ -206,9 +229,9 @@ public class tenantbrowse extends javax.swing.JFrame {
     this.dispose();    // TODO add your handling code here:
     }//GEN-LAST:event_jLabel20MouseClicked
 
-    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel9MouseClicked
+    private void searchiconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchiconMouseClicked
+        loadRooms();
+    }//GEN-LAST:event_searchiconMouseClicked
 
     private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
     tenantprofile tp = new tenantprofile();
@@ -265,10 +288,10 @@ public class tenantbrowse extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel mainRoompanel;
     private javax.swing.JTextField search;
+    private javax.swing.JLabel searchicon;
     // End of variables declaration//GEN-END:variables
 }

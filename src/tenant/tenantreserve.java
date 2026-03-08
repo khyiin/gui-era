@@ -99,6 +99,7 @@ public class tenantreserve extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, -1, -1));
 
+        room_display.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         room_display.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 room_displayActionPerformed(evt);
@@ -106,6 +107,8 @@ public class tenantreserve extends javax.swing.JFrame {
         });
         getContentPane().add(room_display, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 80, 340, 50));
 
+        name.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        name.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameActionPerformed(evt);
@@ -167,6 +170,7 @@ public class tenantreserve extends javax.swing.JFrame {
         jLabel30.setText("Room Name");
         getContentPane().add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 50, 110, 30));
 
+        jButton1.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jButton1.setText("Save");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -174,8 +178,17 @@ public class tenantreserve extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 470, 170, 40));
+
+        moveindate.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        moveindate.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(moveindate, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 330, 490, 40));
+
+        contract.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        contract.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(contract, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 400, 490, 40));
+
+        contact.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        contact.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(contact, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 490, 40));
 
         jLabel33.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N

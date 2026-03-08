@@ -9,6 +9,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
+import javax.swing.ImageIcon;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import Config.config;
 import web.login;
 /**
@@ -19,6 +25,7 @@ public class addroom extends javax.swing.JFrame {
     managerooms parentPanel;
   
     public int landlordId;
+    private byte[] roomImageBytes;
 
     /**
      * Creates new form addroom
@@ -72,7 +79,7 @@ public addroom() {
         jLabel16 = new javax.swing.JLabel();
         manageroom = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        roomimageselector = new javax.swing.JLabel();
         viewres = new javax.swing.JLabel();
         r_name = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -183,8 +190,13 @@ public addroom() {
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-note-30.png"))); // NOI18N
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 40, 30));
 
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/addimage.png"))); // NOI18N
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, 260, 170));
+        roomimageselector.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/addimage.png"))); // NOI18N
+        roomimageselector.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                roomimageselectorMouseClicked(evt);
+            }
+        });
+        getContentPane().add(roomimageselector, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, 260, 170));
 
         viewres.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
         viewres.setForeground(new java.awt.Color(255, 255, 255));
@@ -306,11 +318,10 @@ public addroom() {
 
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
         try (Connection conn = config.connectDB()) {
-            // We do NOT include r_id because it's AUTOINCREMENT
-            String sql = "INSERT INTO rooms (id, r_name, r_type, r_price, r_location, r_description) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO rooms (id, r_name, r_type, r_price, r_location, r_description, r_status, r_image) "
+                       + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pst = conn.prepareStatement(sql);
 
-            // Use the landlordId we passed from the Login screen earlier!
             pst.setInt(1, this.landlordId);
             pst.setString(2, r_name.getText());
             pst.setString(3, r_type.getText().toString());
@@ -320,6 +331,8 @@ public addroom() {
 
             pst.setString(5, r_location.getText());
             pst.setString(6, r_description.getText());
+            pst.setString(7, "Available");
+            pst.setBytes(8, roomImageBytes);
 
             pst.executeUpdate();
             JOptionPane.showMessageDialog(null, "Room successfully listed!");
@@ -369,6 +382,26 @@ public addroom() {
     this.dispose();    // TODO add your handling code here:
     }//GEN-LAST:event_viewresMouseClicked
 
+    private void roomimageselectorMouseClicked(java.awt.event.MouseEvent evt) {
+        JFileChooser chooser = new JFileChooser();
+        int result = chooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();
+            try {
+                roomImageBytes = Files.readAllBytes(file.toPath());
+                ImageIcon icon = new ImageIcon(roomImageBytes);
+                Image scaled = icon.getImage().getScaledInstance(
+                        roomimageselector.getWidth(),
+                        roomimageselector.getHeight(),
+                        Image.SCALE_SMOOTH
+                );
+                roomimageselector.setIcon(new ImageIcon(scaled));
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Failed to load image: " + e.getMessage());
+            }
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -407,7 +440,6 @@ public addroom() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_save;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;
@@ -435,6 +467,7 @@ public addroom() {
     private javax.swing.JTextField r_name;
     private javax.swing.JTextField r_price;
     private javax.swing.JTextField r_type;
+    private javax.swing.JLabel roomimageselector;
     private javax.swing.JLabel viewres;
     // End of variables declaration//GEN-END:variables
 }
