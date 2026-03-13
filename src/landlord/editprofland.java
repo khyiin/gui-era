@@ -312,11 +312,22 @@ public class editprofland extends javax.swing.JFrame {
         config.Session sess = config.Session.getInstance();
 
         // 1. Collect new data from fields
-        String fn = firstname.getText();
-        String ln = lastname.getText();
-        String em = email.getText();
-        String un = username.getText();
-        String ut = usertype.getText().toString();
+        String fn = firstname.getText().trim();
+        String ln = lastname.getText().trim();
+        String em = email.getText().trim();
+        String un = username.getText().trim();
+        String ut = usertype.getText().trim();
+
+        // Validations
+        if (fn.isEmpty() || ln.isEmpty() || em.isEmpty() || un.isEmpty() || ut.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "All fields are required!");
+            return;
+        }
+        
+        if (!em.contains("@") || !em.contains(".")) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid email address!");
+            return;
+        }
 
         // 2. Update the Database
         String sql = "UPDATE users SET first_name = ?, last_name = ?, email = ?, username = ?, user_type = ? WHERE id = ?";

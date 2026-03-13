@@ -73,11 +73,16 @@ public class editroom extends javax.swing.JFrame {
                     roomImageBytes = rs.getBytes("r_image");
                     if (roomImageBytes != null) {
                         ImageIcon icon = new ImageIcon(roomImageBytes);
-                        Image scaled = icon.getImage().getScaledInstance(
-                                roomimageselector.getWidth(),
-                                roomimageselector.getHeight(),
-                                Image.SCALE_SMOOTH
-                        );
+                        
+                        int width = roomimageselector.getWidth();
+                        int height = roomimageselector.getHeight();
+                        if (width == 0 || height == 0) {
+                            width = 260;
+                            height = 150;
+                        }
+                        
+                        Image img = icon.getImage();
+                        Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
                         roomimageselector.setIcon(new ImageIcon(scaled));
                     }
                 } catch (SQLException ignored) { /* r_image column may not exist */ }
@@ -240,11 +245,16 @@ public class editroom extends javax.swing.JFrame {
             try {
                 roomImageBytes = Files.readAllBytes(file.toPath());
                 ImageIcon icon = new ImageIcon(roomImageBytes);
-                Image scaled = icon.getImage().getScaledInstance(
-                        roomimageselector.getWidth(),
-                        roomimageselector.getHeight(),
-                        Image.SCALE_SMOOTH
-                );
+                
+                int width = roomimageselector.getWidth();
+                int height = roomimageselector.getHeight();
+                if (width == 0 || height == 0) {
+                    width = 260;
+                    height = 150;
+                }
+                
+                Image img = icon.getImage();
+                Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
                 roomimageselector.setIcon(new ImageIcon(scaled));
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Failed to load image: " + e.getMessage());
@@ -257,20 +267,35 @@ public class editroom extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No room loaded.");
             return;
         }
+
+        String name = roomname.getText().trim();
+        String priceText = price.getText().trim();
+        String typeText = type.getText().trim();
+        String locationText = location.getText().trim();
+        String descText = description.getText().trim();
+        String statusText = status.getText().trim();
+
+        if (name.isEmpty() || priceText.isEmpty() || typeText.isEmpty() || locationText.isEmpty() || descText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all required fields.");
+            return;
+        }
+
         try {
+            double priceVal = Double.parseDouble(priceText);
             Connection conn = config.connectDB();
             String sql = "UPDATE rooms SET r_name = ?, r_type = ?, r_price = ?, r_location = ?, r_description = ? WHERE r_id = ?";
             PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, roomname.getText().trim());
-            pst.setString(2, type.getText().trim());
-            pst.setDouble(3, Double.parseDouble(price.getText().trim()));
-            pst.setString(4, location.getText().trim());
-            pst.setString(5, description.getText().trim());
+            pst.setString(1, name);
+            pst.setString(2, typeText);
+            pst.setDouble(3, priceVal);
+            pst.setString(4, locationText);
+            pst.setString(5, descText);
             pst.setString(6, roomID);
             pst.executeUpdate();
+            
             try {
                 PreparedStatement pst2 = conn.prepareStatement("UPDATE rooms SET r_status = ? WHERE r_id = ?");
-                pst2.setString(1, status.getText().trim().isEmpty() ? "Available" : status.getText().trim());
+                pst2.setString(1, statusText.isEmpty() ? "Available" : statusText);
                 pst2.setString(2, roomID);
                 pst2.executeUpdate();
             } catch (SQLException ignored) { /* r_status column may not exist */ }

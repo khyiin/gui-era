@@ -407,7 +407,7 @@ public addroom() {
     this.dispose();    // TODO add your handling code here:
     }//GEN-LAST:event_viewresMouseClicked
 
-    private void roomimageselectorMouseClicked(java.awt.event.MouseEvent evt) {
+    private void roomimageselectorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roomimageselectorMouseClicked
         JFileChooser chooser = new JFileChooser();
         int result = chooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
@@ -415,17 +415,22 @@ public addroom() {
             try {
                 roomImageBytes = Files.readAllBytes(file.toPath());
                 ImageIcon icon = new ImageIcon(roomImageBytes);
-                Image scaled = icon.getImage().getScaledInstance(
-                        roomimageselector.getWidth(),
-                        roomimageselector.getHeight(),
-                        Image.SCALE_SMOOTH
-                );
+                
+                int width = roomimageselector.getWidth();
+                int height = roomimageselector.getHeight();
+                if (width == 0 || height == 0) {
+                    width = 260;
+                    height = 170;
+                }
+                
+                Image img = icon.getImage();
+                Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
                 roomimageselector.setIcon(new ImageIcon(scaled));
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Failed to load image: " + e.getMessage());
             }
         }
-    }
+    }//GEN-LAST:event_roomimageselectorMouseClicked
 
     /**
      * @param args the command line arguments

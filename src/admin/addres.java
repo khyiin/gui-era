@@ -230,11 +230,29 @@ public class addres extends javax.swing.JFrame {
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
         Object roomSel = roomid1.getSelectedItem();
         Object userSel = userid.getSelectedItem();
+        String contactText = contact.getText().trim();
+        String moveInDateText = moveindate.getText().trim();
+        String statusText = status.getText().trim();
+        String contractText = contract.getText().trim();
+
         if (roomSel == null || roomSel.toString().startsWith("--") || userSel == null || userSel.toString().startsWith("--")
-                || contact.getText().trim().isEmpty() || moveindate.getText().trim().isEmpty() || status.getText().trim().isEmpty()) {
+                || contactText.isEmpty() || moveInDateText.isEmpty() || statusText.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please select Room and User, and fill in all required fields.");
             return;
         }
+
+        // Basic Contact Validation (Numeric)
+        if (!contactText.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Contact must be numeric!");
+            return;
+        }
+
+        // Basic Date Validation (YYYY-MM-DD or similar simple check)
+        if (!moveInDateText.matches("\\d{4}-\\d{2}-\\d{2}")) {
+            JOptionPane.showMessageDialog(this, "Move-in Date must be in YYYY-MM-DD format!");
+            return;
+        }
+
         try {
             int roomId = Integer.parseInt(roomSel.toString().split(" - ")[0]);
             int userId = Integer.parseInt(userSel.toString().split(" - ")[0]);
@@ -244,10 +262,10 @@ public class addres extends javax.swing.JFrame {
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setInt(1, userId);
             pst.setInt(2, roomId);
-            pst.setString(3, contact.getText().trim());
-            pst.setString(4, moveindate.getText().trim());
-            pst.setString(5, contract.getText().trim());
-            pst.setString(6, status.getText().trim());
+            pst.setString(3, contactText);
+            pst.setString(4, moveInDateText);
+            pst.setString(5, contractText);
+            pst.setString(6, statusText);
             pst.executeUpdate();
             conn.close();
             JOptionPane.showMessageDialog(this, "Reservation saved successfully.");

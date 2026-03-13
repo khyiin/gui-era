@@ -216,14 +216,37 @@ public class editres extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No reservation loaded.");
             return;
         }
+
+        String contactText = contact.getText().trim();
+        String moveInDateText = moveindate.getText().trim();
+        String statusText = status.getText().trim();
+        String contractText = contract.getText().trim();
+
+        if (contactText.isEmpty() || moveInDateText.isEmpty() || statusText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all required fields.");
+            return;
+        }
+
+        // Basic Contact Validation (Numeric)
+        if (!contactText.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Contact must be numeric!");
+            return;
+        }
+
+        // Basic Date Validation (YYYY-MM-DD)
+        if (!moveInDateText.matches("\\d{4}-\\d{2}-\\d{2}")) {
+            JOptionPane.showMessageDialog(this, "Move-in Date must be in YYYY-MM-DD format!");
+            return;
+        }
+
         try {
             Connection conn = config.connectDB();
             String sql = "UPDATE reservations SET contact = ?, move_in_date = ?, contract = ?, status = ? WHERE res_id = ?";
             PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, contact.getText().trim());
-            pst.setString(2, moveindate.getText().trim());
-            pst.setString(3, contract.getText().trim());
-            pst.setString(4, status.getText().trim());
+            pst.setString(1, contactText);
+            pst.setString(2, moveInDateText);
+            pst.setString(3, contractText);
+            pst.setString(4, statusText);
             pst.setString(5, reservationID);
             pst.executeUpdate();
             conn.close();

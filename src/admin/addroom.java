@@ -200,11 +200,16 @@ public class addroom extends javax.swing.JFrame {
             try {
                 roomImageBytes = Files.readAllBytes(file.toPath());
                 ImageIcon icon = new ImageIcon(roomImageBytes);
-                Image scaled = icon.getImage().getScaledInstance(
-                        roomimageselector.getWidth(),
-                        roomimageselector.getHeight(),
-                        Image.SCALE_SMOOTH
-                );
+                
+                int width = roomimageselector.getWidth();
+                int height = roomimageselector.getHeight();
+                if (width == 0 || height == 0) {
+                    width = 260;
+                    height = 150;
+                }
+                
+                Image img = icon.getImage();
+                Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
                 roomimageselector.setIcon(new ImageIcon(scaled));
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Failed to load image: " + e.getMessage());
@@ -213,23 +218,37 @@ public class addroom extends javax.swing.JFrame {
     }//GEN-LAST:event_selectActionPerformed
 
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-        if (roomname.getText().trim().isEmpty() || price.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in Room Name and Price.");
+        String name = roomname.getText().trim();
+        String priceText = price.getText().trim();
+        String typeText = type.getText().trim();
+        String locationText = location.getText().trim();
+        String descText = description.getText().trim();
+        String statusText = status.getText().trim();
+
+        if (name.isEmpty() || priceText.isEmpty() || typeText.isEmpty() || locationText.isEmpty() || descText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all required fields.");
             return;
         }
+
+        if (roomImageBytes == null) {
+            JOptionPane.showMessageDialog(this, "Please select an image for the room!");
+            return;
+        }
+
         try {
+            double priceVal = Double.parseDouble(priceText);
             int ownerId = config.Session.getInstance().getUid();
             Connection conn = config.connectDB();
             String sql = "INSERT INTO rooms (id, r_name, r_type, r_price, r_location, r_description, r_status, r_image) "
                        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setInt(1, ownerId);
-            pst.setString(2, roomname.getText().trim());
-            pst.setString(3, type.getText().trim());
-            pst.setDouble(4, Double.parseDouble(price.getText().trim()));
-            pst.setString(5, location.getText().trim());
-            pst.setString(6, description.getText().trim());
-            pst.setString(7, status.getText().trim().isEmpty() ? "Available" : status.getText().trim());
+            pst.setString(2, name);
+            pst.setString(3, typeText);
+            pst.setDouble(4, priceVal);
+            pst.setString(5, locationText);
+            pst.setString(6, descText);
+            pst.setString(7, statusText.isEmpty() ? "Available" : statusText);
             pst.setBytes(8, roomImageBytes);
             pst.executeUpdate();
             conn.close();

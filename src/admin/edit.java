@@ -70,11 +70,16 @@ public class edit extends javax.swing.JFrame {
                userImageBytes = rs.getBytes("u_image");
                if (userImageBytes != null) {
                    ImageIcon icon = new ImageIcon(userImageBytes);
-                   Image scaled = icon.getImage().getScaledInstance(
-                           userimageselector.getWidth(),
-                           userimageselector.getHeight(),
-                           Image.SCALE_SMOOTH
-                   );
+                   
+                   int width = userimageselector.getWidth();
+                   int height = userimageselector.getHeight();
+                   if (width == 0 || height == 0) {
+                       width = 260;
+                       height = 170;
+                   }
+                   
+                   Image img = icon.getImage();
+                   Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
                    userimageselector.setIcon(new ImageIcon(scaled));
                }
            }
@@ -312,11 +317,16 @@ public class edit extends javax.swing.JFrame {
             try {
                 userImageBytes = Files.readAllBytes(file.toPath());
                 ImageIcon icon = new ImageIcon(userImageBytes);
-                Image scaled = icon.getImage().getScaledInstance(
-                        userimageselector.getWidth(),
-                        userimageselector.getHeight(),
-                        Image.SCALE_SMOOTH
-                );
+                
+                int width = userimageselector.getWidth();
+                int height = userimageselector.getHeight();
+                if (width == 0 || height == 0) {
+                    width = 260;
+                    height = 170;
+                }
+                
+                Image img = icon.getImage();
+                Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
                 userimageselector.setIcon(new ImageIcon(scaled));
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Failed to load image: " + e.getMessage());
@@ -327,21 +337,31 @@ public class edit extends javax.swing.JFrame {
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
      Config.config con = new Config.config();
     
+    String fn = firstname.getText().trim();
+    String ln = lastname.getText().trim();
+    String em = email.getText().trim();
+    String un = username.getText().trim();
+    String ut = type.getText().trim();
+    String st = status.getText().trim();
+    String ad = address.getText().trim();
+    String gn = gender.getSelectedItem().toString();
+
+    // Validations
+    if (fn.isEmpty() || ln.isEmpty() || em.isEmpty() || un.isEmpty() || ut.isEmpty() || st.isEmpty() || ad.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "All fields are required!");
+        return;
+    }
+    
+    if (!em.contains("@") || !em.contains(".")) {
+        JOptionPane.showMessageDialog(this, "Please enter a valid email address!");
+        return;
+    }
+
     // 1. Updated SQL to include 'gender' and 'address'
     String sql = "UPDATE users SET first_name = ?, last_name = ?, gender = ?, email = ?, address = ?, username = ?, user_type = ?, status = ?, u_image = ? WHERE id = ?";
     
     // 2. Call updateRecord with ALL fields in the correct order
-    con.updateRecord(sql, 
-        firstname.getText(), 
-        lastname.getText(), 
-        gender.getSelectedItem().toString(),
-        email.getText(), 
-        address.getText(), 
-        username.getText(), 
-        type.getText(), 
-        status.getText(),
-        userImageBytes,
-        userID);
+    con.updateRecord(sql, fn, ln, gn, em, ad, un, ut, st, userImageBytes, userID);
     
     javax.swing.JOptionPane.showMessageDialog(null, "Update Successful!");
     

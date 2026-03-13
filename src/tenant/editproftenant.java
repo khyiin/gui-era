@@ -281,6 +281,11 @@ public class editproftenant extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "All fields are required!");
         return;
     }
+    
+    if (!em.contains("@") || !em.contains(".")) {
+        JOptionPane.showMessageDialog(this, "Please enter a valid email address!");
+        return;
+    }
 
     config con = new config();
     config.Session sess = config.Session.getInstance();

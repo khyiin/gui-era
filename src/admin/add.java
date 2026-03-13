@@ -283,14 +283,30 @@ public class add extends javax.swing.JFrame {
      Config.config con = new Config.config();
     
     // 1. Get data from your fields
-    String fn = firstname.getText();
-    String ln = lastname.getText();
-    String em = email.getText();
-    String un = username.getText();
-    String ut = type.getText();
-    String st = status.getText();
+    String fn = firstname.getText().trim();
+    String ln = lastname.getText().trim();
+    String em = email.getText().trim();
+    String un = username.getText().trim();
+    String ut = type.getText().trim();
+    String st = status.getText().trim();
     String gn = gender.getSelectedItem().toString(); // From JComboBox
-    String ad = address.getText(); // From JTextField
+    String ad = address.getText().trim(); // From JTextField
+    
+    // Validations
+    if (fn.isEmpty() || ln.isEmpty() || em.isEmpty() || un.isEmpty() || ut.isEmpty() || st.isEmpty() || ad.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "All fields are required!");
+        return;
+    }
+    
+    if (!em.contains("@") || !em.contains(".")) {
+        JOptionPane.showMessageDialog(this, "Please enter a valid email address!");
+        return;
+    }
+    
+    if (userImageBytes == null) {
+        JOptionPane.showMessageDialog(this, "Please select an image!");
+        return;
+    }
     
     String ps = "1234";
 
@@ -318,11 +334,17 @@ public class add extends javax.swing.JFrame {
             try {
                 userImageBytes = Files.readAllBytes(file.toPath());
                 ImageIcon icon = new ImageIcon(userImageBytes);
-                Image scaled = icon.getImage().getScaledInstance(
-                        jLabel11.getWidth(),
-                        jLabel11.getHeight(),
-                        Image.SCALE_SMOOTH
-                );
+                
+                // Fix image scaling to fit label perfectly
+                int width = jLabel11.getWidth();
+                int height = jLabel11.getHeight();
+                if (width == 0 || height == 0) {
+                    width = 260; // Default width from AbsoluteLayout
+                    height = 170; // Default height from AbsoluteLayout
+                }
+                
+                Image img = icon.getImage();
+                Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
                 jLabel11.setIcon(new ImageIcon(scaled));
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Failed to load image: " + e.getMessage());

@@ -270,13 +270,26 @@ public class tenantreserve extends javax.swing.JFrame {
     }//GEN-LAST:event_nameActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    String moveDate = moveindate.getText(); 
-    String stayDuration = contract.getText(); // This is the text from the UI field
+    String moveDate = moveindate.getText().trim(); 
+    String stayDuration = contract.getText().trim();
+    String contactText = contact.getText().trim();
     config.Session sess = config.Session.getInstance();
     int tID = sess.getUid(); 
 
-    if (moveDate.isEmpty() || stayDuration.isEmpty()) {
+    if (moveDate.isEmpty() || stayDuration.isEmpty() || contactText.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Please fill in all fields!");
+        return;
+    }
+
+    // Basic Contact Validation (Numeric)
+    if (!contactText.matches("\\d+")) {
+        JOptionPane.showMessageDialog(this, "Contact must be numeric!");
+        return;
+    }
+
+    // Basic Date Validation (YYYY-MM-DD)
+    if (!moveDate.matches("\\d{4}-\\d{2}-\\d{2}")) {
+        JOptionPane.showMessageDialog(this, "Move-in Date must be in YYYY-MM-DD format!");
         return;
     }
 
@@ -289,7 +302,7 @@ public class tenantreserve extends javax.swing.JFrame {
     String sql = "INSERT INTO reservations (id, r_id, contact, move_in_date, contract, status) VALUES (?, ?, ?, ?, ?, 'Pending')";
 
 // Make sure contact.getText() is included here!
-conf.addRecord(sql, sess.getUid(), roomId, contact.getText(), moveindate.getText(), contract.getText());
+conf.addRecord(sql, sess.getUid(), roomId, contactText, moveDate, stayDuration);
 
     JOptionPane.showMessageDialog(this, "Reservation Sent! Waiting for Landlord approval.");
     

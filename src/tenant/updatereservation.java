@@ -226,13 +226,25 @@ public class updatereservation extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
-    String newContact = contact.getText();
-    String newDate = moveindate.getText();
-    String newContract = contract.getText();
+    String newContact = contact.getText().trim();
+    String newDate = moveindate.getText().trim();
+    String newContract = contract.getText().trim();
 
     // Validation: Don't let them save empty fields
     if (newContact.isEmpty() || newDate.isEmpty() || newContract.isEmpty()) {
         javax.swing.JOptionPane.showMessageDialog(this, "All fields must be filled!");
+        return;
+    }
+
+    // Basic Contact Validation (Numeric)
+    if (!newContact.matches("\\d+")) {
+        JOptionPane.showMessageDialog(this, "Contact must be numeric!");
+        return;
+    }
+
+    // Basic Date Validation (YYYY-MM-DD)
+    if (!newDate.matches("\\d{4}-\\d{2}-\\d{2}")) {
+        JOptionPane.showMessageDialog(this, "Move-in Date must be in YYYY-MM-DD format!");
         return;
     }
 

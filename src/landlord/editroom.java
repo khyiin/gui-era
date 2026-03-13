@@ -77,11 +77,16 @@ public class editroom extends javax.swing.JFrame {
                 roomImageBytes = rs.getBytes("r_image");
                 if (roomImageBytes != null) {
                     ImageIcon icon = new ImageIcon(roomImageBytes);
-                    Image scaled = icon.getImage().getScaledInstance(
-                            roomimageselector.getWidth(),
-                            roomimageselector.getHeight(),
-                            Image.SCALE_SMOOTH
-                    );
+                    
+                    int width = roomimageselector.getWidth();
+                    int height = roomimageselector.getHeight();
+                    if (width == 0 || height == 0) {
+                        width = 260;
+                        height = 170;
+                    }
+                    
+                    Image img = icon.getImage();
+                    Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
                     roomimageselector.setIcon(new ImageIcon(scaled));
                 }
             }
@@ -351,15 +356,27 @@ public class editroom extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
+        String name = r_name.getText().trim();
+        String type = r_type.getText().trim();
+        String priceText = r_price.getText().trim();
+        String location = r_location.getText().trim();
+        String desc = r_description.getText().trim();
+
+        if (name.isEmpty() || type.isEmpty() || priceText.isEmpty() || location.isEmpty() || desc.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "All fields are required!");
+            return;
+        }
+
         try (Connection conn = config.connectDB()) {
+            double priceVal = Double.parseDouble(priceText);
             String sql = "UPDATE rooms SET r_name = ?, r_type = ?, r_price = ?, r_location = ?, r_description = ?, r_image = ? WHERE r_id = ?";
             PreparedStatement pst = conn.prepareStatement(sql);
 
-            pst.setString(1, r_name.getText());
-            pst.setString(2, r_type.getText());
-            pst.setDouble(3, Double.parseDouble(r_price.getText()));
-            pst.setString(4, r_location.getText());
-            pst.setString(5, r_description.getText());
+            pst.setString(1, name);
+            pst.setString(2, type);
+            pst.setDouble(3, priceVal);
+            pst.setString(4, location);
+            pst.setString(5, desc);
             pst.setBytes(6, roomImageBytes);
             pst.setString(7, roomID);
 
@@ -386,17 +403,22 @@ public class editroom extends javax.swing.JFrame {
             try {
                 roomImageBytes = Files.readAllBytes(file.toPath());
                 ImageIcon icon = new ImageIcon(roomImageBytes);
-                Image scaled = icon.getImage().getScaledInstance(
-                        roomimageselector.getWidth(),
-                        roomimageselector.getHeight(),
-                        Image.SCALE_SMOOTH
-                );
+                
+                int width = roomimageselector.getWidth();
+                int height = roomimageselector.getHeight();
+                if (width == 0 || height == 0) {
+                    width = 260;
+                    height = 170;
+                }
+                
+                Image img = icon.getImage();
+                Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
                 roomimageselector.setIcon(new ImageIcon(scaled));
             } catch (IOException e) {
-                JOptionPane.showMessageDialog(this, "Failed to load image: " + e.getMessage());// TODO add your handling code here:
-    }//GEN-LAST:event_roomimageselectorMouseClicked
+                JOptionPane.showMessageDialog(this, "Failed to load image: " + e.getMessage());
+            }
         }
-    }
+    }//GEN-LAST:event_roomimageselectorMouseClicked
     
 
     /**

@@ -56,16 +56,12 @@ public class cardroom extends javax.swing.JPanel {
                     int w = roomimageselector.getWidth();
                     int h = roomimageselector.getHeight();
                     if (w <= 0 || h <= 0) {
-                        w = roomimageselector.getPreferredSize().width;
-                        h = roomimageselector.getPreferredSize().height;
+                        w = 190; // Fallback from AbsoluteLayout
+                        h = 160;
                     }
 
-                    if (w > 0 && h > 0) {
-                        Image scaled = icon.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
-                        roomimageselector.setIcon(new ImageIcon(scaled));
-                    } else {
-                        roomimageselector.setIcon(icon);
-                    }
+                    Image scaled = icon.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
+                    roomimageselector.setIcon(new ImageIcon(scaled));
                 }
             }
         } catch (SQLException e) {
