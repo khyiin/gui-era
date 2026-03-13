@@ -83,6 +83,7 @@ public class signup extends javax.swing.JFrame {
         jLabel3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 221, 52));
 
+        email.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         email.setBorder(null);
         email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,6 +107,7 @@ public class signup extends javax.swing.JFrame {
         });
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, 280, 40));
 
+        username.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         username.setBorder(null);
         username.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -123,6 +125,7 @@ public class signup extends javax.swing.JFrame {
         });
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 440, -1, 30));
 
+        firstname.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         firstname.setBorder(null);
         firstname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,6 +134,7 @@ public class signup extends javax.swing.JFrame {
         });
         jPanel2.add(firstname, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 280, 20));
 
+        lastname.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         lastname.setBorder(null);
         lastname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,6 +168,7 @@ public class signup extends javax.swing.JFrame {
         jLabel10.setText("jLabel5");
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 30, 40));
 
+        password.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         password.setBorder(null);
         password.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

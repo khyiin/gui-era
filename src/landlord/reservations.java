@@ -101,6 +101,7 @@ public class reservations extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        reservationstable.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         reservationstable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},

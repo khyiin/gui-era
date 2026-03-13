@@ -123,6 +123,7 @@ public class editroom extends javax.swing.JFrame {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         select.setBackground(new java.awt.Color(255, 255, 255));
+        select.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         select.setText("Select");
         select.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -132,6 +133,7 @@ public class editroom extends javax.swing.JFrame {
         jPanel2.add(select, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 350, 260, 40));
 
         save.setBackground(new java.awt.Color(255, 255, 255));
+        save.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         save.setText("Update");
         save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,9 +142,11 @@ public class editroom extends javax.swing.JFrame {
         });
         jPanel2.add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 400, 260, 40));
 
+        roomname.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         roomname.setBorder(null);
         jPanel2.add(roomname, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 260, 30));
 
+        price.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         price.setBorder(null);
         price.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -151,6 +155,7 @@ public class editroom extends javax.swing.JFrame {
         });
         jPanel2.add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 240, 260, 30));
 
+        location.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         location.setBorder(null);
         location.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,9 +164,11 @@ public class editroom extends javax.swing.JFrame {
         });
         jPanel2.add(location, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, 260, 30));
 
+        type.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         type.setBorder(null);
         jPanel2.add(type, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 260, 30));
 
+        description.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         description.setBorder(null);
         jPanel2.add(description, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 360, 260, 30));
 
@@ -177,6 +184,7 @@ public class editroom extends javax.swing.JFrame {
         jLabel13.setText("Status");
         jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 400, -1, 20));
 
+        status.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         status.setBorder(null);
         jPanel2.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 420, 260, 30));
 

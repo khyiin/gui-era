@@ -127,6 +127,7 @@ public class addres extends javax.swing.JFrame {
         });
         jPanel2.add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 410, 260, 40));
 
+        moveindate.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         moveindate.setBorder(null);
         moveindate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,6 +136,7 @@ public class addres extends javax.swing.JFrame {
         });
         jPanel2.add(moveindate, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 140, 260, 30));
 
+        contract.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         contract.setBorder(null);
         contract.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,9 +145,11 @@ public class addres extends javax.swing.JFrame {
         });
         jPanel2.add(contract, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 200, 260, 30));
 
+        contact.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         contact.setBorder(null);
         jPanel2.add(contact, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 310, 260, 30));
 
+        status.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         status.setBorder(null);
         jPanel2.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 260, 260, 30));
 
@@ -156,6 +160,7 @@ public class addres extends javax.swing.JFrame {
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 230, -1, 20));
 
         resid.setEditable(false);
+        resid.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         resid.setBorder(null);
         resid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -169,6 +174,7 @@ public class addres extends javax.swing.JFrame {
         jLabel12.setText("Reservations Form");
         jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, -1, 40));
 
+        userid.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         userid.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel2.add(userid, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 260, 40));
 
@@ -178,6 +184,7 @@ public class addres extends javax.swing.JFrame {
         jLabel5.setText("Contact");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 290, -1, 20));
 
+        roomid1.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         roomid1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel2.add(roomid1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 260, 40));
 

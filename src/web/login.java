@@ -67,6 +67,7 @@ public class login extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        username.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         username.setBorder(null);
         username.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         username.addActionListener(new java.awt.event.ActionListener() {
@@ -137,6 +138,7 @@ public class login extends javax.swing.JFrame {
         jLabel8.setText("Username");
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 150, 130, 20));
 
+        password.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         password.setBorder(null);
         password.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

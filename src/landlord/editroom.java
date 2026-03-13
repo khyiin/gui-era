@@ -23,6 +23,7 @@ import web.login;
  * @author corpu
  */
 public class editroom extends javax.swing.JFrame {
+    private int landlordId;
     private byte[] roomImageBytes;
 
     /**
@@ -108,6 +109,7 @@ public class editroom extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
+        btn_save = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
@@ -237,6 +239,14 @@ public class editroom extends javax.swing.JFrame {
         jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-log-out-30.png"))); // NOI18N
         getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 470, 40, 30));
 
+        btn_save.setText("Save");
+        btn_save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_saveActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_save, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 470, 210, 30));
+
         jLabel13.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Log Out");
@@ -330,8 +340,42 @@ public class editroom extends javax.swing.JFrame {
     this.dispose();   // TODO add your handling code here:
     }//GEN-LAST:event_jLabel6MouseClicked
 
-    private void roomimageselectorMouseClicked(java.awt.event.MouseEvent evt) {
-        JFileChooser chooser = new JFileChooser();
+    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
+        try (Connection conn = config.connectDB()) {
+            String sql = "INSERT INTO rooms (id, r_name, r_type, r_price, r_location, r_description, r_status, r_image) "
+            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement pst = conn.prepareStatement(sql);
+
+            pst.setInt(1, this.landlordId);
+            pst.setString(2, r_name.getText());
+            pst.setString(3, r_type.getText().toString());
+
+            // Convert text to a number for the price
+            pst.setDouble(4, Double.parseDouble(r_price.getText()));
+
+            pst.setString(5, r_location.getText());
+            pst.setString(6, r_description.getText());
+            pst.setString(7, "Available");
+            pst.setBytes(8, roomImageBytes);
+
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Room successfully listed!");
+
+            // Clear fields after saving
+            r_name.setText("");
+            r_price.setText("");
+            r_location.setText("");
+            r_description.setText("");
+
+        } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid number for the price.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Database Error: " + e.getMessage());
+        } // TODO add your handling code here:
+    }//GEN-LAST:event_btn_saveActionPerformed
+
+    private void roomimageselectorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roomimageselectorMouseClicked
+         JFileChooser chooser = new JFileChooser();
         int result = chooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             File file = chooser.getSelectedFile();
@@ -345,10 +389,11 @@ public class editroom extends javax.swing.JFrame {
                 );
                 roomimageselector.setIcon(new ImageIcon(scaled));
             } catch (IOException e) {
-                JOptionPane.showMessageDialog(this, "Failed to load image: " + e.getMessage());
-            }
+                JOptionPane.showMessageDialog(this, "Failed to load image: " + e.getMessage());// TODO add your handling code here:
+    }//GEN-LAST:event_roomimageselectorMouseClicked
         }
     }
+    
 
     /**
      * @param args the command line arguments
@@ -386,6 +431,7 @@ public class editroom extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_save;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;

@@ -100,6 +100,7 @@ public class updatereservation extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        update.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         update.setText("Update");
         update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,10 +110,12 @@ public class updatereservation extends javax.swing.JFrame {
         jPanel1.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 400, 260, 40));
 
         roomid.setEditable(false);
+        roomid.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         roomid.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(roomid, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 290, 260, 30));
 
         userid.setEditable(false);
+        userid.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         userid.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         userid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,6 +124,7 @@ public class updatereservation extends javax.swing.JFrame {
         });
         jPanel1.add(userid, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 230, 260, 30));
 
+        contract.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         contract.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         contract.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,9 +133,11 @@ public class updatereservation extends javax.swing.JFrame {
         });
         jPanel1.add(contract, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 290, 260, 30));
 
+        moveindate.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         moveindate.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(moveindate, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 230, 260, 30));
 
+        contact.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         contact.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         contact.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,6 +153,7 @@ public class updatereservation extends javax.swing.JFrame {
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, -1, 20));
 
         reservationid.setEditable(false);
+        reservationid.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         reservationid.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         reservationid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

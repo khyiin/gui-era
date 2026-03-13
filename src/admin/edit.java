@@ -129,6 +129,7 @@ public class edit extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        select.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         select.setText("Select");
         select.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,6 +138,7 @@ public class edit extends javax.swing.JFrame {
         });
         jPanel1.add(select, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 410, 260, 40));
 
+        gender.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         gender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female" }));
         gender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,6 +147,7 @@ public class edit extends javax.swing.JFrame {
         });
         jPanel1.add(gender, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, 260, 30));
 
+        address.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         address.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         address.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -153,6 +156,7 @@ public class edit extends javax.swing.JFrame {
         });
         jPanel1.add(address, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 460, 260, 30));
 
+        update.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         update.setText("Update");
         update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -161,9 +165,11 @@ public class edit extends javax.swing.JFrame {
         });
         jPanel1.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 460, 260, 40));
 
+        lastname.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         lastname.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(lastname, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 260, 30));
 
+        firstname.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         firstname.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         firstname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -172,6 +178,7 @@ public class edit extends javax.swing.JFrame {
         });
         jPanel1.add(firstname, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, 260, 30));
 
+        email.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         email.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         email.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -180,6 +187,7 @@ public class edit extends javax.swing.JFrame {
         });
         jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 400, 260, 30));
 
+        type.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         type.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         type.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,9 +196,11 @@ public class edit extends javax.swing.JFrame {
         });
         jPanel1.add(type, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 110, 260, 30));
 
+        username.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         username.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 340, 260, 30));
 
+        status.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         status.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 170, 260, 30));
 

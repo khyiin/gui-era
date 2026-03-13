@@ -106,6 +106,7 @@ public class editreservation extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        update.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         update.setText("Update");
         update.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         update.addActionListener(new java.awt.event.ActionListener() {
@@ -116,10 +117,12 @@ public class editreservation extends javax.swing.JFrame {
         jPanel2.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 430, 260, 40));
 
         roomid.setEditable(false);
+        roomid.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         roomid.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel2.add(roomid, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 290, 260, 30));
 
         userid.setEditable(false);
+        userid.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         userid.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         userid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,6 +132,7 @@ public class editreservation extends javax.swing.JFrame {
         jPanel2.add(userid, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 230, 260, 30));
 
         contract.setEditable(false);
+        contract.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         contract.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         contract.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,10 +142,12 @@ public class editreservation extends javax.swing.JFrame {
         jPanel2.add(contract, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 290, 260, 30));
 
         moveindate.setEditable(false);
+        moveindate.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         moveindate.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel2.add(moveindate, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 230, 260, 30));
 
         contact.setEditable(false);
+        contact.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         contact.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         contact.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,6 +163,7 @@ public class editreservation extends javax.swing.JFrame {
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, -1, 20));
 
         reservationid.setEditable(false);
+        reservationid.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         reservationid.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         reservationid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -200,7 +207,8 @@ public class editreservation extends javax.swing.JFrame {
         jLabel4.setText("Status");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 360, -1, 20));
 
-        status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Approved", "Rejected", "Cancelled" }));
+        status.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+        status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Approved", "Rejected" }));
         status.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 statusActionPerformed(evt);

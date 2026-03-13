@@ -115,7 +115,7 @@ public class roomcard extends javax.swing.JPanel {
         jLabel23.setText("Room Name:");
         jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
 
-        name.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        name.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         jPanel3.add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 150, 20));
 
         jLabel29.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -144,9 +144,17 @@ public class roomcard extends javax.swing.JPanel {
             }
         });
         jPanel3.add(reserve, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, 130, 30));
+
+        type.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jPanel3.add(type, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 210, 20));
+
+        price.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jPanel3.add(price, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 210, 20));
+
+        location.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jPanel3.add(location, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 210, 20));
+
+        description.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
         jPanel3.add(description, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 110, 210, 20));
 
         roomimageselector.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/backgroundr.png"))); // NOI18N
