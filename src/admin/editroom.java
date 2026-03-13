@@ -38,13 +38,16 @@ public class editroom extends javax.swing.JFrame {
         initComponents();
         this.roomID = rId;
         this.parentFrame = parent;
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
-            public void windowClosed(java.awt.event.WindowEvent e) {
+            public void windowClosing(java.awt.event.WindowEvent e) {
                 if (parentFrame != null) {
                     parentFrame.setVisible(true);
+                } else {
+                    new rooms().setVisible(true);
                 }
+                dispose();
             }
         });
         loadDetails();

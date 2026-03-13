@@ -10,6 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
+import javax.swing.ImageIcon;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import Config.config;
 import web.login;
 /**
@@ -17,6 +23,8 @@ import web.login;
  * @author corpu
  */
 public class add extends javax.swing.JFrame {
+
+    private byte[] userImageBytes;
 
     /**
      * Creates new form add
@@ -30,6 +38,17 @@ public class add extends javax.swing.JFrame {
         return;
     }
         initComponents();
+        
+        // Return to usersForm on close
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                usersForm uf = new usersForm();
+                uf.setVisible(true);
+                dispose();
+            }
+        });
     }
 
     /**
@@ -271,16 +290,16 @@ public class add extends javax.swing.JFrame {
     String ut = type.getText();
     String st = status.getText();
     String gn = gender.getSelectedItem().toString(); // From JComboBox
-     String ad = address.getText(); // From JTextField
+    String ad = address.getText(); // From JTextField
     
     String ps = "1234";
 
     // 2. The SQL string using ? (Placeholders)
-    String sql = "INSERT INTO users (first_name, last_name, gender, username, email, address, password, user_type, status) "
-           + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    String sql = "INSERT INTO users (first_name, last_name, gender, username, email, address, password, user_type, status, u_image) "
+           + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    // 3. Call addRecord (This matches your config file!)
-    con.addRecord(sql, fn, ln,gn, em,ad, un,ps, ut, st);
+    // 3. Call addRecord
+    con.addRecord(sql, fn, ln, gn, un, em, ad, ps, ut, st, userImageBytes);
 
     // 4. Success message and refresh
     javax.swing.JOptionPane.showMessageDialog(null, "Saved Successfully!");
@@ -292,7 +311,23 @@ public class add extends javax.swing.JFrame {
     }//GEN-LAST:event_saveActionPerformed
 
     private void selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectActionPerformed
-        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+        int result = chooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();
+            try {
+                userImageBytes = Files.readAllBytes(file.toPath());
+                ImageIcon icon = new ImageIcon(userImageBytes);
+                Image scaled = icon.getImage().getScaledInstance(
+                        jLabel11.getWidth(),
+                        jLabel11.getHeight(),
+                        Image.SCALE_SMOOTH
+                );
+                jLabel11.setIcon(new ImageIcon(scaled));
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Failed to load image: " + e.getMessage());
+            }
+        }
     }//GEN-LAST:event_selectActionPerformed
 
     /**

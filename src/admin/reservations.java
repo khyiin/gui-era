@@ -31,10 +31,22 @@ public class reservations extends javax.swing.JFrame {
         }
         initComponents();
         displayAllReservations();
+        
+        // Return to adminDashboard on close
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                config.Session sess = config.Session.getInstance();
+                new adminDashboard(sess.getUid()).setVisible(true);
+                dispose();
+            }
+        });
     }
 
     public void displayAllReservations() {
     try {
+        String searchText = search.getText();
         Connection conn = config.connectDB();
         String sql = "SELECT res.res_id AS 'ResID', " +
                      "u.username AS 'Tenant', " +
@@ -45,9 +57,14 @@ public class reservations extends javax.swing.JFrame {
                      "res.status AS 'Status' " +
                      "FROM reservations res " +
                      "LEFT JOIN users u ON res.id = u.id " +
-                     "LEFT JOIN rooms rm ON res.r_id = rm.r_id";
+                     "LEFT JOIN rooms rm ON res.r_id = rm.r_id " +
+                     "WHERE u.username LIKE ? OR rm.r_name LIKE ? OR res.contact LIKE ? OR res.status LIKE ?";
         
         PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, "%" + searchText + "%");
+        pst.setString(2, "%" + searchText + "%");
+        pst.setString(3, "%" + searchText + "%");
+        pst.setString(4, "%" + searchText + "%");
         ResultSet rs = pst.executeQuery();
         reservationstable.setModel(net.proteanit.sql.DbUtils.resultSetToTableModel(rs));
         
@@ -284,7 +301,7 @@ public class reservations extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void jLabel24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MouseClicked
-        // TODO add your handling code here:
+        displayAllReservations();
     }//GEN-LAST:event_jLabel24MouseClicked
 
     private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked

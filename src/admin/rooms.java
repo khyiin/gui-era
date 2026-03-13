@@ -31,10 +31,22 @@ public class rooms extends javax.swing.JFrame {
         }
         initComponents();
         displayAllRooms();
+        
+        // Return to adminDashboard on close
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                config.Session sess = config.Session.getInstance();
+                new adminDashboard(sess.getUid()).setVisible(true);
+                dispose();
+            }
+        });
     }
 
     public void displayAllRooms() {
     try {
+        String searchText = search.getText();
         Connection conn = config.connectDB();
         String sql = "SELECT r.r_id AS 'ID', " +
                      "COALESCE(u1.username, '(Owner)') AS 'Owner', " +
@@ -45,9 +57,15 @@ public class rooms extends javax.swing.JFrame {
                      "r.r_status AS 'Status', " +
                      "r.r_description AS 'Desc' " +
                      "FROM rooms r " +
-                     "LEFT JOIN users u1 ON r.id = u1.id";
+                     "LEFT JOIN users u1 ON r.id = u1.id " +
+                     "WHERE r.r_name LIKE ? OR r.r_type LIKE ? OR r.r_location LIKE ? OR r.r_status LIKE ? OR u1.username LIKE ?";
         
         PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, "%" + searchText + "%");
+        pst.setString(2, "%" + searchText + "%");
+        pst.setString(3, "%" + searchText + "%");
+        pst.setString(4, "%" + searchText + "%");
+        pst.setString(5, "%" + searchText + "%");
         ResultSet rs = pst.executeQuery();
         roomstable.setModel(net.proteanit.sql.DbUtils.resultSetToTableModel(rs));
         
@@ -285,7 +303,7 @@ public class rooms extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel13MouseClicked
 
     private void jLabel24MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel24MouseClicked
-        // TODO add your handling code here:
+        displayAllRooms();
     }//GEN-LAST:event_jLabel24MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked

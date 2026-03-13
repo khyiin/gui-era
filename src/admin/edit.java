@@ -45,6 +45,17 @@ public class edit extends javax.swing.JFrame {
        userid.setEditable(false);
 
        loadUserImage();
+
+       // Return to usersForm on close
+       this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+       this.addWindowListener(new java.awt.event.WindowAdapter() {
+           @Override
+           public void windowClosing(java.awt.event.WindowEvent e) {
+               usersForm uf = new usersForm();
+               uf.setVisible(true);
+               dispose();
+           }
+       });
    }
 
    private void loadUserImage() {

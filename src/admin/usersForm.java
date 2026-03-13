@@ -81,7 +81,7 @@ public class usersForm extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         userTable = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
+        update = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
@@ -150,15 +150,15 @@ public class usersForm extends javax.swing.JFrame {
         });
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 120, 25, 25));
 
-        jButton5.setBackground(new java.awt.Color(255, 255, 255));
-        jButton5.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        jButton5.setText("Update");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        update.setBackground(new java.awt.Color(255, 255, 255));
+        update.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        update.setText("Update");
+        update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                updateActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 120, 80, 30));
+        jPanel2.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 120, 80, 30));
 
         jButton4.setBackground(new java.awt.Color(255, 255, 255));
         jButton4.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
@@ -319,18 +319,18 @@ public class usersForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1MouseClicked
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
      int row = userTable.getSelectedRow();
         if (row != -1) {
-            String id = userTable.getValueAt(row, 0).toString();
-            String fn = userTable.getValueAt(row, 1).toString();
-            String ln = userTable.getValueAt(row, 2).toString();
-            String gn = userTable.getValueAt(row, 3).toString(); 
-            String em = userTable.getValueAt(row, 4).toString();
-            String ad = userTable.getValueAt(row, 5).toString(); 
-            String un = userTable.getValueAt(row, 6).toString();
-            String ut = userTable.getValueAt(row, 7).toString();
-            String st = userTable.getValueAt(row, 8).toString();
+            String id = String.valueOf(userTable.getValueAt(row, 0));
+            String fn = String.valueOf(userTable.getValueAt(row, 1));
+            String ln = String.valueOf(userTable.getValueAt(row, 2));
+            String gn = String.valueOf(userTable.getValueAt(row, 3)); 
+            String em = String.valueOf(userTable.getValueAt(row, 4));
+            String ad = String.valueOf(userTable.getValueAt(row, 5)); 
+            String un = String.valueOf(userTable.getValueAt(row, 6));
+            String ut = String.valueOf(userTable.getValueAt(row, 7));
+            String st = String.valueOf(userTable.getValueAt(row, 8));
 
             // Open the edit form with the 9 variables
             edit ed = new edit(id, fn, ln, gn, em, ad, un, ut, st);
@@ -338,10 +338,9 @@ public class usersForm extends javax.swing.JFrame {
             this.dispose();
         } else {
             javax.swing.JOptionPane.showMessageDialog(null, "Please select a user to update!");     
-    
-   // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
     }
+    }//GEN-LAST:event_updateActionPerformed
+    
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
      int row = userTable.getSelectedRow();
     
@@ -445,7 +444,6 @@ public class usersForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -468,6 +466,7 @@ public class usersForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField search;
+    private javax.swing.JButton update;
     private javax.swing.JTable userTable;
     // End of variables declaration//GEN-END:variables
 }

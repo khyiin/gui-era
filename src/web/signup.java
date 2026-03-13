@@ -237,11 +237,11 @@ public class signup extends javax.swing.JFrame {
     }//GEN-LAST:event_usernameActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String firstName = firstname.getText();        // First Name
-        String lastName  = lastname.getText();        // Last Name
-        String Email     = email.getText();         // Email
-        String userName  = username.getText();        // Username
-        String pass  = new String(password.getText());
+        String firstName = firstname.getText().trim();        
+        String lastName  = lastname.getText().trim();        
+        String Email     = email.getText().trim();         
+        String userName  = username.getText().trim();        
+        String pass  = password.getText().trim();
 
         if (firstName.isEmpty() || lastName.isEmpty() ||
             Email.isEmpty() || userName.isEmpty() || pass.isEmpty()) {
@@ -250,8 +250,23 @@ public class signup extends javax.swing.JFrame {
             return;
         }
 
-        String sql = "INSERT INTO users(first_name, last_name, email, username, password) "
-        + "VALUES (?, ?, ?, ?, ?)";
+        if (!Email.contains("@") || !Email.contains(".")) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid email address");
+            return;
+        }
+
+        if (pass.length() < 4) {
+            JOptionPane.showMessageDialog(this, "Password must be at least 4 characters long");
+            return;
+        }
+
+        if (!jCheckBox1.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Please accept the privacy policy to continue");
+            return;
+        }
+
+        String sql = "INSERT INTO users(first_name, last_name, email, username, password, status, user_type) "
+        + "VALUES (?, ?, ?, ?, ?, 'Active', 'Tenant')";
 
         try (Connection conn = config.connectDB();
             PreparedStatement pst = conn.prepareStatement(sql)) {

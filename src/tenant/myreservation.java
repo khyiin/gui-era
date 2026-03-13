@@ -97,6 +97,7 @@ public class myreservation extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         myrestable = new javax.swing.JTable();
@@ -211,6 +212,11 @@ public class myreservation extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, -1));
+
+        jLabel22.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(29, 21, 7));
+        jLabel22.setText("Reservations");
+        getContentPane().add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 250, 50));
 
         jButton5.setBackground(new java.awt.Color(255, 255, 255));
         jButton5.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
@@ -494,6 +500,7 @@ public class myreservation extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel29;

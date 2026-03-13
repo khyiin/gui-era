@@ -38,6 +38,16 @@ public class editroom extends javax.swing.JFrame {
         return;
         }
         initComponents();
+        
+        // Return to managerooms on close
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                new managerooms().setVisible(true);
+                dispose();
+            }
+        });
     } public String roomID;
       managerooms parent;
 
@@ -342,36 +352,30 @@ public class editroom extends javax.swing.JFrame {
 
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
         try (Connection conn = config.connectDB()) {
-            String sql = "INSERT INTO rooms (id, r_name, r_type, r_price, r_location, r_description, r_status, r_image) "
-            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "UPDATE rooms SET r_name = ?, r_type = ?, r_price = ?, r_location = ?, r_description = ?, r_image = ? WHERE r_id = ?";
             PreparedStatement pst = conn.prepareStatement(sql);
 
-            pst.setInt(1, this.landlordId);
-            pst.setString(2, r_name.getText());
-            pst.setString(3, r_type.getText().toString());
-
-            // Convert text to a number for the price
-            pst.setDouble(4, Double.parseDouble(r_price.getText()));
-
-            pst.setString(5, r_location.getText());
-            pst.setString(6, r_description.getText());
-            pst.setString(7, "Available");
-            pst.setBytes(8, roomImageBytes);
+            pst.setString(1, r_name.getText());
+            pst.setString(2, r_type.getText());
+            pst.setDouble(3, Double.parseDouble(r_price.getText()));
+            pst.setString(4, r_location.getText());
+            pst.setString(5, r_description.getText());
+            pst.setBytes(6, roomImageBytes);
+            pst.setString(7, roomID);
 
             pst.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Room successfully listed!");
+            JOptionPane.showMessageDialog(null, "Room successfully updated!");
 
-            // Clear fields after saving
-            r_name.setText("");
-            r_price.setText("");
-            r_location.setText("");
-            r_description.setText("");
+            if (parent != null) {
+                parent.loadRooms();
+            }
+            this.dispose();
 
         } catch (NumberFormatException nfe) {
             JOptionPane.showMessageDialog(null, "Please enter a valid number for the price.");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Database Error: " + e.getMessage());
-        } // TODO add your handling code here:
+        }
     }//GEN-LAST:event_btn_saveActionPerformed
 
     private void roomimageselectorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roomimageselectorMouseClicked

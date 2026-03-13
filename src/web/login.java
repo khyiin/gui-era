@@ -16,21 +16,6 @@ public class login extends javax.swing.JFrame {
         initComponents();
         
     }
-   private void saveLogin(String username) {
-
-    String sql = "INSERT INTO login_logs (username) VALUES (?)";
-
-    try (Connection conn = config.connectDB();
-         PreparedStatement pst = conn.prepareStatement(sql)) {
-
-        pst.setString(1, username);
-        pst.executeUpdate();
-
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this,
-            "Database error: " + e.getMessage());
-    }
-}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -239,7 +224,6 @@ public class login extends javax.swing.JFrame {
             config.session_id = userID;
 
             JOptionPane.showMessageDialog(this, "Login successful!");
-            saveLogin(userName);
 
             // 6️⃣ Redirect (STRICT CASE)
             if (type.equals("Admin")) {
