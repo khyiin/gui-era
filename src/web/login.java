@@ -14,7 +14,23 @@ public class login extends javax.swing.JFrame {
 
     public login() {
         initComponents();
+        styleComponents();
+    }
+
+    private void styleComponents() {
+        Config.UIConfig.styleButton(jButton1);
+        jLabel2.setForeground(Config.UIConfig.BROWN_PRIMARY);
+        jLabel1.setForeground(Config.UIConfig.TEXT_COLOR);
+        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel3.setForeground(Config.UIConfig.BROWN_PRIMARY);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel3.setForeground(java.awt.Color.BLACK);
+            }
+        });
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

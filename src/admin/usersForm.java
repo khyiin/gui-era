@@ -34,8 +34,6 @@ public class usersForm extends javax.swing.JFrame {
         initComponents(); // 1. Initialize UI first
         displayUser(); 
         // 2. Then fill it with data
-        
-        
     }
     
     // This must be INSIDE the class

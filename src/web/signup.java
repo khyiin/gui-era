@@ -13,6 +13,7 @@ public class signup extends javax.swing.JFrame {
      */
     public signup() {
     initComponents();
+    styleComponents();
     
     // 1. Force the panel to Y=0 so the top isn't cut off
     // We keep the X at 390 so it sits right next to the image
@@ -28,6 +29,21 @@ public class signup extends javax.swing.JFrame {
     this.setResizable(false); 
     this.setLocationRelativeTo(null);
 }
+
+    private void styleComponents() {
+        Config.UIConfig.styleButton(jButton1);
+        jLabel3.setForeground(Config.UIConfig.BROWN_PRIMARY);
+        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel5.setForeground(Config.UIConfig.BROWN_PRIMARY);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel5.setForeground(java.awt.Color.BLACK);
+            }
+        });
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

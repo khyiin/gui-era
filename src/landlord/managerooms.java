@@ -38,6 +38,7 @@ public class managerooms extends javax.swing.JFrame {
          // Centers the window
         loadRooms();
     }
+
     public void loadRooms() {
     roomcardpanel.removeAll();
     // Use your Session to get the current landlord's ID
