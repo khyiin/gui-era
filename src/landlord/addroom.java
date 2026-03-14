@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import Config.config;
+import Config.UIConfig;
 import web.login;
 /**
  *
@@ -32,11 +33,13 @@ public class addroom extends javax.swing.JFrame {
      */
     public addroom(int id) {
     initComponents();
+    styleComponents();
    
     this.landlordId = id; // Save the ID passed from login/dashboard
 }
     public addroom(managerooms parent) {
         initComponents();
+        styleComponents();
         this.parentPanel = parent;
         config.Session sess = config.Session.getInstance();
         this.landlordId = sess.getUid();
@@ -52,6 +55,7 @@ public addroom() {
         return;
         }
     initComponents();
+    styleComponents();
     
     // Return to managerooms on close
     this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -63,6 +67,10 @@ public addroom() {
         }
     });
 }
+
+    private void styleComponents() {
+        UIConfig.styleButton(btn_save);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

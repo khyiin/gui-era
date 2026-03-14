@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import java.awt.Image;
+import Config.UIConfig;
 
 /**
  *
@@ -49,8 +50,15 @@ public class roomcard extends javax.swing.JPanel {
         }
 
         loadRoomImage();
-    
+        styleComponents();
+        
+        // Ensure the card has a consistent size for the scroll pane
+        setPreferredSize(new java.awt.Dimension(570, 210));
 }
+
+    private void styleComponents() {
+        UIConfig.styleWhiteButton(reserve);
+    }
 
     private void loadRoomImage() {
         try (Connection conn = Config.config.connectDB()) {

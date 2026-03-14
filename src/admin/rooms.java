@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import Config.config;
+import Config.UIConfig;
 import web.login;
 
 /**
@@ -31,6 +32,7 @@ public class rooms extends javax.swing.JFrame {
         }
         initComponents();
         displayAllRooms();
+        styleComponents();
         
         // Return to adminDashboard on close
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -44,6 +46,12 @@ public class rooms extends javax.swing.JFrame {
         });
     }
 
+    private void styleComponents() {
+        UIConfig.styleButton(jButton1);
+        UIConfig.styleButton(jButton5);
+        UIConfig.styleButton(jButton4);
+    }
+
     public void displayAllRooms() {
     try {
         String searchText = search.getText();
@@ -54,8 +62,7 @@ public class rooms extends javax.swing.JFrame {
                      "r.r_type AS 'Type', " +
                      "r.r_location AS 'Location', " +
                      "r.r_price AS 'Price', " +
-                     "r.r_status AS 'Status', " +
-                     "r.r_description AS 'Desc' " +
+                     "r.r_status AS 'Status' " +
                      "FROM rooms r " +
                      "LEFT JOIN users u1 ON r.id = u1.id " +
                      "WHERE r.r_name LIKE ? OR r.r_type LIKE ? OR r.r_location LIKE ? OR r.r_status LIKE ? OR u1.username LIKE ?";

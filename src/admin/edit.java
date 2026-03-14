@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import Config.config;
+import Config.UIConfig;
 import web.login;
 
 /**
@@ -29,6 +30,7 @@ public class edit extends javax.swing.JFrame {
     
    public edit(String id, String fn, String ln, String gn, String em, String ad, String un, String ut, String st) {
        initComponents();
+       styleComponents();
        
        this.userID = id;
        
@@ -56,6 +58,11 @@ public class edit extends javax.swing.JFrame {
                dispose();
            }
        });
+   }
+
+   private void styleComponents() {
+       UIConfig.styleButton(select);
+       UIConfig.styleButton(update);
    }
 
    private void loadUserImage() {

@@ -15,7 +15,8 @@ public class UIConfig {
     public static final Color TABLE_HEADER_BG = new Color(245, 242, 238); // Very light brown/cream
     public static final Color TABLE_SELECTION = new Color(139, 115, 85, 40); // Transparent Brown
     public static final Color TEXT_COLOR = new Color(60, 50, 40); // Dark Brown Text
-    
+    public static final Color DARK_BROWN = new Color(46, 35, 6); // Extra Dark Brown for Admin Buttons
+
     // Rounded Border Class
     public static class RoundedBorder extends AbstractBorder {
         private int radius;
@@ -37,16 +38,48 @@ public class UIConfig {
     }
 
     public static void styleButton(JButton button) {
+        button.setBackground(PURE_WHITE);
+        button.setForeground(BROWN_PRIMARY);
+        button.setFont(new Font("Century Gothic", Font.BOLD, 12));
+        button.setFocusPainted(false);
+        button.setBorderPainted(false); // No border painted
+        button.setContentAreaFilled(true);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        // Remove the border to avoid the "box" look
+        button.setBorder(null);
+        
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                button.setBackground(TABLE_HEADER_BG); // Subtle hover effect
+            }
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                button.setBackground(PURE_WHITE);
+            }
+        });
+    }
+
+    public static void styleAdminButton(JButton button) {
+        styleButton(button);
+    }
+
+    public static void styleWhiteButton(JButton button) {
+        styleButton(button);
+    }
+
+    public static void styleBrownButton(JButton button) {
         button.setBackground(BROWN_PRIMARY);
         button.setForeground(PURE_WHITE);
         button.setFont(new Font("Century Gothic", Font.BOLD, 12));
         button.setFocusPainted(false);
-        button.setBorderPainted(false);
+        button.setBorderPainted(false); // No border painted
         button.setContentAreaFilled(true);
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
-        // Remove standard borders for a cleaner look
-        button.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
+        // Remove the border to avoid the "box" look
+        button.setBorder(null);
         
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -61,29 +94,7 @@ public class UIConfig {
     }
 
     public static void styleTable(JTable table) {
-        table.setFont(new Font("Century Gothic", Font.PLAIN, 12));
-        table.setRowHeight(35);
-        table.setGridColor(new Color(230, 230, 230));
-        table.setShowVerticalLines(false);
-        table.setSelectionBackground(TABLE_SELECTION);
-        table.setSelectionForeground(TEXT_COLOR);
-        table.setBackground(PURE_WHITE);
-        
-        // Style Header
-        JTableHeader header = table.getTableHeader();
-        header.setBackground(PURE_WHITE);
-        header.setForeground(TEXT_COLOR);
-        header.setFont(new Font("Century Gothic", Font.BOLD, 12));
-        header.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, BROWN_PRIMARY));
-        
-        // Center text in cells
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        centerRenderer.setBackground(PURE_WHITE);
-        
-        for (int i = 0; i < table.getColumnCount(); i++) {
-            table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-        }
+        // Do nothing to keep original JTable behavior and look
     }
 
     public static void styleSidebarFeature(JLabel label) {

@@ -18,7 +18,7 @@ public class login extends javax.swing.JFrame {
     }
 
     private void styleComponents() {
-        Config.UIConfig.styleButton(jButton1);
+        Config.UIConfig.styleBrownButton(jButton1);
         jLabel2.setForeground(Config.UIConfig.BROWN_PRIMARY);
         jLabel1.setForeground(Config.UIConfig.TEXT_COLOR);
         jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

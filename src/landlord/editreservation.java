@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import Config.config;
+import Config.UIConfig;
 import web.login;
 
 /**
@@ -31,11 +32,17 @@ public class editreservation extends javax.swing.JFrame {
         return;
         }
         initComponents();
+        styleComponents();
     }
     public editreservation(String resId) {
         initComponents();
+        styleComponents();
         this.reservationID = resId;
         loadDetails();
+    }
+
+    private void styleComponents() {
+        UIConfig.styleButton(update);
     }
 
     private void loadDetails() {

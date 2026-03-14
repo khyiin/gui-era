@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import Config.config;
+import Config.UIConfig;
 
 /**
  *
@@ -32,10 +33,12 @@ public class editroom extends javax.swing.JFrame {
      */
     public editroom() {
         initComponents();
+        styleComponents();
     }
 
     public editroom(String rId, rooms parent) {
         initComponents();
+        styleComponents();
         this.roomID = rId;
         this.parentFrame = parent;
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -51,6 +54,11 @@ public class editroom extends javax.swing.JFrame {
             }
         });
         loadDetails();
+    }
+
+    private void styleComponents() {
+        UIConfig.styleButton(select);
+        UIConfig.styleButton(save);
     }
 
     private void loadDetails() {

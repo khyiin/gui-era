@@ -13,6 +13,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import Config.config;
+import Config.UIConfig;
 
 /**
  *
@@ -26,11 +27,13 @@ public class addres extends javax.swing.JFrame {
      */
     public addres() {
         initComponents();
+        styleComponents();
         loadAutoFillData();
     }
 
     public addres(reservations parent) {
         initComponents();
+        styleComponents();
         this.parentFrame = parent;
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -42,6 +45,10 @@ public class addres extends javax.swing.JFrame {
             }
         });
         loadAutoFillData();
+    }
+
+    private void styleComponents() {
+        UIConfig.styleButton(save);
     }
 
     private void loadAutoFillData() {

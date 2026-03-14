@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import java.awt.Image;
+import Config.UIConfig;
 
 /**
  *
@@ -41,6 +42,12 @@ public class cardroom extends javax.swing.JPanel {
         }
 
         loadRoomImage();
+        styleComponents();
+    }
+
+    private void styleComponents() {
+        UIConfig.styleWhiteButton(edit);
+        UIConfig.styleWhiteButton(remove);
     }
 
     private void loadRoomImage() {

@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import Config.config;
+import Config.UIConfig;
 import web.login; 
 /**
  *
@@ -33,7 +34,15 @@ public class usersForm extends javax.swing.JFrame {
         }
         initComponents(); // 1. Initialize UI first
         displayUser(); 
+        styleComponents();
         // 2. Then fill it with data
+    }
+
+    private void styleComponents() {
+        UIConfig.styleTable(userTable);
+        UIConfig.styleButton(jButton1);
+        UIConfig.styleButton(update);
+        UIConfig.styleButton(jButton4);
     }
     
     // This must be INSIDE the class
@@ -47,9 +56,12 @@ public class usersForm extends javax.swing.JFrame {
     String sql = "SELECT id, first_name, last_name, gender, email, address, username, user_type, status FROM users "
                + "WHERE first_name LIKE '%" + searchText + "%' "
                + "OR last_name LIKE '%" + searchText + "%' "
+               + "OR gender LIKE '%" + searchText + "%' "
                + "OR email LIKE '%" + searchText + "%' "
-               + "OR id LIKE '%" + searchText + "%' "
-               + "OR username LIKE '%" + searchText + "%'";
+               + "OR address LIKE '%" + searchText + "%' "
+               + "OR username LIKE '%" + searchText + "%' "
+               + "OR user_type LIKE '%" + searchText + "%' "
+               + "OR status LIKE '%" + searchText + "%'";
                
     con.displayData(sql, userTable);
 
@@ -171,6 +183,7 @@ public class usersForm extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jButton1.setText("Add");
+        jButton1.setBorder(null);
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);

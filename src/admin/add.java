@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import Config.config;
+import Config.UIConfig;
 import web.login;
 /**
  *
@@ -38,6 +39,7 @@ public class add extends javax.swing.JFrame {
         return;
     }
         initComponents();
+        styleComponents();
         
         // Return to usersForm on close
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -49,6 +51,11 @@ public class add extends javax.swing.JFrame {
                 dispose();
             }
         });
+    }
+
+    private void styleComponents() {
+        UIConfig.styleButton(select);
+        UIConfig.styleButton(save);
     }
 
     /**

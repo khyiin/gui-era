@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import Config.config;
+import Config.UIConfig;
 import web.login;
 /**
  *
@@ -33,6 +34,7 @@ public class tenantreserve extends javax.swing.JFrame {
     }
     
     initComponents();
+    styleComponents();
     this.roomId = rId;
     this.landlordId = lId;
     room_display.setText(selectedRoom);
@@ -54,6 +56,10 @@ public class tenantreserve extends javax.swing.JFrame {
         System.out.println("Error: " + e.getMessage());
     }
 }
+
+    private void styleComponents() {
+        UIConfig.styleButton(jButton1);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

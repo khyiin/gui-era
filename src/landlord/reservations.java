@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import Config.config;
+import Config.UIConfig;
 import web.login; 
 
 /**
@@ -31,11 +32,16 @@ public class reservations extends javax.swing.JFrame {
         return;
         }
         initComponents();
+        displayLandlordReservations();
+        styleComponents();
         
        
         this.landlordId = sess.getUid();
-        
-        displayLandlordReservations();
+    }
+    
+    private void styleComponents() {
+        UIConfig.styleTable(reservationstable);
+        UIConfig.styleButton(viewlease);
     }
     public void displayLandlordReservations() {
         Config.config con = new Config.config();

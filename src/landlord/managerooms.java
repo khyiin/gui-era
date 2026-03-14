@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import Config.config;
+import Config.UIConfig;
 import web.login; 
 
 /**
@@ -37,6 +38,11 @@ public class managerooms extends javax.swing.JFrame {
 
          // Centers the window
         loadRooms();
+        styleComponents();
+    }
+
+    private void styleComponents() {
+        UIConfig.styleWhiteButton(upload);
     }
 
     public void loadRooms() {

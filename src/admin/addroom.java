@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import Config.config;
+import Config.UIConfig;
 
 /**
  *
@@ -30,10 +31,12 @@ public class addroom extends javax.swing.JFrame {
      */
     public addroom() {
         initComponents();
+        styleComponents();
     }
 
     public addroom(rooms parent) {
         initComponents();
+        styleComponents();
         this.parentFrame = parent;
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -47,6 +50,11 @@ public class addroom extends javax.swing.JFrame {
                 dispose();
             }
         });
+    }
+
+    private void styleComponents() {
+        UIConfig.styleButton(select);
+        UIConfig.styleButton(save);
     }
 
     /**

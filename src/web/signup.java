@@ -31,7 +31,7 @@ public class signup extends javax.swing.JFrame {
 }
 
     private void styleComponents() {
-        Config.UIConfig.styleButton(jButton1);
+        Config.UIConfig.styleBrownButton(jButton1);
         jLabel3.setForeground(Config.UIConfig.BROWN_PRIMARY);
         jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         

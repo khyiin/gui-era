@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import Config.config;
+import Config.UIConfig;
 import web.login;
 
 /**
@@ -31,6 +32,7 @@ public class reservations extends javax.swing.JFrame {
         }
         initComponents();
         displayAllReservations();
+        styleComponents();
         
         // Return to adminDashboard on close
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -42,6 +44,12 @@ public class reservations extends javax.swing.JFrame {
                 dispose();
             }
         });
+    }
+
+    private void styleComponents() {
+        UIConfig.styleButton(jButton1);
+        UIConfig.styleButton(jButton5);
+        UIConfig.styleButton(jButton4);
     }
 
     public void displayAllReservations() {

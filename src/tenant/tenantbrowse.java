@@ -34,6 +34,8 @@ public class tenantbrowse extends javax.swing.JFrame {
     } 
     public void loadRooms() {
         mainRoompanel.removeAll();
+        // Use BoxLayout (Vertical) so cards don't stretch vertically
+        mainRoompanel.setLayout(new javax.swing.BoxLayout(mainRoompanel, javax.swing.BoxLayout.Y_AXIS));
 
         String keyword = search.getText().trim();
         String baseSql = "SELECT * FROM rooms";
@@ -73,8 +75,12 @@ public class tenantbrowse extends javax.swing.JFrame {
 
                     roomcard card = new roomcard(rId, lId, rName, rType, rPrice, rLoc, rDesc, rStatus);
                     mainRoompanel.add(card);
+                    // Add some spacing between cards
+                    mainRoompanel.add(javax.swing.Box.createVerticalStrut(10));
                 }
             }
+            // Add vertical glue at the end so cards stay at the top
+            mainRoompanel.add(javax.swing.Box.createVerticalGlue());
 
             mainRoompanel.revalidate();
             mainRoompanel.repaint();
@@ -94,6 +100,7 @@ public class tenantbrowse extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         search = new javax.swing.JTextField();
         searchicon = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -127,6 +134,11 @@ public class tenantbrowse extends javax.swing.JFrame {
             }
         });
         jPanel1.add(searchicon, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 30, 25, 20));
+
+        jLabel21.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(60, 47, 15));
+        jLabel21.setText("Browse Rooms Now!");
+        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, 370, 30));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/web/images/icons8-home-40.png"))); // NOI18N
         jLabel7.setText("jLabel7");
@@ -285,6 +297,7 @@ public class tenantbrowse extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;

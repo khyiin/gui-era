@@ -1,12 +1,18 @@
 
 package web;
 
+import Config.UIConfig;
 
 public class landing extends javax.swing.JFrame {
 
    
     public landing() {
         initComponents();
+        styleComponents();
+    }
+
+    private void styleComponents() {
+        UIConfig.styleBrownButton(jButton1);
     }
 
    

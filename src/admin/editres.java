@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import Config.config;
+import Config.UIConfig;
 
 /**
  *
@@ -25,10 +26,12 @@ public class editres extends javax.swing.JFrame {
      */
     public editres() {
         initComponents();
+        styleComponents();
     }
 
     public editres(String resId, reservations parent) {
         initComponents();
+        styleComponents();
         this.reservationID = resId;
         this.parentFrame = parent;
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -41,6 +44,10 @@ public class editres extends javax.swing.JFrame {
             }
         });
         loadDetails();
+    }
+
+    private void styleComponents() {
+        UIConfig.styleButton(save);
     }
 
     private void loadDetails() {

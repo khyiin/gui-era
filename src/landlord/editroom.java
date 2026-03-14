@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import Config.config;
+import Config.UIConfig;
 import web.login;
 
 /**
@@ -38,6 +39,7 @@ public class editroom extends javax.swing.JFrame {
         return;
         }
         initComponents();
+        styleComponents();
         
         // Return to managerooms on close
         this.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -53,6 +55,7 @@ public class editroom extends javax.swing.JFrame {
 
       public editroom(String id, String name, String type, String price, String loc, String desc, managerooms parent) {
     initComponents();
+    styleComponents();
     this.roomID = id;
     this.parent = parent;
     
@@ -64,6 +67,10 @@ public class editroom extends javax.swing.JFrame {
 
     loadRoomImage();
 }
+
+    private void styleComponents() {
+        UIConfig.styleButton(btn_save);
+    }
 
     private void loadRoomImage() {
         if (roomID == null || roomID.isEmpty()) {

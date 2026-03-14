@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import Config.config;
+import Config.UIConfig;
 import web.login;
 import web.leasewindow;
 
@@ -34,7 +35,15 @@ public class myreservation extends javax.swing.JFrame {
         
         initComponents();
         displayMyReservations();
+        styleComponents();
         
+    }
+    
+    private void styleComponents() {
+        UIConfig.styleTable(myrestable);
+        UIConfig.styleButton(viewlease);
+        UIConfig.styleButton(jButton5);
+        UIConfig.styleButton(jButton6);
     }
     public void displayMyReservations() {
         Config.config con = new Config.config();
