@@ -73,6 +73,21 @@ public class config {
         }
     }
 
+    // --- ADDED: Method to check if a record exists ---
+    public boolean recordExists(String sql, Object... values) {
+        try (Connection conn = connectDB(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            for (int i = 0; i < values.length; i++) {
+                pstmt.setObject(i + 1, values[i]);
+            }
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error checking record: " + e.getMessage());
+            return false;
+        }
+    }
+
     // --- ADDED: Method to fetch data for the Session ---
     public ResultSet getData(String sql) throws SQLException {
         Connection conn = connectDB();

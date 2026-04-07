@@ -300,6 +300,14 @@ public class tenantreserve extends javax.swing.JFrame {
     }
 
     config conf = new config();
+    
+    // CHECK FOR DOUBLE RESERVATION
+    String checkSql = "SELECT res_id FROM reservations WHERE r_id = ? AND status != 'Cancelled'";
+    if (conf.recordExists(checkSql, roomId)) {
+        JOptionPane.showMessageDialog(this, "This room is already reserved or has a pending reservation!");
+        return;
+    }
+
     /* UPDATED SQL: 
        - Uses 'id' for the tenant.
        - Uses 'r_id' for the room.

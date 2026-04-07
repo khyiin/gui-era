@@ -1,12 +1,19 @@
 package web;
 
 import Config.config;
+import Config.UIConfig;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Insets;
 import java.awt.print.PrinterException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -19,24 +26,36 @@ public class leasewindow extends JFrame {
     private final JTextArea leaseText;
 
     public leasewindow(String reservationId) {
-        setTitle("Lease Details");
-        setSize(600, 500);
+        setTitle("Lease Agreement - " + reservationId);
+        setSize(700, 850); // Bond paper aspect ratio roughly
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        // Main content area - white background like paper
         leaseText = new JTextArea();
         leaseText.setEditable(false);
-        leaseText.setFont(new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 12));
+        leaseText.setFont(new Font("Serif", Font.PLAIN, 14)); // Serif font for formal look
+        leaseText.setBackground(Color.WHITE);
+        leaseText.setForeground(Color.BLACK);
+        leaseText.setMargin(new Insets(50, 50, 50, 50)); // Large margins like real paper
+        leaseText.setLineWrap(true);
+        leaseText.setWrapStyleWord(true);
 
         JScrollPane scrollPane = new JScrollPane(leaseText);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        scrollPane.setBackground(new Color(240, 240, 240)); // Gray background for the scrollpane area
 
-        JButton printButton = new JButton("Print");
+        JButton printButton = new JButton("Print Agreement");
+        UIConfig.styleBrownButton(printButton); // Use our brown theme for the button
         printButton.addActionListener(e -> printLease());
 
         JPanel bottomPanel = new JPanel();
+        bottomPanel.setBackground(new Color(240, 240, 240));
+        bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         bottomPanel.add(printButton);
 
         getContentPane().setLayout(new BorderLayout());
+        getContentPane().setBackground(new Color(240, 240, 240));
         getContentPane().add(scrollPane, BorderLayout.CENTER);
         getContentPane().add(bottomPanel, BorderLayout.SOUTH);
 
@@ -61,23 +80,41 @@ public class leasewindow extends JFrame {
             pst.setString(1, reservationId);
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
+                    String today = new SimpleDateFormat("MMMM dd, yyyy").format(new Date());
+                    
                     StringBuilder sb = new StringBuilder();
-                    sb.append("LEASE AGREEMENT\n");
-                    sb.append("Reservation ID: ").append(rs.getString("res_id")).append("\n");
-                    sb.append("Status: ").append(rs.getString("status")).append("\n\n");
+                    sb.append("\t\t\tRESIDENTIAL LEASE AGREEMENT\n");
+                    sb.append("\t\t\t---------------------------\n\n");
+                    
+                    sb.append("DATE: ").append(today).append("\n");
+                    sb.append("RESERVATION ID: ").append(rs.getString("res_id")).append("\n");
+                    sb.append("STATUS: ").append(rs.getString("status").toUpperCase()).append("\n\n");
 
-                    sb.append("Landlord: ").append(rs.getString("landlord_name")).append("\n");
-                    sb.append("Tenant : ").append(rs.getString("tenant_name")).append("\n");
-                    sb.append("Contact: ").append(rs.getString("contact")).append("\n\n");
+                    sb.append("1. PARTIES\n");
+                    sb.append("This Lease Agreement is made between:\n");
+                    sb.append("LANDLORD: ").append(rs.getString("landlord_name")).append("\n");
+                    sb.append("TENANT:   ").append(rs.getString("tenant_name")).append("\n");
+                    sb.append("CONTACT:  ").append(rs.getString("contact")).append("\n\n");
 
-                    sb.append("Room Name : ").append(rs.getString("r_name")).append("\n");
-                    sb.append("Location  : ").append(rs.getString("r_location")).append("\n");
-                    sb.append("Price     : ").append(rs.getString("r_price")).append("\n\n");
+                    sb.append("2. PROPERTY\n");
+                    sb.append("The Landlord agrees to lease the following property to the Tenant:\n");
+                    sb.append("ROOM NAME: ").append(rs.getString("r_name")).append("\n");
+                    sb.append("LOCATION:  ").append(rs.getString("r_location")).append("\n\n");
 
-                    sb.append("Move-in Date : ").append(rs.getString("move_in_date")).append("\n");
-                    sb.append("Contract     : ").append(rs.getString("contract")).append("\n\n");
+                    sb.append("3. TERM AND RENT\n");
+                    sb.append("The lease term shall begin on ").append(rs.getString("move_in_date")).append(".\n");
+                    sb.append("The agreed contract duration is: ").append(rs.getString("contract")).append(".\n");
+                    sb.append("The monthly rental amount is set at: PHP ").append(rs.getString("r_price")).append(".\n\n");
 
-                    sb.append("By proceeding, both parties agree to the terms of this lease.");
+                    sb.append("4. TERMS AND CONDITIONS\n");
+                    sb.append("a) The Tenant shall maintain the property in good condition.\n");
+                    sb.append("b) Rent must be paid on or before the due date specified by the Landlord.\n");
+                    sb.append("c) Any damages to the property will be the responsibility of the Tenant.\n");
+                    sb.append("d) The Landlord reserves the right to inspect the property with prior notice.\n\n");
+
+                    sb.append("\n\n\n");
+                    sb.append("__________________________\t\t\t__________________________\n");
+                    sb.append("      Landlord Signature  \t\t\t      Tenant Signature    \n");
 
                     leaseText.setText(sb.toString());
                     leaseText.setCaretPosition(0);
